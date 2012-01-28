@@ -1,0 +1,5 @@
+-- memory.c --
+
+	-- Memory Module Init (Initialize freemap, set bits corresponding to OS pages to '0') -- DONE
+
+
