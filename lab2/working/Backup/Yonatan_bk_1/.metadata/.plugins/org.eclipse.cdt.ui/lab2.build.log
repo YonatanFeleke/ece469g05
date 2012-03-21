@@ -1,0 +1,22 @@
+
+**** Build of configuration Debug for project lab2 ****
+
+make all 
+Building file: ../one-level/os/clock.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"one-level/os/clock.d" -MT"one-level/os/clock.d" -o"one-level/os/clock.o" "../one-level/os/clock.c"
+../one-level/os/clock.c:5:19: error: dlxos.h: No such file or directory
+../one-level/os/clock.c:6:19: error: traps.h: No such file or directory
+../one-level/os/clock.c:7:21: error: ostraps.h: No such file or directory
+../one-level/os/clock.c:8:21: error: process.h: No such file or directory
+../one-level/os/clock.c:9:19: error: clock.h: No such file or directory
+../one-level/os/clock.c:15: error: ‘CLOCK_DEFAULT_RESOLUTION’ undeclared here (not in a function)
+../one-level/os/clock.c: In function ‘ClkStart’:
+../one-level/os/clock.c:37: error: ‘DLX_TIMER_ADDRESS’ undeclared (first use in this function)
+../one-level/os/clock.c:37: error: (Each undeclared identifier is reported only once
+../one-level/os/clock.c:37: error: for each function it appears in.)
+../one-level/os/clock.c:38: warning: implicit declaration of function ‘dbprintf’
+../one-level/os/clock.c: In function ‘ClkInterrupt’:
+../one-level/os/clock.c:58: error: ‘DLX_TIMER_ADDRESS’ undeclared (first use in this function)
+../one-level/os/clock.c:62: error: ‘CLOCK_PROCESS_JIFFIES’ undeclared (first use in this function)
+make: *** [one-level/os/clock.o] Error 1

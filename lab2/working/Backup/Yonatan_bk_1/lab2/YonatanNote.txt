@@ -1,0 +1,19 @@
+
+
+dlxos will only have one process at a time.
+So process1 $20 -> memory location $FFFC
+   process2 $20 -> memory location $FFFA
+
+6 pages to one process 2,2,1,1 code data heap and stack
+
+in Memory.c search for the lastosadrress -> calculate last memory adress
+    -> allows to initialize the freemap.
+
+1) allocPage -> called whenever you get a new page. runs freemap-freepage-sets it to one - get page entry
+        - writes it into memory.c. return the 
+2) page fault handler ->
+if you allocate a page at 0x28 and it has a total of say 4k then we check if it has passed it.
+pcb->currentSavedFrame->regs->
+
+
+What is the use of the system stack and how does creating one help

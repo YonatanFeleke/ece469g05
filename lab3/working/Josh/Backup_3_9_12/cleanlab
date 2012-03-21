@@ -1,0 +1,4 @@
+cd os
+make clean
+cd ../apps/fdisk/
+make clean

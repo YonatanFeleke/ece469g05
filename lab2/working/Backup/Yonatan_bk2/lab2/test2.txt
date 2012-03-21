@@ -1,0 +1,2729 @@
+rm -rf work ../bin/os.dlx.obj ../lib/usertraps.aso ../lib/misc.o Makefile.depend ../bin/vm
+gcc-dlx -I../include -I../include/os -MM filesys.c memory.c misc.c process.c queue.c synch.c traps.c sysproc.c clock.c osend.s trap_random.s dlxos.s | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+mkdir -p work
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/filesys.o filesys.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/memory.o memory.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/misc.o misc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/process.o process.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/queue.o queue.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/synch.o synch.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/traps.o traps.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/sysproc.o sysproc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/clock.o clock.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/osend.aso osend.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/trap_random.aso trap_random.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/dlxos.aso dlxos.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -o work/os.dlx work/filesys.o work/memory.o work/misc.o work/process.o work/queue.o work/synch.o work/traps.o work/sysproc.o work/clock.o work/osend.aso work/trap_random.aso work/dlxos.aso 
+dlxasm -i _osinit -l work/os.lst work/os.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x129d0
+Last data address: 0x2262c
+cp work/os.dlx.obj ../bin/os.dlx.obj
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/usertraps.aso usertraps.s
+cp work/usertraps.aso ../lib/usertraps.aso
+cp work/misc.o ../lib/misc.o
+rm work/usertraps.aso
+rm -rf work ../../../bin/userprog.dlx.obj Makefile.depend ../../../bin/vm
+gcc-dlx -I../include -I../../../include -MM userprog.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/userprog.o userprog.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/userprog.dlx work/userprog.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/userprog.lst work/userprog.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x1fc0
+Last data address: 0x2034
+cp work/userprog.dlx.obj ../../../bin/userprog.dlx.obj
+cd ../; make run
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Josh/lab2/apps/example'
+cd ../../bin; dlxsim -x os.dlx.obj -a -D impf -u userprog.dlx.obj; ee469_fixterminal
+Stack=0x1fffbc, pc starting at 0x1263c
+Got 4 arguments.
+Available memory: 0x22630 -> 0x200000.
+Argument count is 4.
+Argument 0 is -D.
+Argument 1 is impf.
+Argument 2 is -u.
+Argument 3 is userprog.dlx.obj.
+About to initialize queues.
+After initializing queues.
+PmemSize: 2097152
+Number of physical pages in memory: 512
+Last address of OS: 140848
+Number of pages used by OS: 35
+Number of free pages left in physical memory: 477
+Freemap Int #0 value: 0x00000000
+Freemap Int #1 value: 0xFFFFFFF8
+Freemap Int #2 value: 0xFFFFFFFF
+Freemap Int #3 value: 0xFFFFFFFF
+Freemap Int #4 value: 0xFFFFFFFF
+Freemap Int #5 value: 0xFFFFFFFF
+Freemap Int #6 value: 0xFFFFFFFF
+Freemap Int #7 value: 0xFFFFFFFF
+Freemap Int #8 value: 0xFFFFFFFF
+Freemap Int #9 value: 0xFFFFFFFF
+Freemap Int #10 value: 0xFFFFFFFF
+Freemap Int #11 value: 0xFFFFFFFF
+Freemap Int #12 value: 0xFFFFFFFF
+Freemap Int #13 value: 0xFFFFFFFF
+Freemap Int #14 value: 0xFFFFFFFF
+Freemap Int #15 value: 0xFFFFFFFF
+After initializing memory.
+Entering ProcessModuleInit
+Initializing PCB 0 @ 0x16458.
+Initializing PCB 1 @ 0x168bc.
+Initializing PCB 2 @ 0x16d20.
+Initializing PCB 3 @ 0x17184.
+Initializing PCB 4 @ 0x175e8.
+Initializing PCB 5 @ 0x17a4c.
+Initializing PCB 6 @ 0x17eb0.
+Initializing PCB 7 @ 0x18314.
+Initializing PCB 8 @ 0x18778.
+Initializing PCB 9 @ 0x18bdc.
+Initializing PCB 10 @ 0x19040.
+Initializing PCB 11 @ 0x194a4.
+Initializing PCB 12 @ 0x19908.
+Initializing PCB 13 @ 0x19d6c.
+Initializing PCB 14 @ 0x1a1d0.
+Initializing PCB 15 @ 0x1a634.
+Initializing PCB 16 @ 0x1aa98.
+Initializing PCB 17 @ 0x1aefc.
+Initializing PCB 18 @ 0x1b360.
+Initializing PCB 19 @ 0x1b7c4.
+Initializing PCB 20 @ 0x1bc28.
+Initializing PCB 21 @ 0x1c08c.
+Initializing PCB 22 @ 0x1c4f0.
+Initializing PCB 23 @ 0x1c954.
+Initializing PCB 24 @ 0x1cdb8.
+Initializing PCB 25 @ 0x1d21c.
+Initializing PCB 26 @ 0x1d680.
+Initializing PCB 27 @ 0x1dae4.
+Initializing PCB 28 @ 0x1df48.
+Initializing PCB 29 @ 0x1e3ac.
+Initializing PCB 30 @ 0x1e810.
+Initializing PCB 31 @ 0x1ec74.
+Leaving ProcessModuleInit
+After initializing processes.
+SynchModuleInit: Entering SynchModuleInit
+SynchModuleInit: Leaving SynchModuleInit
+After initializing synchronization tools.
+After initializing keyboard.
+After initializing clock.
+Attepmting to open vm mode=2.
+File vm opening in file system 0.
+Attempting to open file vm into desc 0, mode 2.
+Opened vm in FS 0, mode=2 slot=0.
+VM Descriptor is 0
+Entering ProcessFork args=0x0 0x1ffe1c userprog.dlx.obj 1
+Got a link @ 0x1f438
+Freemap Index #1 has free pages, contents: 0xFFFFFFF8
+Physical Page #35 allocated!
+Freemap Index #1 after new allocation: 0xFFFFFFF0
+Allocating physical page #35 (Address 0x00023000) for process virtual page #0 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFFF0
+Physical Page #36 allocated!
+Freemap Index #1 after new allocation: 0xFFFFFFE0
+Allocating physical page #36 (Address 0x00024000) for process virtual page #1 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFFE0
+Physical Page #37 allocated!
+Freemap Index #1 after new allocation: 0xFFFFFFC0
+Allocating physical page #37 (Address 0x00025000) for process virtual page #2 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFFC0
+Physical Page #38 allocated!
+Freemap Index #1 after new allocation: 0xFFFFFF80
+Allocating physical page #38 (Address 0x00026000) for process virtual page #3 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFF80
+Physical Page #39 allocated!
+Freemap Index #1 after new allocation: 0xFFFFFF00
+Allocating physical page #39 (Address 0x00027000) for process virtual page #255 (user stack)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFF00
+Physical Page #40 allocated!
+Freemap Index #1 after new allocation: 0xFFFFFE00
+Allocating physical page #40 (Address 0x00028000) for process system stack
+
+Initializing system stack pointer to 0x00028FFC
+
+ProcessFork: stackframe = 0x28ea8
+PTBASE: 0x0001ECD4
+
+PTBITS: 0x000C000C
+
+PTSIZE: 0x00000100
+
+About to load userprog.dlx.obj
+Attepmting to open userprog.dlx.obj mode=1.
+File userprog.dlx.obj opening in file system 0.
+Attempting to open file userprog.dlx.obj into desc 1, mode 1.
+Opened userprog.dlx.obj in FS 0, mode=1 slot=1.
+File descriptor is now 1.
+File userprog.dlx.obj -> start=0x00001000
+File userprog.dlx.obj -> code @ 0x00001000 (size=0x00000fc0)
+File userprog.dlx.obj -> data @ 0x00002000 (size=0x00000034)
+Got 200 bytes at offset 60 ... terminated at 199.
+Buffer is '00002000:48656c6c
+:6f20576f
+:726c6421
+:0a00
+00002010:50494420
+:6f627461
+:696e6564
+:2066726f
+:6d205573
+:65722050
+:726f6772
+:616d3a20
+:25640a00
+00001000:afbefffc
+:001df020
+:afbffff8
+:2fbd0008
+:0c000fa4
+Z'
+New address is 0x2000.
+Seeking to 104 and returning 14 bytes!
+Placing 14 bytes at vaddr 00002000.
+Address to translate: 0x00002000
+Offset: 0x00000000
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025000
+Got 200 bytes at offset 104 ... terminated at 195.
+Buffer is '00002010:50494420
+:6f627461
+:696e6564
+:2066726f
+:6d205573
+:65722050
+:726f6772
+:616d3a20
+:25640a00
+00001000:afbefffc
+:001df020
+:afbffff8
+:2fbd0008
+:0c000fa4
+:54000000
+:23bdfff8
+:3c020000
+:24422000
+Z'
+New address is 0x2010.
+Seeking to 202 and returning 36 bytes!
+Placing 36 bytes at vaddr 00002010.
+Address to translate: 0x00002010
+Offset: 0x00000010
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025010
+Got 200 bytes at offset 202 ... terminated at 197.
+Buffer is '00001000:afbefffc
+:001df020
+:afbffff8
+:2fbd0008
+:0c000fa4
+:54000000
+:23bdfff8
+:3c020000
+:24422000
+:afa20000
+:0c0000cc
+:54000000
+:0c0000d0
+:54000000
+:3c030000
+:24632010
+:afa30000
+:afa10004
+:0c0000ac
+Z'
+New address is 0x1000.
+Seeking to 400 and returning 76 bytes!
+Placing 76 bytes at vaddr 00001000.
+Address to translate: 0x00001000
+Offset: 0x00000000
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024000
+Got 200 bytes at offset 400 ... terminated at 199.
+Buffer is ':54000000
+:afa20000
+:0c0000a0
+:54000000
+:afa20000
+:0c000094
+:54000000
+:afa20000
+:0c000088
+:54000000
+:afa20000
+:0c00007c
+:54000000
+:afa20000
+:0c000070
+:54000000
+:afa20000
+:0c000064
+:54000000
+:afa20000
+Z'
+Seeking to 600 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000104c.
+Address to translate: 0x0000104C
+Offset: 0x0000004C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002404C
+Got 200 bytes at offset 600 ... terminated at 199.
+Buffer is ':0c000058
+:54000000
+:23bd0008
+:0c000f00
+:54000000
+:44000213
+:4be00000
+:54000000
+:44000214
+:4be00000
+:54000000
+:44000210
+:4be00000
+:54000000
+:44000211
+:4be00000
+:54000000
+:44000212
+:4be00000
+:54000000
+Z'
+Seeking to 800 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000109c.
+Address to translate: 0x0000109C
+Offset: 0x0000009C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002409C
+Got 200 bytes at offset 800 ... terminated at 199.
+Buffer is ':44000280
+:4be00000
+:54000000
+:44000201
+:4be00000
+:54000000
+:44000431
+:4be00000
+:54000000
+:44000432
+:4be00000
+:54000000
+:44000440
+:4be00000
+:54000000
+:44000441
+:4be00000
+:54000000
+:44000450
+:4be00000
+Z'
+Seeking to 1000 and returning 80 bytes!
+Placing 80 bytes at vaddr 000010ec.
+Address to translate: 0x000010EC
+Offset: 0x000000EC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x000240EC
+Got 200 bytes at offset 1000 ... terminated at 199.
+Buffer is ':54000000
+:44000451
+:4be00000
+:54000000
+:44000452
+:4be00000
+:54000000
+:44000453
+:4be00000
+:54000000
+:44000454
+:4be00000
+:54000000
+:44000455
+:4be00000
+:54000000
+:44000456
+:4be00000
+:54000000
+:44000457
+Z'
+Seeking to 1200 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000113c.
+Address to translate: 0x0000113C
+Offset: 0x0000013C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002413C
+Got 200 bytes at offset 1200 ... terminated at 199.
+Buffer is ':4be00000
+:54000000
+:44000458
+:4be00000
+:54000000
+:44000459
+:4be00000
+:54000000
+:44000460
+:4be00000
+:54000000
+:44000461
+:4be00000
+:54000000
+:44000462
+:4be00000
+:54000000
+:44000463
+:4be00000
+:54000000
+Z'
+Seeking to 1400 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000118c.
+Address to translate: 0x0000118C
+Offset: 0x0000018C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002418C
+Got 200 bytes at offset 1400 ... terminated at 199.
+Buffer is ':44000464
+:4be00000
+:54000000
+:44000465
+:4be00000
+:54000000
+:44000466
+:4be00000
+:54000000
+:44000500
+:4be00000
+:54000000
+:44000467
+:4be00000
+:44000468
+:4be00000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+Z'
+Seeking to 1600 and returning 80 bytes!
+Placing 80 bytes at vaddr 000011dc.
+Address to translate: 0x000011DC
+Offset: 0x000001DC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x000241DC
+Got 200 bytes at offset 1600 ... terminated at 199.
+Buffer is ':afa20000
+:afa30004
+:afa40008
+:83c20003
+:20010000
+:304300ff
+:60640020
+:1480002c
+:54000000
+:304300ff
+:60640009
+:1480001c
+:54000000
+:304300ff
+:6064000a
+:1480000c
+:54000000
+:08000008
+:54000000
+:20010001
+Z'
+Seeking to 1800 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000122c.
+Address to translate: 0x0000122C
+Offset: 0x0000022C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002422C
+Got 200 bytes at offset 1800 ... terminated at 199.
+Buffer is ':08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fa40008
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:afa40008
+:83c20003
+:20010000
+:304300ff
+Z'
+Seeking to 2000 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000127c.
+Address to translate: 0x0000127C
+Offset: 0x0000027C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002427C
+Got 200 bytes at offset 2000 ... terminated at 199.
+Buffer is ':6c64002f
+:1080001c
+:54000000
+:304300ff
+:70640039
+:1480005c
+:54000000
+:08000004
+:54000000
+:304300ff
+:6c640060
+:1080001c
+:54000000
+:304300ff
+:70640066
+:14800034
+:54000000
+:08000004
+:54000000
+:304300ff
+Z'
+Seeking to 2200 and returning 80 bytes!
+Placing 80 bytes at vaddr 000012cc.
+Address to translate: 0x000012CC
+Offset: 0x000002CC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x000242CC
+Got 200 bytes at offset 2200 ... terminated at 199.
+Buffer is ':6c640040
+:10800020
+:54000000
+:304300ff
+:70640041
+:1480000c
+:54000000
+:08000008
+:54000000
+:20010001
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fa40008
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+Z'
+Seeking to 2400 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000131c.
+Address to translate: 0x0000131C
+Offset: 0x0000031C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002431C
+Got 200 bytes at offset 2400 ... terminated at 199.
+Buffer is ':afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:8fc10000
+:afc1fff4
+:8fc10000
+:20220001
+:afc20000
+:8fc20004
+:20430001
+:afc30004
+:80420000
+:a0220000
+:a3c2fff3
+:93c1fff3
+:64220000
+:1440000c
+Z'
+Seeking to 2600 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000136c.
+Address to translate: 0x0000136C
+Offset: 0x0000036C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002436C
+Got 200 bytes at offset 2600 ... terminated at 199.
+Buffer is ':54000000
+:0800000c
+:54000000
+:0bffffc0
+:54000000
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+Z'
+Seeking to 2800 and returning 80 bytes!
+Placing 80 bytes at vaddr 000013bc.
+Address to translate: 0x000013BC
+Offset: 0x000003BC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x000243BC
+Got 200 bytes at offset 2800 ... terminated at 199.
+Buffer is ':afa30004
+:8fc10000
+:afc1fff4
+:8fc10008
+:2022ffff
+:afc20008
+:70210000
+:1020000c
+:54000000
+:08000048
+:54000000
+:8fc10000
+:20220001
+:afc20000
+:8fc20004
+:20430001
+:afc30004
+:80420000
+:a0220000
+:a3c2fff3
+Z'
+Seeking to 3000 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000140c.
+Address to translate: 0x0000140C
+Offset: 0x0000040C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002440C
+Got 200 bytes at offset 3000 ... terminated at 199.
+Buffer is ':93c1fff3
+:64220000
+:1440000c
+:54000000
+:0800000c
+:54000000
+:0bffffa0
+:54000000
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+Z'
+Seeking to 3200 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000145c.
+Address to translate: 0x0000145C
+Offset: 0x0000045C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002445C
+Got 200 bytes at offset 3200 ... terminated at 199.
+Buffer is ':afbffff8
+:2fbd0018
+:afa20000
+:8fc10000
+:afc1fff4
+:8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:0800001c
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffffd0
+:54000000
+:23bdfff8
+:001d0820
+Z'
+Seeking to 3400 and returning 80 bytes!
+Placing 80 bytes at vaddr 000014ac.
+Address to translate: 0x000014AC
+Offset: 0x000004AC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x000244AC
+Got 200 bytes at offset 3400 ... terminated at 199.
+Buffer is ':8fc20000
+:ac220000
+:8fc20004
+:ac220004
+:0ffffe5c
+:54000000
+:23bd0008
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+Z'
+Seeking to 3600 and returning 80 bytes!
+Placing 80 bytes at vaddr 000014fc.
+Address to translate: 0x000014FC
+Offset: 0x000004FC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x000244FC
+Got 200 bytes at offset 3600 ... terminated at 199.
+Buffer is ':afa20000
+:afa30004
+:54000000
+:20010000
+:afc1fff4
+:8fc1fff4
+:8fc20008
+:0022082a
+:1420000c
+:54000000
+:08000088
+:54000000
+:8fc10004
+:90220000
+:64410000
+:14200018
+:54000000
+:20010000
+:080000d8
+:54000000
+Z'
+Seeking to 3800 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000154c.
+Address to translate: 0x0000154C
+Offset: 0x0000054C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002454C
+Got 200 bytes at offset 3800 ... terminated at 199.
+Buffer is ':08000028
+:54000000
+:8fc10000
+:8fc20004
+:90210000
+:90420000
+:00220829
+:1020000c
+:54000000
+:0800003c
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:8fc20004
+:20410001
+:00011020
+:afc20004
+:8fc2fff4
+Z'
+Seeking to 4000 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000159c.
+Address to translate: 0x0000159C
+Offset: 0x0000059C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002459C
+Got 200 bytes at offset 4000 ... terminated at 199.
+Buffer is ':20410001
+:00011020
+:afc2fff4
+:0bffff64
+:54000000
+:8fc1fff4
+:8fc20008
+:00220828
+:10200018
+:54000000
+:20010000
+:08000054
+:54000000
+:0800004c
+:54000000
+:8fc20000
+:90410000
+:8fc20004
+:90430000
+:00230822
+Z'
+Seeking to 4200 and returning 80 bytes!
+Placing 80 bytes at vaddr 000015ec.
+Address to translate: 0x000015EC
+Offset: 0x000005EC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x000245EC
+Got 200 bytes at offset 4200 ... terminated at 199.
+Buffer is ':74220000
+:10400020
+:54000000
+:8fc10000
+:8fc20004
+:90210000
+:90420000
+:00220829
+:08000008
+:54000000
+:2001ffff
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+Z'
+Seeking to 4400 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000163c.
+Address to translate: 0x0000163C
+Offset: 0x0000063C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002463C
+Got 200 bytes at offset 4400 ... terminated at 199.
+Buffer is ':afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:20010000
+:afc1fff4
+:8fc10000
+:20220001
+:afc20000
+:90210000
+:64220000
+:1440000c
+:54000000
+:0800001c
+:54000000
+:8fc2fff4
+:20410001
+:00011020
+:afc2fff4
+Z'
+Seeking to 4600 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000168c.
+Address to translate: 0x0000168C
+Offset: 0x0000068C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002468C
+Got 200 bytes at offset 4600 ... terminated at 199.
+Buffer is ':0bffffc8
+:54000000
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:23bdfff8
+:001d0820
+:8fc20004
+:ac220000
+Z'
+Seeking to 4800 and returning 80 bytes!
+Placing 80 bytes at vaddr 000016dc.
+Address to translate: 0x000016DC
+Offset: 0x000006DC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x000246DC
+Got 200 bytes at offset 4800 ... terminated at 199.
+Buffer is ':0fffff5c
+:54000000
+:23bd0008
+:afc1fff4
+:8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:08000060
+:54000000
+:23bdfff0
+:001d0820
+:8fc20000
+:ac220000
+:8fc20004
+:ac220004
+:8fc2fff4
+:ac220008
+:0ffffdc0
+Z'
+Seeking to 5000 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000172c.
+Address to translate: 0x0000172C
+Offset: 0x0000072C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002472C
+Got 200 bytes at offset 5000 ... terminated at 199.
+Buffer is ':54000000
+:23bd0010
+:64220000
+:14400010
+:54000000
+:8fc10000
+:08000028
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffff8c
+:54000000
+:20010000
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+Z'
+Seeking to 5200 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000177c.
+Address to translate: 0x0000177C
+Offset: 0x0000077C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002477C
+Got 200 bytes at offset 5200 ... terminated at 199.
+Buffer is ':8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:54000000
+:8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:08000070
+:54000000
+:8fc10004
+:afc1fff4
+:8fc1fff4
+:90220000
+Z'
+Seeking to 5400 and returning 80 bytes!
+Placing 80 bytes at vaddr 000017cc.
+Address to translate: 0x000017CC
+Offset: 0x000007CC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x000247CC
+Got 200 bytes at offset 5400 ... terminated at 199.
+Buffer is ':64410000
+:1420000c
+:54000000
+:08000044
+:54000000
+:8fc10000
+:8fc2fff4
+:90210000
+:90420000
+:00220828
+:10200010
+:54000000
+:8fc10000
+:08000030
+:54000000
+:8fc2fff4
+:20410001
+:00011020
+:afc2fff4
+:0bffffa8
+Z'
+Seeking to 5600 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000181c.
+Address to translate: 0x0000181C
+Offset: 0x0000081C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002481C
+Got 200 bytes at offset 5600 ... terminated at 199.
+Buffer is ':54000000
+:0bffff7c
+:54000000
+:20010000
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:54000000
+:8fc10000
+:90220000
+Z'
+Seeking to 5800 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000186c.
+Address to translate: 0x0000186C
+Offset: 0x0000086C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002486C
+Got 200 bytes at offset 5800 ... terminated at 199.
+Buffer is ':64410000
+:1420000c
+:54000000
+:08000040
+:54000000
+:8fc10000
+:90220000
+:8fc10004
+:00411028
+:10400010
+:54000000
+:8fc10000
+:08000028
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffffac
+:54000000
+Z'
+Seeking to 6000 and returning 80 bytes!
+Placing 80 bytes at vaddr 000018bc.
+Address to translate: 0x000018BC
+Offset: 0x000008BC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x000248BC
+Got 200 bytes at offset 6000 ... terminated at 199.
+Buffer is ':20010000
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:8fc10000
+:68220000
+:1040002c
+:54000000
+:8fc10004
+Z'
+Seeking to 6200 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000190c.
+Address to translate: 0x0000190C
+Offset: 0x0000090C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002490C
+Got 200 bytes at offset 6200 ... terminated at 199.
+Buffer is ':20220001
+:afc20004
+:2002002d
+:a0220000
+:8fc10000
+:00011022
+:afc20000
+:08000118
+:54000000
+:8fc10000
+:64220000
+:14400020
+:54000000
+:8fc10004
+:20220001
+:afc20004
+:20020030
+:a0220000
+:080000ec
+:54000000
+Z'
+Seeking to 6400 and returning 80 bytes!
+Placing 80 bytes at vaddr 0000195c.
+Address to translate: 0x0000195C
+Offset: 0x0000095C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x0002495C
+Got 200 bytes at offset 6400 ... terminated at 199.
+Buffer is ':20010001
+:afc1fff4
+:8fc1fff4
+:8fc20000
+:0022082c
+:1420000c
+:54000000
+:08000024
+:54000000
+:8fc1fff4
+:00011820
+:50620002
+:00411020
+:50410001
+:afc1fff4
+:0bffffc8
+:54000000
+:54000000
+:8fc1fff4
+:2002000a
+Z'
+Seeking to 6600 and returning 80 bytes!
+Placing 80 bytes at vaddr 000019ac.
+Address to translate: 0x000019AC
+Offset: 0x000009AC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x000249AC
+Got 200 bytes at offset 6600 ... terminated at 199.
+Buffer is ':00200035
+:00400835
+:0401000f
+:00000834
+:afc1fff4
+:8fc10004
+:20220001
+:afc20004
+:8fc20000
+:8fc3fff4
+:00400035
+:00600835
+:0401000f
+:00001034
+:00021820
+:20620030
+:a0220000
+:8fc10000
+:8fc3fff4
+:00200035
+Z'
+Seeking to 6800 and returning 80 bytes!
+Placing 80 bytes at vaddr 000019fc.
+Address to translate: 0x000019FC
+Offset: 0x000009FC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x000249FC
+Got 200 bytes at offset 6800 ... terminated at 199.
+Buffer is ':00600835
+:0401000f
+:00001034
+:8fc3fff4
+:00400035
+:00600835
+:0401000e
+:00001034
+:00220822
+:afc10000
+:8fc1fff4
+:6c220001
+:1440000c
+:54000000
+:0800000c
+:54000000
+:0bffff64
+:54000000
+:8fc10004
+:20020000
+Z'
+Seeking to 7000 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001a4c.
+Address to translate: 0x00001A4C
+Offset: 0x00000A4C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024A4C
+Got 200 bytes at offset 7000 ... terminated at 199.
+Buffer is ':a0220000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0020
+:afa20000
+:20010000
+:afc1fff4
+:8fc10000
+:90220000
+:60410020
+:14200034
+:54000000
+Z'
+Seeking to 7200 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001a9c.
+Address to translate: 0x00001A9C
+Offset: 0x00000A9C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024A9C
+Got 200 bytes at offset 7200 ... terminated at 199.
+Buffer is ':8fc10000
+:90220000
+:60410009
+:14200020
+:54000000
+:8fc10000
+:90220000
+:6041000a
+:1420000c
+:54000000
+:0800001c
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffffa8
+:54000000
+:8fc10004
+:64220000
+Z'
+Seeking to 7400 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001aec.
+Address to translate: 0x00001AEC
+Offset: 0x00000AEC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024AEC
+Got 200 bytes at offset 7400 ... terminated at 199.
+Buffer is ':10400010
+:54000000
+:8fc10004
+:8fc20000
+:ac220000
+:8fc10000
+:90220000
+:64410000
+:14200010
+:54000000
+:8fc1fff4
+:08000294
+:54000000
+:8fc10000
+:90220000
+:6041002d
+:10200024
+:54000000
+:2001ffff
+:afc1ffec
+Z'
+Seeking to 7600 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001b3c.
+Address to translate: 0x00001B3C
+Offset: 0x00000B3C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024B3C
+Got 200 bytes at offset 7600 ... terminated at 199.
+Buffer is ':8fc20000
+:20410001
+:00011020
+:afc20000
+:0800000c
+:54000000
+:20010001
+:afc1ffec
+:8fc10008
+:64220000
+:14400090
+:54000000
+:8fc10000
+:90220000
+:60410030
+:10200074
+:54000000
+:8fc20000
+:20410001
+:00011020
+Z'
+Seeking to 7800 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001b8c.
+Address to translate: 0x00001B8C
+Offset: 0x00000B8C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024B8C
+Got 200 bytes at offset 7800 ... terminated at 199.
+Buffer is ':afc20000
+:8fc10000
+:90220000
+:60410078
+:14200020
+:54000000
+:8fc10000
+:90220000
+:60410058
+:1420000c
+:54000000
+:08000024
+:54000000
+:20010010
+:afc10008
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0800000c
+Z'
+Seeking to 8000 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001bdc.
+Address to translate: 0x00001BDC
+Offset: 0x00000BDC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024BDC
+Got 200 bytes at offset 8000 ... terminated at 199.
+Buffer is ':54000000
+:20010008
+:afc10008
+:0800000c
+:54000000
+:2001000a
+:afc10008
+:8fc10008
+:70220000
+:1440001c
+:54000000
+:8fc10008
+:6c220010
+:1440000c
+:54000000
+:08000010
+:54000000
+:8fc1fff4
+:08000188
+:54000000
+Z'
+Seeking to 8200 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001c2c.
+Address to translate: 0x00001C2C
+Offset: 0x00000C2C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024C2C
+Got 200 bytes at offset 8200 ... terminated at 199.
+Buffer is ':54000000
+:8fc10000
+:90220000
+:6c41002f
+:10200030
+:54000000
+:8fc10000
+:90220000
+:70410039
+:1020001c
+:54000000
+:8fc10000
+:90220000
+:2041ffd0
+:afc1fff0
+:0800008c
+:54000000
+:8fc10000
+:90220000
+:6c410060
+Z'
+Seeking to 8400 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001c7c.
+Address to translate: 0x00001C7C
+Offset: 0x00000C7C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024C7C
+Got 200 bytes at offset 8400 ... terminated at 199.
+Buffer is ':10200030
+:54000000
+:8fc10000
+:90220000
+:7041007a
+:1020001c
+:54000000
+:8fc10000
+:90220000
+:2041ffa9
+:afc1fff0
+:0800004c
+:54000000
+:8fc10000
+:90220000
+:6c410040
+:10200030
+:54000000
+:8fc10000
+:90220000
+Z'
+Seeking to 8600 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001ccc.
+Address to translate: 0x00001CCC
+Offset: 0x00000CCC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024CCC
+Got 200 bytes at offset 8600 ... terminated at 199.
+Buffer is ':7041005a
+:1020001c
+:54000000
+:8fc10000
+:90220000
+:2041ffc9
+:afc1fff0
+:0800000c
+:54000000
+:200103e8
+:afc1fff0
+:8fc1fff0
+:8fc20008
+:0022082a
+:10200040
+:54000000
+:8fc1fff4
+:8fc20008
+:00200035
+:00400835
+Z'
+Seeking to 8800 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001d1c.
+Address to translate: 0x00001D1C
+Offset: 0x00000D1C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024D1C
+Got 200 bytes at offset 8800 ... terminated at 199.
+Buffer is ':0401000e
+:00000834
+:afc1fff4
+:8fc1fff4
+:8fc2fff0
+:00220820
+:afc1fff4
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:8fc1fff0
+:8fc20008
+:0022082a
+:1420000c
+:54000000
+:0800000c
+:54000000
+:0bfffec8
+:54000000
+Z'
+Seeking to 9000 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001d6c.
+Address to translate: 0x00001D6C
+Offset: 0x00000D6C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024D6C
+Got 200 bytes at offset 9000 ... terminated at 199.
+Buffer is ':8fc10004
+:64220000
+:10400010
+:54000000
+:8fc10004
+:8fc20000
+:ac220000
+:8fc1fff4
+:8fc2ffec
+:00200035
+:00400835
+:0401000e
+:00000834
+:afc1fff4
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+Z'
+Seeking to 9200 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001dbc.
+Address to translate: 0x00001DBC
+Offset: 0x00000DBC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024DBC
+Got 200 bytes at offset 9200 ... terminated at 199.
+Buffer is ':8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:afa30004
+:54000000
+:8fc10008
+:2022ffff
+:afc20008
+:6c210000
+:1420000c
+:54000000
+:0800002c
+:54000000
+:8fc10004
+:20220001
+Z'
+Seeking to 9400 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001e0c.
+Address to translate: 0x00001E0C
+Offset: 0x00000E0C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024E0C
+Got 200 bytes at offset 9400 ... terminated at 199.
+Buffer is ':afc20004
+:8fc20000
+:20430001
+:afc30000
+:80420000
+:a0220000
+:0bffffbc
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+Z'
+Seeking to 9600 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001e5c.
+Address to translate: 0x00001E5C
+Offset: 0x00000E5C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024E5C
+Got 200 bytes at offset 9600 ... terminated at 199.
+Buffer is ':54000000
+:8fc10004
+:2022ffff
+:afc20004
+:6c210000
+:1420000c
+:54000000
+:08000020
+:54000000
+:8fc10000
+:20220001
+:afc20000
+:20020000
+:a0220000
+:0bffffc8
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+Z'
+Seeking to 9800 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001eac.
+Address to translate: 0x00001EAC
+Offset: 0x00000EAC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024EAC
+Got 200 bytes at offset 9800 ... terminated at 199.
+Buffer is ':4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:afa30004
+:8fc10000
+:8fc20004
+:0022182c
+:14600008
+:54000000
+:8fc10004
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+Z'
+Seeking to 10000 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001efc.
+Address to translate: 0x00001EFC
+Offset: 0x00000EFC
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024EFC
+Got 200 bytes at offset 10000 ... terminated at 199.
+Buffer is ':8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:afa30004
+:8fc10000
+:8fc20004
+:0022182d
+:14600008
+:54000000
+:8fc10004
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+Z'
+Seeking to 10200 and returning 80 bytes!
+Placing 80 bytes at vaddr 00001f4c.
+Address to translate: 0x00001F4C
+Offset: 0x00000F4C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024F4C
+Got 90 bytes at offset 10200 ... terminated at 89.
+Buffer is ':001ee820
+:8fdefffc
+:4be00000
+:54000000
+:44000300
+:4be00000
+:54000000
+:4be00000
+:54000000
+Z'
+Seeking to 10290 and returning 36 bytes!
+Placing 36 bytes at vaddr 00001f9c.
+Address to translate: 0x00001F9C
+Offset: 0x00000F9C
+Index: 0x00000001
+PTE_IDX: 0x00024001
+PTE_IDX: 0x00024000
+Translated Address: 0x00024F9C
+USER_STACKPOINTER: 0x000FFFFC
+
+Address to translate: 0x000FFEFC
+Offset: 0x00000EFC
+Index: 0x000000FF
+PTE_IDX: 0x00027001
+PTE_IDX: 0x00027000
+Translated Address: 0x00027EFC
+Address to translate: 0x000FFEF0
+Offset: 0x00000EF0
+Index: 0x000000FF
+PTE_IDX: 0x00027001
+PTE_IDX: 0x00027000
+Translated Address: 0x00027EF0
+Setting currentPCB=0x1ec74, stackframe=0x28ea8
+Leaving ProcessFork (userprog.dlx.obj)
+Set timer quantum to 10000, about to run first process.
+Address to translate: 0x000FFEE0
+Offset: 0x00000EE0
+Index: 0x000000FF
+PTE_IDX: 0x00027003
+PTE_IDX: 0x00027000
+Translated Address: 0x00027EE0
+Address to translate: 0x00002000
+Offset: 0x00000000
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025000
+Address to translate: 0x00002001
+Offset: 0x00000001
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025001
+Address to translate: 0x00002002
+Offset: 0x00000002
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025002
+Address to translate: 0x00002003
+Offset: 0x00000003
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025003
+Address to translate: 0x00002004
+Offset: 0x00000004
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025004
+Address to translate: 0x00002005
+Offset: 0x00000005
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025005
+Address to translate: 0x00002006
+Offset: 0x00000006
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025006
+Address to translate: 0x00002007
+Offset: 0x00000007
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025007
+Address to translate: 0x00002008
+Offset: 0x00000008
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025008
+Address to translate: 0x00002009
+Offset: 0x00000009
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025009
+Address to translate: 0x0000200A
+Offset: 0x0000000A
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500A
+Address to translate: 0x0000200B
+Offset: 0x0000000B
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500B
+Address to translate: 0x0000200C
+Offset: 0x0000000C
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500C
+Address to translate: 0x0000200D
+Offset: 0x0000000D
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500D
+Hello World!
+Address to translate: 0x000FFEE0
+Offset: 0x00000EE0
+Index: 0x000000FF
+PTE_IDX: 0x00027003
+PTE_IDX: 0x00027000
+Translated Address: 0x00027EE0
+Address to translate: 0x00002010
+Offset: 0x00000010
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025010
+Address to translate: 0x00002011
+Offset: 0x00000011
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025011
+Address to translate: 0x00002012
+Offset: 0x00000012
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025012
+Address to translate: 0x00002013
+Offset: 0x00000013
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025013
+Address to translate: 0x00002014
+Offset: 0x00000014
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025014
+Address to translate: 0x00002015
+Offset: 0x00000015
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025015
+Address to translate: 0x00002016
+Offset: 0x00000016
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025016
+Address to translate: 0x00002017
+Offset: 0x00000017
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025017
+Address to translate: 0x00002018
+Offset: 0x00000018
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025018
+Address to translate: 0x00002019
+Offset: 0x00000019
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025019
+Address to translate: 0x0000201A
+Offset: 0x0000001A
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002501A
+Address to translate: 0x0000201B
+Offset: 0x0000001B
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002501B
+Address to translate: 0x0000201C
+Offset: 0x0000001C
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002501C
+Address to translate: 0x0000201D
+Offset: 0x0000001D
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002501D
+Address to translate: 0x0000201E
+Offset: 0x0000001E
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002501E
+Address to translate: 0x0000201F
+Offset: 0x0000001F
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002501F
+Address to translate: 0x00002020
+Offset: 0x00000020
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025020
+Address to translate: 0x00002021
+Offset: 0x00000021
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025021
+Address to translate: 0x00002022
+Offset: 0x00000022
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025022
+Address to translate: 0x00002023
+Offset: 0x00000023
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025023
+Address to translate: 0x00002024
+Offset: 0x00000024
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025024
+Address to translate: 0x00002025
+Offset: 0x00000025
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025025
+Address to translate: 0x00002026
+Offset: 0x00000026
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025026
+Address to translate: 0x00002027
+Offset: 0x00000027
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025027
+Address to translate: 0x00002028
+Offset: 0x00000028
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025028
+Address to translate: 0x00002029
+Offset: 0x00000029
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025029
+Address to translate: 0x0000202A
+Offset: 0x0000002A
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002502A
+Address to translate: 0x0000202B
+Offset: 0x0000002B
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002502B
+Address to translate: 0x0000202C
+Offset: 0x0000002C
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002502C
+Address to translate: 0x0000202D
+Offset: 0x0000002D
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002502D
+Address to translate: 0x0000202E
+Offset: 0x0000002E
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002502E
+Address to translate: 0x0000202F
+Offset: 0x0000002F
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002502F
+Address to translate: 0x00002030
+Offset: 0x00000030
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025030
+Address to translate: 0x00002031
+Offset: 0x00000031
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025031
+Address to translate: 0x00002032
+Offset: 0x00000032
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025032
+Address to translate: 0x00002033
+Offset: 0x00000033
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025033
+Address to translate: 0x000FFEE4
+Offset: 0x00000EE4
+Index: 0x000000FF
+PTE_IDX: 0x00027003
+PTE_IDX: 0x00027000
+Translated Address: 0x00027EE4
+PID obtained from User Program: 31
+Address to translate: 0x000FFEE0
+Offset: 0x00000EE0
+Index: 0x000000FF
+PTE_IDX: 0x00027003
+PTE_IDX: 0x00027000
+Translated Address: 0x00027EE0
+Address to translate: 0x00002000
+Offset: 0x00000000
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025000
+Address to translate: 0x00002001
+Offset: 0x00000001
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025001
+Address to translate: 0x00002002
+Offset: 0x00000002
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025002
+Address to translate: 0x00002003
+Offset: 0x00000003
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025003
+Address to translate: 0x00002004
+Offset: 0x00000004
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025004
+Address to translate: 0x00002005
+Offset: 0x00000005
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025005
+Address to translate: 0x00002006
+Offset: 0x00000006
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025006
+Address to translate: 0x00002007
+Offset: 0x00000007
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025007
+Address to translate: 0x00002008
+Offset: 0x00000008
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025008
+Address to translate: 0x00002009
+Offset: 0x00000009
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025009
+Address to translate: 0x0000200A
+Offset: 0x0000000A
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500A
+Address to translate: 0x0000200B
+Offset: 0x0000000B
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500B
+Address to translate: 0x0000200C
+Offset: 0x0000000C
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500C
+Address to translate: 0x0000200D
+Offset: 0x0000000D
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500D
+Hello World!
+Address to translate: 0x000FFEE0
+Offset: 0x00000EE0
+Index: 0x000000FF
+PTE_IDX: 0x00027003
+PTE_IDX: 0x00027000
+Translated Address: 0x00027EE0
+Address to translate: 0x00002000
+Offset: 0x00000000
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025000
+Address to translate: 0x00002001
+Offset: 0x00000001
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025001
+Address to translate: 0x00002002
+Offset: 0x00000002
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025002
+Address to translate: 0x00002003
+Offset: 0x00000003
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025003
+Address to translate: 0x00002004
+Offset: 0x00000004
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025004
+Address to translate: 0x00002005
+Offset: 0x00000005
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025005
+Address to translate: 0x00002006
+Offset: 0x00000006
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025006
+Address to translate: 0x00002007
+Offset: 0x00000007
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025007
+Address to translate: 0x00002008
+Offset: 0x00000008
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025008
+Address to translate: 0x00002009
+Offset: 0x00000009
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025009
+Address to translate: 0x0000200A
+Offset: 0x0000000A
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500A
+Address to translate: 0x0000200B
+Offset: 0x0000000B
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500B
+Address to translate: 0x0000200C
+Offset: 0x0000000C
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500C
+Address to translate: 0x0000200D
+Offset: 0x0000000D
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500D
+Hello World!
+Address to translate: 0x000FFEE0
+Offset: 0x00000EE0
+Index: 0x000000FF
+PTE_IDX: 0x00027003
+PTE_IDX: 0x00027000
+Translated Address: 0x00027EE0
+Address to translate: 0x00002000
+Offset: 0x00000000
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025000
+Address to translate: 0x00002001
+Offset: 0x00000001
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025001
+Address to translate: 0x00002002
+Offset: 0x00000002
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025002
+Address to translate: 0x00002003
+Offset: 0x00000003
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025003
+Address to translate: 0x00002004
+Offset: 0x00000004
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025004
+Address to translate: 0x00002005
+Offset: 0x00000005
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025005
+Address to translate: 0x00002006
+Offset: 0x00000006
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025006
+Address to translate: 0x00002007
+Offset: 0x00000007
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025007
+Address to translate: 0x00002008
+Offset: 0x00000008
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025008
+Address to translate: 0x00002009
+Offset: 0x00000009
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025009
+Address to translate: 0x0000200A
+Offset: 0x0000000A
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500A
+Address to translate: 0x0000200B
+Offset: 0x0000000B
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500B
+Address to translate: 0x0000200C
+Offset: 0x0000000C
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500C
+Address to translate: 0x0000200D
+Offset: 0x0000000D
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500D
+Hello World!
+Address to translate: 0x000FFEE0
+Offset: 0x00000EE0
+Index: 0x000000FF
+PTE_IDX: 0x00027003
+PTE_IDX: 0x00027000
+Translated Address: 0x00027EE0
+Address to translate: 0x00002000
+Offset: 0x00000000
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025000
+Address to translate: 0x00002001
+Offset: 0x00000001
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025001
+Address to translate: 0x00002002
+Offset: 0x00000002
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025002
+Address to translate: 0x00002003
+Offset: 0x00000003
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025003
+Address to translate: 0x00002004
+Offset: 0x00000004
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025004
+Address to translate: 0x00002005
+Offset: 0x00000005
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025005
+Address to translate: 0x00002006
+Offset: 0x00000006
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025006
+Address to translate: 0x00002007
+Offset: 0x00000007
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025007
+Address to translate: 0x00002008
+Offset: 0x00000008
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025008
+Address to translate: 0x00002009
+Offset: 0x00000009
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025009
+Address to translate: 0x0000200A
+Offset: 0x0000000A
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500A
+Address to translate: 0x0000200B
+Offset: 0x0000000B
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500B
+Address to translate: 0x0000200C
+Offset: 0x0000000C
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500C
+Address to translate: 0x0000200D
+Offset: 0x0000000D
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500D
+Hello World!
+Address to translate: 0x000FFEE0
+Offset: 0x00000EE0
+Index: 0x000000FF
+PTE_IDX: 0x00027003
+PTE_IDX: 0x00027000
+Translated Address: 0x00027EE0
+Address to translate: 0x00002000
+Offset: 0x00000000
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025000
+Address to translate: 0x00002001
+Offset: 0x00000001
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025001
+Address to translate: 0x00002002
+Offset: 0x00000002
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025002
+Address to translate: 0x00002003
+Offset: 0x00000003
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025003
+Address to translate: 0x00002004
+Offset: 0x00000004
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025004
+Address to translate: 0x00002005
+Offset: 0x00000005
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025005
+Address to translate: 0x00002006
+Offset: 0x00000006
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025006
+Address to translate: 0x00002007
+Offset: 0x00000007
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025007
+Address to translate: 0x00002008
+Offset: 0x00000008
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025008
+Address to translate: 0x00002009
+Offset: 0x00000009
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025009
+Address to translate: 0x0000200A
+Offset: 0x0000000A
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500A
+Address to translate: 0x0000200B
+Offset: 0x0000000B
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500B
+Address to translate: 0x0000200C
+Offset: 0x0000000C
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500C
+Address to translate: 0x0000200D
+Offset: 0x0000000D
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500D
+Hello World!
+Address to translate: 0x000FFEE0
+Offset: 0x00000EE0
+Index: 0x000000FF
+PTE_IDX: 0x00027003
+PTE_IDX: 0x00027000
+Translated Address: 0x00027EE0
+Address to translate: 0x00002000
+Offset: 0x00000000
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025000
+Address to translate: 0x00002001
+Offset: 0x00000001
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025001
+Address to translate: 0x00002002
+Offset: 0x00000002
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025002
+Address to translate: 0x00002003
+Offset: 0x00000003
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025003
+Address to translate: 0x00002004
+Offset: 0x00000004
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025004
+Address to translate: 0x00002005
+Offset: 0x00000005
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025005
+Address to translate: 0x00002006
+Offset: 0x00000006
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025006
+Address to translate: 0x00002007
+Offset: 0x00000007
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025007
+Address to translate: 0x00002008
+Offset: 0x00000008
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025008
+Address to translate: 0x00002009
+Offset: 0x00000009
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025009
+Address to translate: 0x0000200A
+Offset: 0x0000000A
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500A
+Address to translate: 0x0000200B
+Offset: 0x0000000B
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500B
+Address to translate: 0x0000200C
+Offset: 0x0000000C
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500C
+Address to translate: 0x0000200D
+Offset: 0x0000000D
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500D
+Hello World!
+Address to translate: 0x000FFEE0
+Offset: 0x00000EE0
+Index: 0x000000FF
+PTE_IDX: 0x00027003
+PTE_IDX: 0x00027000
+Translated Address: 0x00027EE0
+Address to translate: 0x00002000
+Offset: 0x00000000
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025000
+Address to translate: 0x00002001
+Offset: 0x00000001
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025001
+Address to translate: 0x00002002
+Offset: 0x00000002
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025002
+Address to translate: 0x00002003
+Offset: 0x00000003
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025003
+Address to translate: 0x00002004
+Offset: 0x00000004
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025004
+Address to translate: 0x00002005
+Offset: 0x00000005
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025005
+Address to translate: 0x00002006
+Offset: 0x00000006
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025006
+Address to translate: 0x00002007
+Offset: 0x00000007
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025007
+Address to translate: 0x00002008
+Offset: 0x00000008
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025008
+Address to translate: 0x00002009
+Offset: 0x00000009
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x00025009
+Address to translate: 0x0000200A
+Offset: 0x0000000A
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500A
+Address to translate: 0x0000200B
+Offset: 0x0000000B
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500B
+Address to translate: 0x0000200C
+Offset: 0x0000000C
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500C
+Address to translate: 0x0000200D
+Offset: 0x0000000D
+Index: 0x00000002
+PTE_IDX: 0x00025001
+PTE_IDX: 0x00025000
+Translated Address: 0x0002500D
+Hello World!
+Entering ProcessDestroy for 0x1ec74.
+Leaving ProcessDestroy for 0x1ec74.
+No runnable processes - exiting!
+Exiting at program request.
+Instructions executed: 3124037
+Time simulated: 3.124 secs
+Real time elapsed: 0.299 secs
+Execution rate: 10.46M simulated instructions per real second.
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Josh/lab2/apps/example'

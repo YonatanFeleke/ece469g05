@@ -1,0 +1,12 @@
+//
+//	shared_memory.h
+//
+//	Definitions for functions that will link or unlink segments
+//	in memory to be shared among different processes
+//
+
+
+int shmget(int shmsize);						//	TRAP_SHARE_CREATE_PAGE
+void *shmat(int shmid, int vaddr);	//TRAP_SHARE_MAP_PAGE
+int shmdt(void * shmaddr);					//TRAP_SHARE_UNMAP_PAGE
+int shmrm(int shmid);								//TRAP_SHARE_UNMAP_PAGE

@@ -1,0 +1,303 @@
+rm -rf work ../bin/os.dlx.obj ../lib/usertraps.aso ../lib/misc.o Makefile.depend ../bin/vm
+gcc-dlx -I../include -I../include/os -MM filesys.c memory.c misc.c process.c queue.c traps.c sysproc.c clock.c disk.c dfs.c ostests.c files.c osend.s trap_random.s dlxos.s | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+mkdir -p work
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/filesys.o filesys.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/memory.o memory.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/misc.o misc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/process.o process.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/queue.o queue.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/traps.o traps.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/sysproc.o sysproc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/clock.o clock.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/disk.o disk.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/dfs.o dfs.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/ostests.o ostests.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/files.o files.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/osend.aso osend.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/trap_random.aso trap_random.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/dlxos.aso dlxos.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -o work/os.dlx work/filesys.o work/memory.o work/misc.o work/process.o work/queue.o work/traps.o work/sysproc.o work/clock.o work/disk.o work/dfs.o work/ostests.o work/files.o work/osend.aso work/trap_random.aso work/dlxos.aso ../lib/synch.o
+dlxasm -i _osinit -l work/os.lst work/os.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x17da0
+Last data address: 0x2c694
+cp work/os.dlx.obj ../bin/os.dlx.obj
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/usertraps.aso usertraps.s
+cp work/usertraps.aso ../lib/usertraps.aso
+cp work/misc.o ../lib/misc.o
+rm work/usertraps.aso
+cd fdisk; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab3/working/Josh/flat/apps/fdisk/fdisk'
+rm -rf work ../../../bin/fdisk.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab3/working/Josh/flat/apps/fdisk/fdisk'
+cd fdisk; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab3/working/Josh/flat/apps/fdisk/fdisk'
+gcc-dlx -I../include -I../../../include -MM fdisk.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab3/working/Josh/flat/apps/fdisk/fdisk'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab3/working/Josh/flat/apps/fdisk/fdisk'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/fdisk.o fdisk.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/fdisk.dlx work/fdisk.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/fdisk.lst work/fdisk.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x2598
+Last data address: 0xc1a8
+cp work/fdisk.dlx.obj ../../../bin/fdisk.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab3/working/Josh/flat/apps/fdisk/fdisk'
+cd ../../os; make; cd ../bin; dlxsim -x os.dlx.obj -a -D F -u fdisk.dlx.obj; ee469_fixterminal
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab3/working/Josh/flat/os'
+make[1]: Nothing to be done for `default'.
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab3/working/Josh/flat/os'
+Stack=0x1fffc4, pc starting at 0x14258
+Got 4 arguments.
+Available memory: 0x2b194 -> 0x200000.
+Argument count is 4.
+Argument 0 is -D.
+Argument 1 is F.
+Argument 2 is -u.
+Argument 3 is fdisk.dlx.obj.
+DfsOpenFileSystem -- FS_Valid: 1
+DfsOpenFileSystem -- FS_BlockSize: 1024
+DfsOpenFileSystem -- FS_BlockCount: 32768
+DfsOpenFileSystem -- FS_InodeBlock: 1
+DfsOpenFileSystem -- FS_InodeCount: 512
+DfsOpenFileSystem -- FS_FBVBlock: 33
+DfsOpenFileSystem -- 1 file system block used for MBR/Superblock
+DfsOpenFileSystem -- 32 file system blocks used for inodes
+DfsOpenFileSystem -- 4 file system blocks used for free block vector
+DfsOpenFileSystem -- inode read, Iteration #0
+DfsReadBlock : Reading file system block #1 -- physical block #2
+DfsReadBlock : Reading file system block #1 -- physical block #3
+DfsOpenFileSystem -- inode read, Iteration #1
+DfsReadBlock : Reading file system block #2 -- physical block #4
+DfsReadBlock : Reading file system block #2 -- physical block #5
+DfsOpenFileSystem -- inode read, Iteration #2
+DfsReadBlock : Reading file system block #3 -- physical block #6
+DfsReadBlock : Reading file system block #3 -- physical block #7
+DfsOpenFileSystem -- inode read, Iteration #3
+DfsReadBlock : Reading file system block #4 -- physical block #8
+DfsReadBlock : Reading file system block #4 -- physical block #9
+DfsOpenFileSystem -- inode read, Iteration #4
+DfsReadBlock : Reading file system block #5 -- physical block #10
+DfsReadBlock : Reading file system block #5 -- physical block #11
+DfsOpenFileSystem -- inode read, Iteration #5
+DfsReadBlock : Reading file system block #6 -- physical block #12
+DfsReadBlock : Reading file system block #6 -- physical block #13
+DfsOpenFileSystem -- inode read, Iteration #6
+DfsReadBlock : Reading file system block #7 -- physical block #14
+DfsReadBlock : Reading file system block #7 -- physical block #15
+DfsOpenFileSystem -- inode read, Iteration #7
+DfsReadBlock : Reading file system block #8 -- physical block #16
+DfsReadBlock : Reading file system block #8 -- physical block #17
+DfsOpenFileSystem -- inode read, Iteration #8
+DfsReadBlock : Reading file system block #9 -- physical block #18
+DfsReadBlock : Reading file system block #9 -- physical block #19
+DfsOpenFileSystem -- inode read, Iteration #9
+DfsReadBlock : Reading file system block #10 -- physical block #20
+DfsReadBlock : Reading file system block #10 -- physical block #21
+DfsOpenFileSystem -- inode read, Iteration #10
+DfsReadBlock : Reading file system block #11 -- physical block #22
+DfsReadBlock : Reading file system block #11 -- physical block #23
+DfsOpenFileSystem -- inode read, Iteration #11
+DfsReadBlock : Reading file system block #12 -- physical block #24
+DfsReadBlock : Reading file system block #12 -- physical block #25
+DfsOpenFileSystem -- inode read, Iteration #12
+DfsReadBlock : Reading file system block #13 -- physical block #26
+DfsReadBlock : Reading file system block #13 -- physical block #27
+DfsOpenFileSystem -- inode read, Iteration #13
+DfsReadBlock : Reading file system block #14 -- physical block #28
+DfsReadBlock : Reading file system block #14 -- physical block #29
+DfsOpenFileSystem -- inode read, Iteration #14
+DfsReadBlock : Reading file system block #15 -- physical block #30
+DfsReadBlock : Reading file system block #15 -- physical block #31
+DfsOpenFileSystem -- inode read, Iteration #15
+DfsReadBlock : Reading file system block #16 -- physical block #32
+DfsReadBlock : Reading file system block #16 -- physical block #33
+DfsOpenFileSystem -- inode read, Iteration #16
+DfsReadBlock : Reading file system block #17 -- physical block #34
+DfsReadBlock : Reading file system block #17 -- physical block #35
+DfsOpenFileSystem -- inode read, Iteration #17
+DfsReadBlock : Reading file system block #18 -- physical block #36
+DfsReadBlock : Reading file system block #18 -- physical block #37
+DfsOpenFileSystem -- inode read, Iteration #18
+DfsReadBlock : Reading file system block #19 -- physical block #38
+DfsReadBlock : Reading file system block #19 -- physical block #39
+DfsOpenFileSystem -- inode read, Iteration #19
+DfsReadBlock : Reading file system block #20 -- physical block #40
+DfsReadBlock : Reading file system block #20 -- physical block #41
+DfsOpenFileSystem -- inode read, Iteration #20
+DfsReadBlock : Reading file system block #21 -- physical block #42
+DfsReadBlock : Reading file system block #21 -- physical block #43
+DfsOpenFileSystem -- inode read, Iteration #21
+DfsReadBlock : Reading file system block #22 -- physical block #44
+DfsReadBlock : Reading file system block #22 -- physical block #45
+DfsOpenFileSystem -- inode read, Iteration #22
+DfsReadBlock : Reading file system block #23 -- physical block #46
+DfsReadBlock : Reading file system block #23 -- physical block #47
+DfsOpenFileSystem -- inode read, Iteration #23
+DfsReadBlock : Reading file system block #24 -- physical block #48
+DfsReadBlock : Reading file system block #24 -- physical block #49
+DfsOpenFileSystem -- inode read, Iteration #24
+DfsReadBlock : Reading file system block #25 -- physical block #50
+DfsReadBlock : Reading file system block #25 -- physical block #51
+DfsOpenFileSystem -- inode read, Iteration #25
+DfsReadBlock : Reading file system block #26 -- physical block #52
+DfsReadBlock : Reading file system block #26 -- physical block #53
+DfsOpenFileSystem -- inode read, Iteration #26
+DfsReadBlock : Reading file system block #27 -- physical block #54
+DfsReadBlock : Reading file system block #27 -- physical block #55
+DfsOpenFileSystem -- inode read, Iteration #27
+DfsReadBlock : Reading file system block #28 -- physical block #56
+DfsReadBlock : Reading file system block #28 -- physical block #57
+DfsOpenFileSystem -- inode read, Iteration #28
+DfsReadBlock : Reading file system block #29 -- physical block #58
+DfsReadBlock : Reading file system block #29 -- physical block #59
+DfsOpenFileSystem -- inode read, Iteration #29
+DfsReadBlock : Reading file system block #30 -- physical block #60
+DfsReadBlock : Reading file system block #30 -- physical block #61
+DfsOpenFileSystem -- inode read, Iteration #30
+DfsReadBlock : Reading file system block #31 -- physical block #62
+DfsReadBlock : Reading file system block #31 -- physical block #63
+DfsOpenFileSystem -- inode read, Iteration #31
+DfsReadBlock : Reading file system block #32 -- physical block #64
+DfsReadBlock : Reading file system block #32 -- physical block #65
+DfsOpenFileSystem -- FBV read, Iteration #0
+DfsReadBlock : Reading file system block #33 -- physical block #66
+DfsReadBlock : Reading file system block #33 -- physical block #67
+DfsOpenFileSystem -- FBV read, Iteration #1
+DfsReadBlock : Reading file system block #34 -- physical block #68
+DfsReadBlock : Reading file system block #34 -- physical block #69
+DfsOpenFileSystem -- FBV read, Iteration #2
+DfsReadBlock : Reading file system block #35 -- physical block #70
+DfsReadBlock : Reading file system block #35 -- physical block #71
+DfsOpenFileSystem -- FBV read, Iteration #3
+DfsReadBlock : Reading file system block #36 -- physical block #72
+DfsReadBlock : Reading file system block #36 -- physical block #73
+DfsAllocateBlock -- FBV Index #1 has free file system block, contents: 0x0000037F
+DfsAllocateBlock -- file system block #39 allocated!
+DfsAllocateBlock -- FBV Index #1 after file system block allocation: 0x000003FF
+DfsAllocateBlock -- FBV Index #1 has free file system block, contents: 0x000003FF
+DfsAllocateBlock -- file system block #42 allocated!
+DfsAllocateBlock -- FBV Index #1 after file system block allocation: 0x000007FF
+DfsFreeBlock -- file system block #39 freed!
+DfsFreeBlock -- FBV Index #1 after file system block freed: 0x0000077F
+DfsFreeBlock -- file system block #42 freed!
+DfsFreeBlock -- FBV Index #1 after file system block freed: 0x0000037F
+ProcessFork: closing filesystem and exiting simulator
+Inode writeback, Iteration #0
+DfsWriteBlock : writing to file system block #1 -- physical block #2
+DfsWriteBlock : writing to file system block #1 -- physical block #3
+Inode writeback, Iteration #1
+DfsWriteBlock : writing to file system block #2 -- physical block #4
+DfsWriteBlock : writing to file system block #2 -- physical block #5
+Inode writeback, Iteration #2
+DfsWriteBlock : writing to file system block #3 -- physical block #6
+DfsWriteBlock : writing to file system block #3 -- physical block #7
+Inode writeback, Iteration #3
+DfsWriteBlock : writing to file system block #4 -- physical block #8
+DfsWriteBlock : writing to file system block #4 -- physical block #9
+Inode writeback, Iteration #4
+DfsWriteBlock : writing to file system block #5 -- physical block #10
+DfsWriteBlock : writing to file system block #5 -- physical block #11
+Inode writeback, Iteration #5
+DfsWriteBlock : writing to file system block #6 -- physical block #12
+DfsWriteBlock : writing to file system block #6 -- physical block #13
+Inode writeback, Iteration #6
+DfsWriteBlock : writing to file system block #7 -- physical block #14
+DfsWriteBlock : writing to file system block #7 -- physical block #15
+Inode writeback, Iteration #7
+DfsWriteBlock : writing to file system block #8 -- physical block #16
+DfsWriteBlock : writing to file system block #8 -- physical block #17
+Inode writeback, Iteration #8
+DfsWriteBlock : writing to file system block #9 -- physical block #18
+DfsWriteBlock : writing to file system block #9 -- physical block #19
+Inode writeback, Iteration #9
+DfsWriteBlock : writing to file system block #10 -- physical block #20
+DfsWriteBlock : writing to file system block #10 -- physical block #21
+Inode writeback, Iteration #10
+DfsWriteBlock : writing to file system block #11 -- physical block #22
+DfsWriteBlock : writing to file system block #11 -- physical block #23
+Inode writeback, Iteration #11
+DfsWriteBlock : writing to file system block #12 -- physical block #24
+DfsWriteBlock : writing to file system block #12 -- physical block #25
+Inode writeback, Iteration #12
+DfsWriteBlock : writing to file system block #13 -- physical block #26
+DfsWriteBlock : writing to file system block #13 -- physical block #27
+Inode writeback, Iteration #13
+DfsWriteBlock : writing to file system block #14 -- physical block #28
+DfsWriteBlock : writing to file system block #14 -- physical block #29
+Inode writeback, Iteration #14
+DfsWriteBlock : writing to file system block #15 -- physical block #30
+DfsWriteBlock : writing to file system block #15 -- physical block #31
+Inode writeback, Iteration #15
+DfsWriteBlock : writing to file system block #16 -- physical block #32
+DfsWriteBlock : writing to file system block #16 -- physical block #33
+Inode writeback, Iteration #16
+DfsWriteBlock : writing to file system block #17 -- physical block #34
+DfsWriteBlock : writing to file system block #17 -- physical block #35
+Inode writeback, Iteration #17
+DfsWriteBlock : writing to file system block #18 -- physical block #36
+DfsWriteBlock : writing to file system block #18 -- physical block #37
+Inode writeback, Iteration #18
+DfsWriteBlock : writing to file system block #19 -- physical block #38
+DfsWriteBlock : writing to file system block #19 -- physical block #39
+Inode writeback, Iteration #19
+DfsWriteBlock : writing to file system block #20 -- physical block #40
+DfsWriteBlock : writing to file system block #20 -- physical block #41
+Inode writeback, Iteration #20
+DfsWriteBlock : writing to file system block #21 -- physical block #42
+DfsWriteBlock : writing to file system block #21 -- physical block #43
+Inode writeback, Iteration #21
+DfsWriteBlock : writing to file system block #22 -- physical block #44
+DfsWriteBlock : writing to file system block #22 -- physical block #45
+Inode writeback, Iteration #22
+DfsWriteBlock : writing to file system block #23 -- physical block #46
+DfsWriteBlock : writing to file system block #23 -- physical block #47
+Inode writeback, Iteration #23
+DfsWriteBlock : writing to file system block #24 -- physical block #48
+DfsWriteBlock : writing to file system block #24 -- physical block #49
+Inode writeback, Iteration #24
+DfsWriteBlock : writing to file system block #25 -- physical block #50
+DfsWriteBlock : writing to file system block #25 -- physical block #51
+Inode writeback, Iteration #25
+DfsWriteBlock : writing to file system block #26 -- physical block #52
+DfsWriteBlock : writing to file system block #26 -- physical block #53
+Inode writeback, Iteration #26
+DfsWriteBlock : writing to file system block #27 -- physical block #54
+DfsWriteBlock : writing to file system block #27 -- physical block #55
+Inode writeback, Iteration #27
+DfsWriteBlock : writing to file system block #28 -- physical block #56
+DfsWriteBlock : writing to file system block #28 -- physical block #57
+Inode writeback, Iteration #28
+DfsWriteBlock : writing to file system block #29 -- physical block #58
+DfsWriteBlock : writing to file system block #29 -- physical block #59
+Inode writeback, Iteration #29
+DfsWriteBlock : writing to file system block #30 -- physical block #60
+DfsWriteBlock : writing to file system block #30 -- physical block #61
+Inode writeback, Iteration #30
+DfsWriteBlock : writing to file system block #31 -- physical block #62
+DfsWriteBlock : writing to file system block #31 -- physical block #63
+Inode writeback, Iteration #31
+DfsWriteBlock : writing to file system block #32 -- physical block #64
+DfsWriteBlock : writing to file system block #32 -- physical block #65
+DfsCloseFileSystem -- FBV writeback, Iteration #0
+DfsWriteBlock : writing to file system block #33 -- physical block #66
+DfsWriteBlock : writing to file system block #33 -- physical block #67
+DfsCloseFileSystem -- FBV writeback, Iteration #1
+DfsWriteBlock : writing to file system block #34 -- physical block #68
+DfsWriteBlock : writing to file system block #34 -- physical block #69
+DfsCloseFileSystem -- FBV writeback, Iteration #2
+DfsWriteBlock : writing to file system block #35 -- physical block #70
+DfsWriteBlock : writing to file system block #35 -- physical block #71
+DfsCloseFileSystem -- FBV writeback, Iteration #3
+DfsWriteBlock : writing to file system block #36 -- physical block #72
+DfsWriteBlock : writing to file system block #36 -- physical block #73
+Exiting at program request.
+Instructions executed: 2984796
+Time simulated: 2.985 secs
+Real time elapsed: 0.250 secs
+Execution rate: 11.93M simulated instructions per real second.

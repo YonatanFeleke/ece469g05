@@ -1,0 +1,65 @@
+#include "usertraps.h"
+#include "misc.h"
+
+int main (int x)
+{
+	int handle0,handle1,handle2;
+	void *vaddr0,*vaddr1,*vaddr2;
+	
+  // TEST #1: TEST Shared Memory Handle Generation
+  //////////////////////////////////////////////////////////////////////
+  Printf("\n-------------------------------------------------------------------------------------\n");
+  Printf("SharedMem_test (%d): TEST #1a: shmget(4k)\n", getpid());
+	handle0 = shmget(0x1000);
+	Printf("Shget(0x1000) returned: %d\n",handle0);
+  //////////////////////////////////////////////////////////////////////
+  Printf("SharedMem_test (%d): TEST #1b: shmget(4k)\n", getpid());
+	handle1 = shmget(0x1000);
+	Printf("Shget(0x1000) returned: %d\n",handle1);
+  //////////////////////////////////////////////////////////////////////
+  Printf("SharedMem_test (%d): TEST #1c: shmget(8k)\n", getpid());
+	handle2 = shmget(0x2000);
+	Printf("Shget(0x200) returned: %d____SHOULD FAIL\n",handle2);
+	//////////////////////////////////////////////////////////////////////
+  Printf("SharedMem_test (%d): TEST #1d: shmget(4k)\n", getpid());
+	handle2 = shmget(0x1000);
+	Printf("Shget(0x1000) returned: %d\n",handle2);
+  Printf("__________________________________________________\n");
+
+
+  // TEST #2: TEST Shared Memory Virtual Address Generation
+  //////////////////////////////////////////////////////////////////////
+  Printf("\n-------------------------------------------------------------------------------------\n");
+  Printf("SharedMem_test (%d): TEST #2a: shmat(handle0,0x1000)\n", getpid(),handle0);
+	vaddr0 = shmat(handle0,0x1000);
+	Printf("shmat(%d,0x1000) returned: %d\n",handle0,vaddr0);
+  //////////////////////////////////////////////////////////////////////
+  Printf("SharedMem_test (%d): TEST #2b: shmat(%d,0x1000)\n",getpid(),handle1);
+	handle1 = shmget(0x1000);
+	Printf("shmat(%d,0x1000) returned: %d\n",handle1,vaddr1);
+  //////////////////////////////////////////////////////////////////////
+  Printf("SharedMem_test (%d): TEST #2c: shmat(%d,0x1000)\n", getpid());
+	handle2 = shmget(0x1000);
+	Printf("shmat(%d,0x1000) returned: %d\n",handle2,vaddr2);
+  Printf("__________________________________________________\n");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	return(0);
+}

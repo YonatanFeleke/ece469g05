@@ -1,0 +1,7 @@
+cd os
+make clean
+make
+cd ../apps/example/
+make clean
+make
+make run

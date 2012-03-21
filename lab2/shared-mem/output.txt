@@ -1,0 +1,3810 @@
+rm -rf work ../bin/os.dlx.obj ../lib/usertraps.aso ../lib/misc.o Makefile.depend ../bin/vm
+gcc-dlx -I../include -I../include/os -MM filesys.c memory.c misc.c process.c queue.c synch.c traps.c sysproc.c clock.c shared_memory.c osend.s trap_random.s dlxos.s | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+mkdir -p work
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/filesys.o filesys.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/memory.o memory.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/misc.o misc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/process.o process.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/queue.o queue.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/synch.o synch.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/traps.o traps.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/sysproc.o sysproc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/clock.o clock.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/shared_memory.o shared_memory.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/osend.aso osend.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/trap_random.aso trap_random.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/dlxos.aso dlxos.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -o work/os.dlx work/filesys.o work/memory.o work/misc.o work/process.o work/queue.o work/synch.o work/traps.o work/sysproc.o work/clock.o work/shared_memory.o work/osend.aso work/trap_random.aso work/dlxos.aso 
+dlxasm -i _osinit -l work/os.lst work/os.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x140b0
+Last data address: 0x26430
+cp work/os.dlx.obj ../bin/os.dlx.obj
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/usertraps.aso usertraps.s
+cp work/usertraps.aso ../lib/usertraps.aso
+cp work/misc.o ../lib/misc.o
+rm work/usertraps.aso
+cd shared_test; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/shared-mem/apps/example/shared_test'
+rm -rf work ../../../bin/shared_test.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/shared-mem/apps/example/shared_test'
+cd shared_test; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/shared-mem/apps/example/shared_test'
+gcc-dlx -I../include -I../../../include -MM shared_test.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/shared-mem/apps/example/shared_test'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/shared-mem/apps/example/shared_test'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/shared_test.o shared_test.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/shared_test.dlx work/shared_test.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/shared_test.lst work/shared_test.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x2050
+Last data address: 0x3148
+cp work/shared_test.dlx.obj ../../../bin/shared_test.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/shared-mem/apps/example/shared_test'
+cd ../../bin; dlxsim -x os.dlx.obj -a -D SMimpf -u shared_test.dlx.obj; ee469_fixterminal
+Stack=0x1fffbc, pc starting at 0x13d18
+Got 4 arguments.
+Available memory: 0x26434 -> 0x200000.
+Argument count is 4.
+Argument 0 is -D.
+Argument 1 is SMimpf.
+Argument 2 is -u.
+Argument 3 is shared_test.dlx.obj.
+About to initialize queues.
+After initializing queues.
+PmemSize: 2097152
+Number of physical pages in memory: 512
+Last address of OS: 156724
+Number of pages used by OS: 39
+Number of free pages left in physical memory: 473
+Freemap Int #0 value: 0x00000000
+Freemap Int #1 value: 0xFFFFFF80
+Freemap Int #2 value: 0xFFFFFFFF
+Freemap Int #3 value: 0xFFFFFFFF
+Freemap Int #4 value: 0xFFFFFFFF
+Freemap Int #5 value: 0xFFFFFFFF
+Freemap Int #6 value: 0xFFFFFFFF
+Freemap Int #7 value: 0xFFFFFFFF
+Freemap Int #8 value: 0xFFFFFFFF
+Freemap Int #9 value: 0xFFFFFFFF
+Freemap Int #10 value: 0xFFFFFFFF
+Freemap Int #11 value: 0xFFFFFFFF
+Freemap Int #12 value: 0xFFFFFFFF
+Freemap Int #13 value: 0xFFFFFFFF
+Freemap Int #14 value: 0xFFFFFFFF
+Freemap Int #15 value: 0xFFFFFFFF
+After initializing memory.
+Entering ProcessModuleInit
+Initializing PCB 0 @ 0x190e4.
+Initializing PCB 1 @ 0x1954c.
+Initializing PCB 2 @ 0x199b4.
+Initializing PCB 3 @ 0x19e1c.
+Initializing PCB 4 @ 0x1a284.
+Initializing PCB 5 @ 0x1a6ec.
+Initializing PCB 6 @ 0x1ab54.
+Initializing PCB 7 @ 0x1afbc.
+Initializing PCB 8 @ 0x1b424.
+Initializing PCB 9 @ 0x1b88c.
+Initializing PCB 10 @ 0x1bcf4.
+Initializing PCB 11 @ 0x1c15c.
+Initializing PCB 12 @ 0x1c5c4.
+Initializing PCB 13 @ 0x1ca2c.
+Initializing PCB 14 @ 0x1ce94.
+Initializing PCB 15 @ 0x1d2fc.
+Initializing PCB 16 @ 0x1d764.
+Initializing PCB 17 @ 0x1dbcc.
+Initializing PCB 18 @ 0x1e034.
+Initializing PCB 19 @ 0x1e49c.
+Initializing PCB 20 @ 0x1e904.
+Initializing PCB 21 @ 0x1ed6c.
+Initializing PCB 22 @ 0x1f1d4.
+Initializing PCB 23 @ 0x1f63c.
+Initializing PCB 24 @ 0x1faa4.
+Initializing PCB 25 @ 0x1ff0c.
+Initializing PCB 26 @ 0x20374.
+Initializing PCB 27 @ 0x207dc.
+Initializing PCB 28 @ 0x20c44.
+Initializing PCB 29 @ 0x210ac.
+Initializing PCB 30 @ 0x21514.
+Initializing PCB 31 @ 0x2197c.
+Leaving ProcessModuleInit
+After initializing processes.
+SynchModuleInit: Entering SynchModuleInit
+SynchModuleInit: Leaving SynchModuleInit
+After initializing synchronization tools.
+After initializing keyboard.
+After initializing clock.
+Attepmting to open vm mode=2.
+File vm opening in file system 0.
+Attempting to open file vm into desc 0, mode 2.
+Opened vm in FS 0, mode=2 slot=0.
+VM Descriptor is 0
+ProcessFork-Entering ProcessFork args=0x0 0x1ffe1c shared_test.dlx.obj 1
+ProcessFork-Got a link @ 0x22144
+Freemap Index #1 has free pages, contents: 0xFFFFFF80
+Physical Page #39 allocated!
+Freemap Index #1 after page allocated: 0xFFFFFF00
+ProcessFork-Allocating physical page #39 (Address 0x00027000) for process virtual page #0 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFF00
+Physical Page #40 allocated!
+Freemap Index #1 after page allocated: 0xFFFFFE00
+ProcessFork-Allocating physical page #40 (Address 0x00028000) for process virtual page #1 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFE00
+Physical Page #41 allocated!
+Freemap Index #1 after page allocated: 0xFFFFFC00
+ProcessFork-Allocating physical page #41 (Address 0x00029000) for process virtual page #2 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFC00
+Physical Page #42 allocated!
+Freemap Index #1 after page allocated: 0xFFFFF800
+ProcessFork-Allocating physical page #42 (Address 0x0002A000) for process virtual page #3 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFF800
+Physical Page #43 allocated!
+Freemap Index #1 after page allocated: 0xFFFFF000
+ProcessFork-Allocating physical page #43 (Address 0x0002B000) for process virtual page #255 (user stack)
+
+Freemap Index #1 has free pages, contents: 0xFFFFF000
+Physical Page #44 allocated!
+Freemap Index #1 after page allocated: 0xFFFFE000
+ProcessFork-Allocating physical page #44 (Address 0x0002C000) for process system stack
+
+ProcessFork-Initializing system stack pointer to 0x0002CFFC
+
+ProcessFork-ProcessFork: stackframe = 0x2cea8
+ProcessFork-PTBASE: 0x000219DC
+
+ProcessFork-PTSIZE: 0x00000100
+
+ProcessFork-PTBITS: 0x000C000C
+
+ProcessFork-About to load shared_test.dlx.obj
+Attepmting to open shared_test.dlx.obj mode=1.
+File shared_test.dlx.obj opening in file system 0.
+Attempting to open file shared_test.dlx.obj into desc 1, mode 1.
+Opened shared_test.dlx.obj in FS 0, mode=1 slot=1.
+File descriptor is now 1.
+ProcessFork-USER_STACKPOINTER: 0x000FFFFC
+
+ProcessFork-File shared_test.dlx.obj -> start=0x00001000
+ProcessFork-File shared_test.dlx.obj -> code @ 0x00001000 (size=0x00001050)
+ProcessFork-File shared_test.dlx.obj -> data @ 0x00003000 (size=0x00000148)
+Got 200 bytes at offset 60 ... terminated at 199.
+Buffer is '00003000:0a2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d
+00003045:2d2d2d2d
+Z'
+New address is 0x3000.
+Seeking to 242 and returning 69 bytes!
+ProcessFork-Placing 69 bytes at vaddr 00003000.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003000
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A000
+Got 200 bytes at offset 242 ... terminated at 199.
+Buffer is '00003045:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d0a00
+00003058:53686172
+:65644d65
+:6d5f7465
+:73742028
+:2564293a
+:20544553
+:54202331
+:613a2073
+:686d6765
+:7428346b
+:290a00
+00003084:53686765
+:74283078
+Z'
+New address is 0x3045.
+Seeking to 298 and returning 19 bytes!
+ProcessFork-Placing 19 bytes at vaddr 00003045.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003045
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A045
+Got 200 bytes at offset 298 ... terminated at 193.
+Buffer is '00003058:53686172
+:65644d65
+:6d5f7465
+:73742028
+:2564293a
+:20544553
+:54202331
+:613a2073
+:686d6765
+:7428346b
+:290a00
+00003084:53686765
+:74283078
+:31303030
+:29207265
+:7475726e
+:65643a20
+:25640a00
+Z'
+New address is 0x3058.
+Seeking to 414 and returning 43 bytes!
+ProcessFork-Placing 43 bytes at vaddr 00003058.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003058
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A058
+Got 200 bytes at offset 414 ... terminated at 193.
+Buffer is '00003084:53686765
+:74283078
+:31303030
+:29207265
+:7475726e
+:65643a20
+:25640a00
+000030a0:53686172
+:65644d65
+:6d5f7465
+:73742028
+:2564293a
+:20544553
+:54202331
+:623a2073
+:686d6765
+:7428346b
+:290a00
+Z'
+New address is 0x3084.
+Seeking to 492 and returning 28 bytes!
+ProcessFork-Placing 28 bytes at vaddr 00003084.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003084
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A084
+Got 200 bytes at offset 492 ... terminated at 193.
+Buffer is '000030a0:53686172
+:65644d65
+:6d5f7465
+:73742028
+:2564293a
+:20544553
+:54202331
+:623a2073
+:686d6765
+:7428346b
+:290a00
+000030cc:53686172
+:65644d65
+:6d5f7465
+:73742028
+:2564293a
+:20544553
+:54202331
+Z'
+New address is 0x30a0.
+Seeking to 608 and returning 43 bytes!
+ProcessFork-Placing 43 bytes at vaddr 000030a0.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030A0
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0A0
+Got 200 bytes at offset 608 ... terminated at 193.
+Buffer is '000030cc:53686172
+:65644d65
+:6d5f7465
+:73742028
+:2564293a
+:20544553
+:54202331
+:633a2073
+:686d6765
+:7428346b
+:290a00
+000030f8:53686765
+:74283078
+:33353030
+:29207265
+:7475726e
+:65643a20
+:25640a00
+Z'
+New address is 0x30cc.
+Seeking to 724 and returning 43 bytes!
+ProcessFork-Placing 43 bytes at vaddr 000030cc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030CC
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0CC
+Got 200 bytes at offset 724 ... terminated at 195.
+Buffer is '000030f8:53686765
+:74283078
+:33353030
+:29207265
+:7475726e
+:65643a20
+:25640a00
+00003114:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+Z'
+New address is 0x30f8.
+Seeking to 802 and returning 28 bytes!
+ProcessFork-Placing 28 bytes at vaddr 000030f8.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030F8
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0F8
+Got 200 bytes at offset 802 ... terminated at 195.
+Buffer is '00003114:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f5f5f
+:5f5f0a00
+00001000:afbefffc
+:001df020
+:afbffff8
+:2fbd0008
+:0c001030
+Z'
+New address is 0x3114.
+Seeking to 940 and returning 52 bytes!
+ProcessFork-Placing 52 bytes at vaddr 00003114.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003114
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A114
+Got 200 bytes at offset 940 ... terminated at 197.
+Buffer is '00001000:afbefffc
+:001df020
+:afbffff8
+:2fbd0008
+:0c001030
+:54000000
+:23bdfff8
+:3c030000
+:24633000
+:afa30000
+:0c000140
+:54000000
+:0c000144
+:54000000
+:3c030000
+:24633058
+:afa30000
+:afa10004
+:0c000120
+Z'
+New address is 0x1000.
+Seeking to 1138 and returning 76 bytes!
+ProcessFork-Placing 76 bytes at vaddr 00001000.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001000
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028000
+Got 200 bytes at offset 1138 ... terminated at 199.
+Buffer is ':54000000
+:20031000
+:afa30000
+:0c000134
+:54000000
+:3c020000
+:24423084
+:afa20000
+:afa10004
+:0c0000f8
+:54000000
+:0c0000fc
+:54000000
+:3c030000
+:246330a0
+:afa30000
+:afa10004
+:0c0000d8
+:54000000
+:20031000
+Z'
+Seeking to 1338 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000104c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000104C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002804C
+Got 200 bytes at offset 1338 ... terminated at 199.
+Buffer is ':afa30000
+:0c0000ec
+:54000000
+:afa20000
+:afa10004
+:0c0000b8
+:54000000
+:0c0000bc
+:54000000
+:3c030000
+:246330cc
+:afa30000
+:afa10004
+:0c000098
+:54000000
+:20031000
+:afa30000
+:0c0000ac
+:54000000
+:3c030000
+Z'
+Seeking to 1538 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000109c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000109C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002809C
+Got 200 bytes at offset 1538 ... terminated at 199.
+Buffer is ':246330f8
+:afa30000
+:afa10004
+:0c000070
+:54000000
+:3c030000
+:24633114
+:afa30000
+:0c00005c
+:54000000
+:20010000
+:23bd0008
+:0c000f18
+:54000000
+:44000213
+:4be00000
+:54000000
+:44000214
+:4be00000
+:54000000
+Z'
+Seeking to 1738 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000010ec.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000010EC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x000280EC
+Got 200 bytes at offset 1738 ... terminated at 199.
+Buffer is ':44000210
+:4be00000
+:54000000
+:44000211
+:4be00000
+:54000000
+:44000212
+:4be00000
+:54000000
+:44000280
+:4be00000
+:54000000
+:44000201
+:4be00000
+:54000000
+:44000431
+:4be00000
+:54000000
+:44000432
+:4be00000
+Z'
+Seeking to 1938 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000113c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000113C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002813C
+Got 200 bytes at offset 1938 ... terminated at 199.
+Buffer is ':54000000
+:44000440
+:4be00000
+:54000000
+:44000441
+:4be00000
+:54000000
+:44000442
+:4be00000
+:54000000
+:44000443
+:4be00000
+:54000000
+:44000450
+:4be00000
+:54000000
+:44000451
+:4be00000
+:54000000
+:44000452
+Z'
+Seeking to 2138 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000118c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000118C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002818C
+Got 200 bytes at offset 2138 ... terminated at 199.
+Buffer is ':4be00000
+:54000000
+:44000453
+:4be00000
+:54000000
+:44000454
+:4be00000
+:54000000
+:44000455
+:4be00000
+:54000000
+:44000456
+:4be00000
+:54000000
+:44000457
+:4be00000
+:54000000
+:44000458
+:4be00000
+:54000000
+Z'
+Seeking to 2338 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000011dc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000011DC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x000281DC
+Got 200 bytes at offset 2338 ... terminated at 199.
+Buffer is ':44000459
+:4be00000
+:54000000
+:44000460
+:4be00000
+:54000000
+:44000461
+:4be00000
+:54000000
+:44000462
+:4be00000
+:54000000
+:44000463
+:4be00000
+:54000000
+:44000464
+:4be00000
+:54000000
+:44000465
+:4be00000
+Z'
+Seeking to 2538 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000122c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000122C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002822C
+Got 200 bytes at offset 2538 ... terminated at 199.
+Buffer is ':54000000
+:44000466
+:4be00000
+:54000000
+:44000500
+:4be00000
+:54000000
+:44000467
+:4be00000
+:44000468
+:4be00000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:afa40008
+:83c20003
+:20010000
+Z'
+Seeking to 2738 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000127c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000127C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002827C
+Got 200 bytes at offset 2738 ... terminated at 199.
+Buffer is ':304300ff
+:60640020
+:1480002c
+:54000000
+:304300ff
+:60640009
+:1480001c
+:54000000
+:304300ff
+:6064000a
+:1480000c
+:54000000
+:08000008
+:54000000
+:20010001
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fa40008
+Z'
+Seeking to 2938 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000012cc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000012CC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x000282CC
+Got 200 bytes at offset 2938 ... terminated at 199.
+Buffer is ':8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:afa40008
+:83c20003
+:20010000
+:304300ff
+:6c64002f
+:1080001c
+:54000000
+:304300ff
+:70640039
+Z'
+Seeking to 3138 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000131c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000131C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002831C
+Got 200 bytes at offset 3138 ... terminated at 199.
+Buffer is ':1480005c
+:54000000
+:08000004
+:54000000
+:304300ff
+:6c640060
+:1080001c
+:54000000
+:304300ff
+:70640066
+:14800034
+:54000000
+:08000004
+:54000000
+:304300ff
+:6c640040
+:10800020
+:54000000
+:304300ff
+:70640041
+Z'
+Seeking to 3338 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000136c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000136C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002836C
+Got 200 bytes at offset 3338 ... terminated at 199.
+Buffer is ':1480000c
+:54000000
+:08000008
+:54000000
+:20010001
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fa40008
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+Z'
+Seeking to 3538 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000013bc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000013BC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x000283BC
+Got 200 bytes at offset 3538 ... terminated at 199.
+Buffer is ':afa30004
+:8fc10000
+:afc1fff4
+:8fc10000
+:20220001
+:afc20000
+:8fc20004
+:20430001
+:afc30004
+:80420000
+:a0220000
+:a3c2fff3
+:93c1fff3
+:64220000
+:1440000c
+:54000000
+:0800000c
+:54000000
+:0bffffc0
+:54000000
+Z'
+Seeking to 3738 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000140c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000140C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002840C
+Got 200 bytes at offset 3738 ... terminated at 199.
+Buffer is ':8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:8fc10000
+:afc1fff4
+:8fc10008
+:2022ffff
+Z'
+Seeking to 3938 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000145c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000145C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002845C
+Got 200 bytes at offset 3938 ... terminated at 199.
+Buffer is ':afc20008
+:70210000
+:1020000c
+:54000000
+:08000048
+:54000000
+:8fc10000
+:20220001
+:afc20000
+:8fc20004
+:20430001
+:afc30004
+:80420000
+:a0220000
+:a3c2fff3
+:93c1fff3
+:64220000
+:1440000c
+:54000000
+:0800000c
+Z'
+Seeking to 4138 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000014ac.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000014AC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x000284AC
+Got 200 bytes at offset 4138 ... terminated at 199.
+Buffer is ':54000000
+:0bffffa0
+:54000000
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:8fc10000
+:afc1fff4
+Z'
+Seeking to 4338 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000014fc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000014FC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x000284FC
+Got 200 bytes at offset 4338 ... terminated at 199.
+Buffer is ':8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:0800001c
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffffd0
+:54000000
+:23bdfff8
+:001d0820
+:8fc20000
+:ac220000
+:8fc20004
+:ac220004
+:0ffffe5c
+Z'
+Seeking to 4538 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000154c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000154C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002854C
+Got 200 bytes at offset 4538 ... terminated at 199.
+Buffer is ':54000000
+:23bd0008
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:54000000
+:20010000
+:afc1fff4
+Z'
+Seeking to 4738 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000159c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000159C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002859C
+Got 200 bytes at offset 4738 ... terminated at 199.
+Buffer is ':8fc1fff4
+:8fc20008
+:0022082a
+:1420000c
+:54000000
+:08000088
+:54000000
+:8fc10004
+:90220000
+:64410000
+:14200018
+:54000000
+:20010000
+:080000d8
+:54000000
+:08000028
+:54000000
+:8fc10000
+:8fc20004
+:90210000
+Z'
+Seeking to 4938 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000015ec.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000015EC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x000285EC
+Got 200 bytes at offset 4938 ... terminated at 199.
+Buffer is ':90420000
+:00220829
+:1020000c
+:54000000
+:0800003c
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:8fc20004
+:20410001
+:00011020
+:afc20004
+:8fc2fff4
+:20410001
+:00011020
+:afc2fff4
+:0bffff64
+:54000000
+Z'
+Seeking to 5138 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000163c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000163C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002863C
+Got 200 bytes at offset 5138 ... terminated at 199.
+Buffer is ':8fc1fff4
+:8fc20008
+:00220828
+:10200018
+:54000000
+:20010000
+:08000054
+:54000000
+:0800004c
+:54000000
+:8fc20000
+:90410000
+:8fc20004
+:90430000
+:00230822
+:74220000
+:10400020
+:54000000
+:8fc10000
+:8fc20004
+Z'
+Seeking to 5338 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000168c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000168C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002868C
+Got 200 bytes at offset 5338 ... terminated at 199.
+Buffer is ':90210000
+:90420000
+:00220829
+:08000008
+:54000000
+:2001ffff
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+Z'
+Seeking to 5538 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000016dc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000016DC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x000286DC
+Got 200 bytes at offset 5538 ... terminated at 199.
+Buffer is ':20010000
+:afc1fff4
+:8fc10000
+:20220001
+:afc20000
+:90210000
+:64220000
+:1440000c
+:54000000
+:0800001c
+:54000000
+:8fc2fff4
+:20410001
+:00011020
+:afc2fff4
+:0bffffc8
+:54000000
+:8fc1fff4
+:08000004
+:54000000
+Z'
+Seeking to 5738 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000172c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000172C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002872C
+Got 200 bytes at offset 5738 ... terminated at 199.
+Buffer is ':8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:23bdfff8
+:001d0820
+:8fc20004
+:ac220000
+:0fffff5c
+:54000000
+:23bd0008
+:afc1fff4
+:8fc10000
+Z'
+Seeking to 5938 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000177c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000177C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002877C
+Got 200 bytes at offset 5938 ... terminated at 199.
+Buffer is ':90220000
+:64410000
+:1420000c
+:54000000
+:08000060
+:54000000
+:23bdfff0
+:001d0820
+:8fc20000
+:ac220000
+:8fc20004
+:ac220004
+:8fc2fff4
+:ac220008
+:0ffffdc0
+:54000000
+:23bd0010
+:64220000
+:14400010
+:54000000
+Z'
+Seeking to 6138 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000017cc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000017CC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x000287CC
+Got 200 bytes at offset 6138 ... terminated at 199.
+Buffer is ':8fc10000
+:08000028
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffff8c
+:54000000
+:20010000
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+Z'
+Seeking to 6338 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000181c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000181C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002881C
+Got 200 bytes at offset 6338 ... terminated at 199.
+Buffer is ':afbffff8
+:2fbd0018
+:afa20000
+:54000000
+:8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:08000070
+:54000000
+:8fc10004
+:afc1fff4
+:8fc1fff4
+:90220000
+:64410000
+:1420000c
+:54000000
+:08000044
+:54000000
+Z'
+Seeking to 6538 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000186c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000186C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002886C
+Got 200 bytes at offset 6538 ... terminated at 199.
+Buffer is ':8fc10000
+:8fc2fff4
+:90210000
+:90420000
+:00220828
+:10200010
+:54000000
+:8fc10000
+:08000030
+:54000000
+:8fc2fff4
+:20410001
+:00011020
+:afc2fff4
+:0bffffa8
+:54000000
+:0bffff7c
+:54000000
+:20010000
+:08000004
+Z'
+Seeking to 6738 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000018bc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000018BC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x000288BC
+Got 200 bytes at offset 6738 ... terminated at 199.
+Buffer is ':54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:54000000
+:8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:08000040
+:54000000
+Z'
+Seeking to 6938 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000190c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000190C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002890C
+Got 200 bytes at offset 6938 ... terminated at 199.
+Buffer is ':8fc10000
+:90220000
+:8fc10004
+:00411028
+:10400010
+:54000000
+:8fc10000
+:08000028
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffffac
+:54000000
+:20010000
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+Z'
+Seeking to 7138 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000195c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000195C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x0002895C
+Got 200 bytes at offset 7138 ... terminated at 199.
+Buffer is ':001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:8fc10000
+:68220000
+:1040002c
+:54000000
+:8fc10004
+:20220001
+:afc20004
+:2002002d
+:a0220000
+:8fc10000
+Z'
+Seeking to 7338 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000019ac.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000019AC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x000289AC
+Got 200 bytes at offset 7338 ... terminated at 199.
+Buffer is ':00011022
+:afc20000
+:08000118
+:54000000
+:8fc10000
+:64220000
+:14400020
+:54000000
+:8fc10004
+:20220001
+:afc20004
+:20020030
+:a0220000
+:080000ec
+:54000000
+:20010001
+:afc1fff4
+:8fc1fff4
+:8fc20000
+:0022082c
+Z'
+Seeking to 7538 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000019fc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000019FC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x000289FC
+Got 200 bytes at offset 7538 ... terminated at 199.
+Buffer is ':1420000c
+:54000000
+:08000024
+:54000000
+:8fc1fff4
+:00011820
+:50620002
+:00411020
+:50410001
+:afc1fff4
+:0bffffc8
+:54000000
+:54000000
+:8fc1fff4
+:2002000a
+:00200035
+:00400835
+:0401000f
+:00000834
+:afc1fff4
+Z'
+Seeking to 7738 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001a4c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001A4C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028A4C
+Got 200 bytes at offset 7738 ... terminated at 199.
+Buffer is ':8fc10004
+:20220001
+:afc20004
+:8fc20000
+:8fc3fff4
+:00400035
+:00600835
+:0401000f
+:00001034
+:00021820
+:20620030
+:a0220000
+:8fc10000
+:8fc3fff4
+:00200035
+:00600835
+:0401000f
+:00001034
+:8fc3fff4
+:00400035
+Z'
+Seeking to 7938 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001a9c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001A9C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028A9C
+Got 200 bytes at offset 7938 ... terminated at 199.
+Buffer is ':00600835
+:0401000e
+:00001034
+:00220822
+:afc10000
+:8fc1fff4
+:6c220001
+:1440000c
+:54000000
+:0800000c
+:54000000
+:0bffff64
+:54000000
+:8fc10004
+:20020000
+:a0220000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+Z'
+Seeking to 8138 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001aec.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001AEC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028AEC
+Got 200 bytes at offset 8138 ... terminated at 199.
+Buffer is ':8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0020
+:afa20000
+:20010000
+:afc1fff4
+:8fc10000
+:90220000
+:60410020
+:14200034
+:54000000
+:8fc10000
+:90220000
+:60410009
+:14200020
+:54000000
+Z'
+Seeking to 8338 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001b3c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001B3C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028B3C
+Got 200 bytes at offset 8338 ... terminated at 199.
+Buffer is ':8fc10000
+:90220000
+:6041000a
+:1420000c
+:54000000
+:0800001c
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffffa8
+:54000000
+:8fc10004
+:64220000
+:10400010
+:54000000
+:8fc10004
+:8fc20000
+:ac220000
+Z'
+Seeking to 8538 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001b8c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001B8C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028B8C
+Got 200 bytes at offset 8538 ... terminated at 199.
+Buffer is ':8fc10000
+:90220000
+:64410000
+:14200010
+:54000000
+:8fc1fff4
+:08000294
+:54000000
+:8fc10000
+:90220000
+:6041002d
+:10200024
+:54000000
+:2001ffff
+:afc1ffec
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0800000c
+Z'
+Seeking to 8738 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001bdc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001BDC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028BDC
+Got 200 bytes at offset 8738 ... terminated at 199.
+Buffer is ':54000000
+:20010001
+:afc1ffec
+:8fc10008
+:64220000
+:14400090
+:54000000
+:8fc10000
+:90220000
+:60410030
+:10200074
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:8fc10000
+:90220000
+:60410078
+:14200020
+Z'
+Seeking to 8938 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001c2c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001C2C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028C2C
+Got 200 bytes at offset 8938 ... terminated at 199.
+Buffer is ':54000000
+:8fc10000
+:90220000
+:60410058
+:1420000c
+:54000000
+:08000024
+:54000000
+:20010010
+:afc10008
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0800000c
+:54000000
+:20010008
+:afc10008
+:0800000c
+:54000000
+Z'
+Seeking to 9138 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001c7c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001C7C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028C7C
+Got 200 bytes at offset 9138 ... terminated at 199.
+Buffer is ':2001000a
+:afc10008
+:8fc10008
+:70220000
+:1440001c
+:54000000
+:8fc10008
+:6c220010
+:1440000c
+:54000000
+:08000010
+:54000000
+:8fc1fff4
+:08000188
+:54000000
+:54000000
+:8fc10000
+:90220000
+:6c41002f
+:10200030
+Z'
+Seeking to 9338 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001ccc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001CCC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028CCC
+Got 200 bytes at offset 9338 ... terminated at 199.
+Buffer is ':54000000
+:8fc10000
+:90220000
+:70410039
+:1020001c
+:54000000
+:8fc10000
+:90220000
+:2041ffd0
+:afc1fff0
+:0800008c
+:54000000
+:8fc10000
+:90220000
+:6c410060
+:10200030
+:54000000
+:8fc10000
+:90220000
+:7041007a
+Z'
+Seeking to 9538 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001d1c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001D1C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028D1C
+Got 200 bytes at offset 9538 ... terminated at 199.
+Buffer is ':1020001c
+:54000000
+:8fc10000
+:90220000
+:2041ffa9
+:afc1fff0
+:0800004c
+:54000000
+:8fc10000
+:90220000
+:6c410040
+:10200030
+:54000000
+:8fc10000
+:90220000
+:7041005a
+:1020001c
+:54000000
+:8fc10000
+:90220000
+Z'
+Seeking to 9738 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001d6c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001D6C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028D6C
+Got 200 bytes at offset 9738 ... terminated at 199.
+Buffer is ':2041ffc9
+:afc1fff0
+:0800000c
+:54000000
+:200103e8
+:afc1fff0
+:8fc1fff0
+:8fc20008
+:0022082a
+:10200040
+:54000000
+:8fc1fff4
+:8fc20008
+:00200035
+:00400835
+:0401000e
+:00000834
+:afc1fff4
+:8fc1fff4
+:8fc2fff0
+Z'
+Seeking to 9938 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001dbc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001DBC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028DBC
+Got 200 bytes at offset 9938 ... terminated at 199.
+Buffer is ':00220820
+:afc1fff4
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:8fc1fff0
+:8fc20008
+:0022082a
+:1420000c
+:54000000
+:0800000c
+:54000000
+:0bfffec8
+:54000000
+:8fc10004
+:64220000
+:10400010
+:54000000
+:8fc10004
+Z'
+Seeking to 10138 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001e0c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001E0C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028E0C
+Got 200 bytes at offset 10138 ... terminated at 199.
+Buffer is ':8fc20000
+:ac220000
+:8fc1fff4
+:8fc2ffec
+:00200035
+:00400835
+:0401000e
+:00000834
+:afc1fff4
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+Z'
+Seeking to 10338 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001e5c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001E5C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028E5C
+Got 200 bytes at offset 10338 ... terminated at 199.
+Buffer is ':afbffff8
+:2fbd0010
+:afa20000
+:afa30004
+:54000000
+:8fc10008
+:2022ffff
+:afc20008
+:6c210000
+:1420000c
+:54000000
+:0800002c
+:54000000
+:8fc10004
+:20220001
+:afc20004
+:8fc20000
+:20430001
+:afc30000
+:80420000
+Z'
+Seeking to 10538 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001eac.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001EAC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028EAC
+Got 200 bytes at offset 10538 ... terminated at 199.
+Buffer is ':a0220000
+:0bffffbc
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:54000000
+:8fc10004
+:2022ffff
+:afc20004
+:6c210000
+Z'
+Seeking to 10738 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001efc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001EFC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028EFC
+Got 200 bytes at offset 10738 ... terminated at 199.
+Buffer is ':1420000c
+:54000000
+:08000020
+:54000000
+:8fc10000
+:20220001
+:afc20000
+:20020000
+:a0220000
+:0bffffc8
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+Z'
+Seeking to 10938 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001f4c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001F4C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028F4C
+Got 200 bytes at offset 10938 ... terminated at 199.
+Buffer is ':2fbd0010
+:afa20000
+:afa30004
+:8fc10000
+:8fc20004
+:0022182c
+:14600008
+:54000000
+:8fc10004
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+Z'
+Seeking to 11138 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001f9c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001F9C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028F9C
+Got 200 bytes at offset 11138 ... terminated at 199.
+Buffer is ':afbffff8
+:2fbd0010
+:afa20000
+:afa30004
+:8fc10000
+:8fc20004
+:0022182d
+:14600008
+:54000000
+:8fc10004
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:44000300
+Z'
+Seeking to 11338 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001fec.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001FEC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-Translated Address: 0x00028FEC
+
+MemoryTranslateUserToSystem-Address to translate: 0x00002000
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00029001
+MemoryTranslateUserToSystem-Translated Address: 0x00029000
+Got 40 bytes at offset 11338 ... terminated at 39.
+Buffer is ':4be00000
+:54000000
+:4be00000
+:54000000
+Z'
+Seeking to 11378 and returning 16 bytes!
+ProcessFork-Placing 16 bytes at vaddr 0000203c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000203C
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00029001
+MemoryTranslateUserToSystem-Translated Address: 0x0002903C
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEFC
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B001
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEFC
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEF0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B001
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEF0
+Setting currentPCB=0x2197c, stackframe=0x2cea8
+Leaving ProcessFork (shared_test.dlx.obj)
+Set timer quantum to 10000, about to run first process.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE0
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003000
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A000
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003001
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A001
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003002
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A002
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003003
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A003
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003004
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A004
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003005
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A005
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003006
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A006
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003007
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A007
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003008
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A008
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003009
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A009
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000300A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A00A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000300B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A00B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000300C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A00C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000300D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A00D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000300E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A00E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000300F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A00F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003010
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A010
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003011
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A011
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003012
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A012
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003013
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A013
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003014
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A014
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003015
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A015
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003016
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A016
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003017
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A017
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003018
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A018
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003019
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A019
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000301A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A01A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000301B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A01B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000301C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A01C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000301D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A01D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000301E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A01E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000301F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A01F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003020
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A020
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003021
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A021
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003022
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A022
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003023
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A023
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003024
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A024
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003025
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A025
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003026
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A026
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003027
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A027
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003028
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A028
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003029
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A029
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000302A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A02A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000302B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A02B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000302C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A02C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000302D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A02D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000302E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A02E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000302F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A02F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003030
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A030
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003031
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A031
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003032
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A032
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003033
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A033
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003034
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A034
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003035
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A035
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003036
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A036
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003037
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A037
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003038
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A038
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003039
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A039
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000303A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A03A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000303B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A03B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000303C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A03C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000303D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A03D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000303E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A03E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000303F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A03F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003040
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A040
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003041
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A041
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003042
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A042
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003043
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A043
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003044
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A044
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003045
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A045
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003046
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A046
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003047
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A047
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003048
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A048
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003049
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A049
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000304A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A04A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000304B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A04B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000304C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A04C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000304D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A04D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000304E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A04E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000304F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A04F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003050
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A050
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003051
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A051
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003052
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A052
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003053
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A053
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003054
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A054
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003055
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A055
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003056
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A056
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003057
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A057
+
+-------------------------------------------------------------------------------------
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE0
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003058
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A058
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003059
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A059
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000305A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A05A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000305B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A05B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000305C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A05C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000305D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A05D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000305E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A05E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000305F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A05F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003060
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A060
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003061
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A061
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003062
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A062
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003063
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A063
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003064
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A064
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003065
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A065
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003066
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A066
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003067
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A067
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003068
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A068
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003069
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A069
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000306A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A06A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000306B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A06B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000306C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A06C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000306D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A06D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000306E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A06E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000306F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A06F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003070
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A070
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003071
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A071
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003072
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A072
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003073
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A073
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003074
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A074
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003075
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A075
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003076
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A076
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003077
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A077
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003078
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A078
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003079
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A079
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000307A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A07A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000307B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A07B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000307C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A07C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000307D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A07D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000307E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A07E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000307F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A07F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003080
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A080
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003081
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A081
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003082
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A082
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE4
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE4
+SharedMem_test (31): TEST #1a: shmget(4k)
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE0
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003084
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A084
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003085
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A085
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003086
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A086
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003087
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A087
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003088
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A088
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003089
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A089
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000308A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A08A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000308B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A08B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000308C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A08C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000308D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A08D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000308E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A08E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000308F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A08F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003090
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A090
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003091
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A091
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003092
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A092
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003093
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A093
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003094
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A094
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003095
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A095
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003096
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A096
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003097
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A097
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003098
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A098
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003099
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A099
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000309A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000309B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000309C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000309D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000309E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000309F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09F
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE4
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE4
+Shget(0x1000) returned: -1
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030A0
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0A0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030A1
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0A1
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030A2
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0A2
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030A3
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0A3
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030A4
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0A4
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030A5
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0A5
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030A6
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0A6
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030A7
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0A7
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030A8
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0A8
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030A9
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0A9
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030AA
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0AA
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030AB
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0AB
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030AC
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0AC
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030AD
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0AD
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030AE
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0AE
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030AF
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0AF
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030B0
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0B0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030B1
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0B1
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030B2
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0B2
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030B3
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0B3
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030B4
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0B4
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030B5
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0B5
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030B6
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0B6
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030B7
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0B7
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030B8
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0B8
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030B9
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0B9
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030BA
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0BA
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030BB
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0BB
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030BC
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0BC
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030BD
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0BD
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030BE
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0BE
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030BF
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0BF
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030C0
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0C0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030C1
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0C1
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030C2
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0C2
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030C3
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0C3
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030C4
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0C4
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030C5
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0C5
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030C6
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0C6
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030C7
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0C7
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030C8
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0C8
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030C9
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0C9
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030CA
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0CA
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE4
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE4
+SharedMem_test (31): TEST #1b: shmget(4k)
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE0
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003084
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A084
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003085
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A085
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003086
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A086
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003087
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A087
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003088
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A088
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003089
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A089
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000308A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A08A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000308B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A08B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000308C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A08C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000308D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A08D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000308E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A08E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000308F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A08F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003090
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A090
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003091
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A091
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003092
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A092
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003093
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A093
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003094
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A094
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003095
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A095
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003096
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A096
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003097
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A097
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003098
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A098
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003099
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A099
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000309A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000309B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000309C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000309D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000309E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000309F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09F
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE4
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE4
+Shget(0x1000) returned: -1
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030CC
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0CC
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030CD
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0CD
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030CE
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0CE
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030CF
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0CF
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030D0
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0D0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030D1
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0D1
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030D2
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0D2
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030D3
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0D3
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030D4
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0D4
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030D5
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0D5
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030D6
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0D6
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030D7
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0D7
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030D8
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0D8
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030D9
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0D9
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030DA
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0DA
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030DB
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0DB
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030DC
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0DC
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030DD
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0DD
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030DE
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0DE
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030DF
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0DF
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030E0
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0E0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030E1
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0E1
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030E2
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0E2
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030E3
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0E3
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030E4
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0E4
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030E5
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0E5
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030E6
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0E6
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030E7
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0E7
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030E8
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0E8
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030E9
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0E9
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030EA
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0EA
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030EB
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0EB
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030EC
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0EC
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030ED
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0ED
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030EE
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0EE
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030EF
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0EF
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030F0
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0F0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030F1
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0F1
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030F2
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0F2
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030F3
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0F3
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030F4
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0F4
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030F5
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0F5
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030F6
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0F6
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE4
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE4
+SharedMem_test (31): TEST #1c: shmget(4k)
+About to switch to PCB 0x2197c,flags=0x202 @ 0x0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE0
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030F8
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0F8
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030F9
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0F9
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030FA
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0FA
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030FB
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0FB
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030FC
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0FC
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030FD
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0FD
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030FE
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0FE
+
+MemoryTranslateUserToSystem-Address to translate: 0x000030FF
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0FF
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003100
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A100
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003101
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A101
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003102
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A102
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003103
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A103
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003104
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A104
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003105
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A105
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003106
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A106
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003107
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A107
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003108
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A108
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003109
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A109
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000310A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A10A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000310B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A10B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000310C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A10C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000310D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A10D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000310E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A10E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000310F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A10F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003110
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A110
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003111
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A111
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003112
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A112
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003113
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A113
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE4
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE4
+Shget(0x3500) returned: -1
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B003
+MemoryTranslateUserToSystem-Translated Address: 0x0002BEE0
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003114
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A114
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003115
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A115
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003116
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A116
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003117
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A117
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003118
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A118
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003119
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A119
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000311A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A11A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000311B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A11B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000311C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A11C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000311D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A11D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000311E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A11E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000311F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A11F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003120
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A120
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003121
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A121
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003122
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A122
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003123
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A123
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003124
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A124
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003125
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A125
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003126
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A126
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003127
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A127
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003128
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A128
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003129
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A129
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000312A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A12A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000312B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A12B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000312C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A12C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000312D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A12D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000312E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A12E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000312F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A12F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003130
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A130
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003131
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A131
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003132
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A132
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003133
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A133
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003134
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A134
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003135
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A135
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003136
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A136
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003137
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A137
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003138
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A138
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003139
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A139
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000313A
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A13A
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000313B
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A13B
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000313C
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A13C
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000313D
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A13D
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000313E
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A13E
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000313F
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A13F
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003140
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A140
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003141
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A141
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003142
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A142
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003143
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A143
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003144
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A144
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003145
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A145
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003146
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A146
+
+MemoryTranslateUserToSystem-Address to translate: 0x00003147
+MemoryTranslateUserToSystem-Index: 0x00000003
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A147
+__________________________________________________
+Entering ProcessDestroy for 0x2197c.
+Leaving ProcessDestroy for 0x2197c.
+No runnable processes - exiting!
+Exiting at program request.
+Instructions executed: 3865154
+Time simulated: 3.865 secs
+Real time elapsed: 0.317 secs
+Execution rate: 12.18M simulated instructions per real second.

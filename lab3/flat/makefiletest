@@ -1,0 +1,6 @@
+cd os
+make
+cd ../apps/filetest/
+make
+cd ../filetest2/
+make

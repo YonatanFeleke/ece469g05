@@ -1,0 +1,11 @@
+//
+//	shared_memory.h
+//
+//	Definitions for process creation and manipulation.  These include
+//	the process control block (PCB) structure as well as information
+//	about the stack format for a saved process.
+//
+int shmget(int shmsize);
+void *shmat(int shmid, int vaddr);
+int shmdt(void * shmaddr);
+int shmrm(int shmid);

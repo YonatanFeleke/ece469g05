@@ -1,0 +1,6 @@
+cd os
+make clean
+cd ../apps/example/
+make clean
+clear all
+clear

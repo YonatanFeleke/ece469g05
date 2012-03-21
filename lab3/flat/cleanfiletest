@@ -1,0 +1,6 @@
+cd os
+make clean
+cd ../apps/filetest/
+make clean
+cd ../filetest2/
+make clean

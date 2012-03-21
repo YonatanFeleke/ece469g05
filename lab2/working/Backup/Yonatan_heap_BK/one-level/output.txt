@@ -1,0 +1,2310 @@
+rm -rf work ../bin/os.dlx.obj ../lib/usertraps.aso ../lib/misc.o Makefile.depend ../bin/vm
+gcc-dlx -I../include -I../include/os -MM filesys.c memory.c misc.c process.c queue.c synch.c traps.c sysproc.c clock.c osend.s trap_random.s dlxos.s | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+mkdir -p work
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/filesys.o filesys.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/memory.o memory.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/misc.o misc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/process.o process.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/queue.o queue.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/synch.o synch.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/traps.o traps.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/sysproc.o sysproc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/clock.o clock.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/osend.aso osend.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/trap_random.aso trap_random.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/dlxos.aso dlxos.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -o work/os.dlx work/filesys.o work/memory.o work/misc.o work/process.o work/queue.o work/synch.o work/traps.o work/sysproc.o work/clock.o work/osend.aso work/trap_random.aso work/dlxos.aso 
+dlxasm -i _osinit -l work/os.lst work/os.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x13218
+Last data address: 0x23964
+cp work/os.dlx.obj ../bin/os.dlx.obj
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/usertraps.aso usertraps.s
+cp work/usertraps.aso ../lib/usertraps.aso
+cp work/misc.o ../lib/misc.o
+rm work/usertraps.aso
+cd makeprocs; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/makeprocs'
+rm -rf work ../../../bin/makeprocs.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/makeprocs'
+cd hello_world; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/hello_world'
+rm -rf work ../../../bin/hello_world.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/hello_world'
+cd userprog; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/userprog'
+rm -rf work ../../../bin/userprog.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/userprog'
+cd test2; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/test2'
+gcc-dlx -I../include -I../../../include -MM test2.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/test2'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/test2'
+rm -rf work ../../../bin/test2.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/test2'
+cd makeprocs; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/makeprocs'
+gcc-dlx -I../include -I../../../include -MM makeprocs.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/makeprocs'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/makeprocs'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/makeprocs.o makeprocs.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/makeprocs.dlx work/makeprocs.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/makeprocs.lst work/makeprocs.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x2208
+Last data address: 0x31ea
+cp work/makeprocs.dlx.obj ../../../bin/makeprocs.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/makeprocs'
+cd hello_world; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/hello_world'
+gcc-dlx -I../include -I../../../include -MM hello_world.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/hello_world'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/hello_world'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/hello_world.o hello_world.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/hello_world.dlx work/hello_world.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/hello_world.lst work/hello_world.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x2100
+Last data address: 0x30a9
+cp work/hello_world.dlx.obj ../../../bin/hello_world.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/hello_world'
+cd userprog; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/userprog'
+gcc-dlx -I../include -I../../../include -MM userprog.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/userprog'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/userprog'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/userprog.o userprog.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/userprog.dlx work/userprog.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/userprog.lst work/userprog.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x1f70
+Last data address: 0x2034
+cp work/userprog.dlx.obj ../../../bin/userprog.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/userprog'
+cd test2; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/test2'
+gcc-dlx -I../include -I../../../include -MM test2.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/test2'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/test2'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/test2.o test2.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/test2.dlx work/test2.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/test2.lst work/test2.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x1f60
+Last data address: 0x203f
+cp work/test2.dlx.obj ../../../bin/test2.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/lab2/apps/example/test2'
+cd ../../bin; dlxsim -x os.dlx.obj -a  -u userprog.dlx.obj; ee469_fixterminal
+Stack=0x1fffd0, pc starting at 0x12e80
+Got 2 arguments.
+Available memory: 0x23968 -> 0x200000.
+Argument count is 2.
+Argument 0 is -u.
+Argument 1 is userprog.dlx.obj.
+Hello World!
+PID obtained from User Program: 31
+No runnable processes - exiting!
+Exiting at program request.
+Instructions executed: 2821929
+Time simulated: 2.822 secs
+Real time elapsed: 0.235 secs
+Execution rate: 12.02M simulated instructions per real second.
+cd ../../bin; dlxsim -x os.dlx.obj -a  -u makeprocs.dlx.obj; ee469_fixterminal
+Stack=0x1fffd0, pc starting at 0x12e80
+Got 2 arguments.
+Available memory: 0x23968 -> 0x200000.
+Argument count is 2.
+Argument 0 is -u.
+Argument 1 is makeprocs.dlx.obj.
+makeprocs (31): Creating 30 hello_world processes
+-------------------------------------------------------------------------------------
+makeprocs (31): Creating 30 hello world's in a row, but only one runs at a time
+makeprocs (31): Creating hello world #0
+hello_world (30): Hello world!
+hello_world (30): Done!
+makeprocs (31): Creating hello world #1
+hello_world (29): Hello world!
+hello_world (29): Done!
+makeprocs (31): Creating hello world #2
+hello_world (28): Hello world!
+hello_world (28): Done!
+makeprocs (31): Creating hello world #3
+hello_world (27): Hello world!
+hello_world (27): Done!
+makeprocs (31): Creating hello world #4
+hello_world (26): Hello world!
+hello_world (26): Done!
+makeprocs (31): Creating hello world #5
+hello_world (25): Hello world!
+hello_world (25): Done!
+makeprocs (31): Creating hello world #6
+hello_world (24): Hello world!
+hello_world (24): Done!
+makeprocs (31): Creating hello world #7
+hello_world (23): Hello world!
+hello_world (23): Done!
+makeprocs (31): Creating hello world #8
+hello_world (22): Hello world!
+hello_world (22): Done!
+makeprocs (31): Creating hello world #9
+hello_world (21): Hello world!
+hello_world (21): Done!
+makeprocs (31): Creating hello world #10
+hello_world (20): Hello world!
+hello_world (20): Done!
+makeprocs (31): Creating hello world #11
+hello_world (19): Hello world!
+hello_world (19): Done!
+makeprocs (31): Creating hello world #12
+hello_world (18): Hello world!
+hello_world (18): Done!
+makeprocs (31): Creating hello world #13
+hello_world (17): Hello world!
+hello_world (17): Done!
+makeprocs (31): Creating hello world #14
+hello_world (16): Hello world!
+hello_world (16): Done!
+makeprocs (31): Creating hello world #15
+hello_world (15): Hello world!
+hello_world (15): Done!
+makeprocs (31): Creating hello world #16
+hello_world (14): Hello world!
+hello_world (14): Done!
+makeprocs (31): Creating hello world #17
+hello_world (13): Hello world!
+hello_world (13): Done!
+makeprocs (31): Creating hello world #18
+hello_world (12): Hello world!
+hello_world (12): Done!
+makeprocs (31): Creating hello world #19
+hello_world (11): Hello world!
+hello_world (11): Done!
+makeprocs (31): Creating hello world #20
+hello_world (10): Hello world!
+hello_world (10): Done!
+makeprocs (31): Creating hello world #21
+hello_world (9): Hello world!
+hello_world (9): Done!
+makeprocs (31): Creating hello world #22
+hello_world (8): Hello world!
+hello_world (8): Done!
+makeprocs (31): Creating hello world #23
+hello_world (7): Hello world!
+hello_world (7): Done!
+makeprocs (31): Creating hello world #24
+hello_world (6): Hello world!
+hello_world (6): Done!
+makeprocs (31): Creating hello world #25
+hello_world (5): Hello world!
+hello_world (5): Done!
+makeprocs (31): Creating hello world #26
+hello_world (4): Hello world!
+hello_world (4): Done!
+makeprocs (31): Creating hello world #27
+hello_world (3): Hello world!
+hello_world (3): Done!
+makeprocs (31): Creating hello world #28
+hello_world (2): Hello world!
+hello_world (2): Done!
+makeprocs (31): Creating hello world #29
+hello_world (1): Hello world!
+hello_world (1): Done!
+-------------------------------------------------------------------------------------
+makeprocs (31): All other processes completed, exiting main process.
+No runnable processes - exiting!
+Exiting at program request.
+Instructions executed: 92052035
+Time simulated: 92.052 secs
+Real time elapsed: 6.572 secs
+Execution rate: 14.01M simulated instructions per real second.
+cd ../../bin; dlxsim -x os.dlx.obj -a -D impf -u test2.dlx.obj; ee469_fixterminal
+Stack=0x1fffc0, pc starting at 0x12e80
+Got 4 arguments.
+Available memory: 0x23968 -> 0x200000.
+Argument count is 4.
+Argument 0 is -D.
+Argument 1 is impf.
+Argument 2 is -u.
+Argument 3 is test2.dlx.obj.
+About to initialize queues.
+After initializing queues.
+PmemSize: 2097152
+Number of physical pages in memory: 512
+Last address of OS: 145768
+Number of pages used by OS: 36
+Number of free pages left in physical memory: 476
+Freemap Int #0 value: 0x00000000
+Freemap Int #1 value: 0xFFFFFFF0
+Freemap Int #2 value: 0xFFFFFFFF
+Freemap Int #3 value: 0xFFFFFFFF
+Freemap Int #4 value: 0xFFFFFFFF
+Freemap Int #5 value: 0xFFFFFFFF
+Freemap Int #6 value: 0xFFFFFFFF
+Freemap Int #7 value: 0xFFFFFFFF
+Freemap Int #8 value: 0xFFFFFFFF
+Freemap Int #9 value: 0xFFFFFFFF
+Freemap Int #10 value: 0xFFFFFFFF
+Freemap Int #11 value: 0xFFFFFFFF
+Freemap Int #12 value: 0xFFFFFFFF
+Freemap Int #13 value: 0xFFFFFFFF
+Freemap Int #14 value: 0xFFFFFFFF
+Freemap Int #15 value: 0xFFFFFFFF
+After initializing memory.
+Entering ProcessModuleInit
+Initializing PCB 0 @ 0x17790.
+Initializing PCB 1 @ 0x17bf4.
+Initializing PCB 2 @ 0x18058.
+Initializing PCB 3 @ 0x184bc.
+Initializing PCB 4 @ 0x18920.
+Initializing PCB 5 @ 0x18d84.
+Initializing PCB 6 @ 0x191e8.
+Initializing PCB 7 @ 0x1964c.
+Initializing PCB 8 @ 0x19ab0.
+Initializing PCB 9 @ 0x19f14.
+Initializing PCB 10 @ 0x1a378.
+Initializing PCB 11 @ 0x1a7dc.
+Initializing PCB 12 @ 0x1ac40.
+Initializing PCB 13 @ 0x1b0a4.
+Initializing PCB 14 @ 0x1b508.
+Initializing PCB 15 @ 0x1b96c.
+Initializing PCB 16 @ 0x1bdd0.
+Initializing PCB 17 @ 0x1c234.
+Initializing PCB 18 @ 0x1c698.
+Initializing PCB 19 @ 0x1cafc.
+Initializing PCB 20 @ 0x1cf60.
+Initializing PCB 21 @ 0x1d3c4.
+Initializing PCB 22 @ 0x1d828.
+Initializing PCB 23 @ 0x1dc8c.
+Initializing PCB 24 @ 0x1e0f0.
+Initializing PCB 25 @ 0x1e554.
+Initializing PCB 26 @ 0x1e9b8.
+Initializing PCB 27 @ 0x1ee1c.
+Initializing PCB 28 @ 0x1f280.
+Initializing PCB 29 @ 0x1f6e4.
+Initializing PCB 30 @ 0x1fb48.
+Initializing PCB 31 @ 0x1ffac.
+Leaving ProcessModuleInit
+After initializing processes.
+SynchModuleInit: Entering SynchModuleInit
+SynchModuleInit: Leaving SynchModuleInit
+After initializing synchronization tools.
+After initializing keyboard.
+After initializing clock.
+Attepmting to open vm mode=2.
+File vm opening in file system 0.
+Attempting to open file vm into desc 0, mode 2.
+Opened vm in FS 0, mode=2 slot=0.
+VM Descriptor is 0
+ProcessFork-Entering ProcessFork args=0x0 0x1ffe20 test2.dlx.obj 1
+ProcessFork-Got a link @ 0x20770
+Freemap Index #1 has free pages, contents: 0xFFFFFFF0
+Physical Page #36 allocated!
+Freemap Index #1 after new allocation: 0xFFFFFFE0
+ProcessFork-Allocating physical page #36 (Address 0x00024000) for process virtual page #0 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFFE0
+Physical Page #37 allocated!
+Freemap Index #1 after new allocation: 0xFFFFFFC0
+ProcessFork-Allocating physical page #37 (Address 0x00025000) for process virtual page #1 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFFC0
+Physical Page #38 allocated!
+Freemap Index #1 after new allocation: 0xFFFFFF80
+ProcessFork-Allocating physical page #38 (Address 0x00026000) for process virtual page #2 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFF80
+Physical Page #39 allocated!
+Freemap Index #1 after new allocation: 0xFFFFFF00
+ProcessFork-Allocating physical page #39 (Address 0x00027000) for process virtual page #3 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFF00
+Physical Page #40 allocated!
+Freemap Index #1 after new allocation: 0xFFFFFE00
+ProcessFork-Allocating physical page #40 (Address 0x00028000) for process virtual page #255 (user stack)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFE00
+Physical Page #41 allocated!
+Freemap Index #1 after new allocation: 0xFFFFFC00
+ProcessFork-Allocating physical page #41 (Address 0x00029000) for process system stack
+
+ProcessFork-Initializing system stack pointer to 0x00029FFC
+
+ProcessFork-ProcessFork: stackframe = 0x29ea8
+ProcessFork-PTBASE: 0x0002000C
+
+ProcessFork-PTSIZE: 0x00000100
+
+ProcessFork-PTBITS: 0x000C000C
+
+ProcessFork-About to load test2.dlx.obj
+Attepmting to open test2.dlx.obj mode=1.
+File test2.dlx.obj opening in file system 0.
+Attempting to open file test2.dlx.obj into desc 1, mode 1.
+Opened test2.dlx.obj in FS 0, mode=1 slot=1.
+File descriptor is now 1.
+ProcessFork-File test2.dlx.obj -> start=0x00001000
+ProcessFork-File test2.dlx.obj -> code @ 0x00001000 (size=0x00000f60)
+ProcessFork-File test2.dlx.obj -> data @ 0x00002000 (size=0x0000003f)
+Got 200 bytes at offset 60 ... terminated at 197.
+Buffer is '00002000:54727969
+:6e672074
+:6f206163
+:63657373
+:20616464
+:72657373
+:20307844
+:45414442
+:45454621
+:0a00
+00002028:49207368
+:6f756c64
+:6e277420
+:67657420
+:68657265
+:210a00
+00001000:afbefffc
+:001df020
+Z'
+New address is 0x2000.
+Seeking to 164 and returning 38 bytes!
+ProcessFork-Placing 38 bytes at vaddr 00002000.
+MemoryTranslateUserToSystem-Address to translate: 0x00002000
+MemoryTranslateUserToSystem-Offset: 0x00000000
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026000
+Got 200 bytes at offset 164 ... terminated at 193.
+Buffer is '00002028:49207368
+:6f756c64
+:6e277420
+:67657420
+:68657265
+:210a00
+00001000:afbefffc
+:001df020
+:afbffff8
+:2fbd0008
+:0c000f44
+:54000000
+:23bdfff8
+:3c010000
+:24212000
+:afa10000
+:0c00006c
+:54000000
+Z'
+New address is 0x2028.
+Seeking to 230 and returning 23 bytes!
+ProcessFork-Placing 23 bytes at vaddr 00002028.
+MemoryTranslateUserToSystem-Address to translate: 0x00002028
+MemoryTranslateUserToSystem-Offset: 0x00000028
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026028
+Got 200 bytes at offset 230 ... terminated at 197.
+Buffer is '00001000:afbefffc
+:001df020
+:afbffff8
+:2fbd0008
+:0c000f44
+:54000000
+:23bdfff8
+:3c010000
+:24212000
+:afa10000
+:0c00006c
+:54000000
+:3c010000
+:24212028
+:afa10000
+:0c000058
+:54000000
+:23bd0008
+:0c000f00
+Z'
+New address is 0x1000.
+Seeking to 428 and returning 76 bytes!
+ProcessFork-Placing 76 bytes at vaddr 00001000.
+MemoryTranslateUserToSystem-Address to translate: 0x00001000
+MemoryTranslateUserToSystem-Offset: 0x00000000
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025000
+Got 200 bytes at offset 428 ... terminated at 199.
+Buffer is ':54000000
+:44000213
+:4be00000
+:54000000
+:44000214
+:4be00000
+:54000000
+:44000210
+:4be00000
+:54000000
+:44000211
+:4be00000
+:54000000
+:44000212
+:4be00000
+:54000000
+:44000280
+:4be00000
+:54000000
+:44000201
+Z'
+Seeking to 628 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000104c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000104C
+MemoryTranslateUserToSystem-Offset: 0x0000004C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002504C
+Got 200 bytes at offset 628 ... terminated at 199.
+Buffer is ':4be00000
+:54000000
+:44000431
+:4be00000
+:54000000
+:44000432
+:4be00000
+:54000000
+:44000440
+:4be00000
+:54000000
+:44000441
+:4be00000
+:54000000
+:44000450
+:4be00000
+:54000000
+:44000451
+:4be00000
+:54000000
+Z'
+Seeking to 828 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000109c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000109C
+MemoryTranslateUserToSystem-Offset: 0x0000009C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002509C
+Got 200 bytes at offset 828 ... terminated at 199.
+Buffer is ':44000452
+:4be00000
+:54000000
+:44000453
+:4be00000
+:54000000
+:44000454
+:4be00000
+:54000000
+:44000455
+:4be00000
+:54000000
+:44000456
+:4be00000
+:54000000
+:44000457
+:4be00000
+:54000000
+:44000458
+:4be00000
+Z'
+Seeking to 1028 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000010ec.
+MemoryTranslateUserToSystem-Address to translate: 0x000010EC
+MemoryTranslateUserToSystem-Offset: 0x000000EC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x000250EC
+Got 200 bytes at offset 1028 ... terminated at 199.
+Buffer is ':54000000
+:44000459
+:4be00000
+:54000000
+:44000460
+:4be00000
+:54000000
+:44000461
+:4be00000
+:54000000
+:44000462
+:4be00000
+:54000000
+:44000463
+:4be00000
+:54000000
+:44000464
+:4be00000
+:54000000
+:44000465
+Z'
+Seeking to 1228 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000113c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000113C
+MemoryTranslateUserToSystem-Offset: 0x0000013C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002513C
+Got 200 bytes at offset 1228 ... terminated at 199.
+Buffer is ':4be00000
+:54000000
+:44000466
+:4be00000
+:54000000
+:44000500
+:4be00000
+:54000000
+:44000467
+:4be00000
+:44000468
+:4be00000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:afa40008
+:83c20003
+Z'
+Seeking to 1428 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000118c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000118C
+MemoryTranslateUserToSystem-Offset: 0x0000018C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002518C
+Got 200 bytes at offset 1428 ... terminated at 199.
+Buffer is ':20010000
+:304300ff
+:60640020
+:1480002c
+:54000000
+:304300ff
+:60640009
+:1480001c
+:54000000
+:304300ff
+:6064000a
+:1480000c
+:54000000
+:08000008
+:54000000
+:20010001
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+Z'
+Seeking to 1628 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000011dc.
+MemoryTranslateUserToSystem-Address to translate: 0x000011DC
+MemoryTranslateUserToSystem-Offset: 0x000001DC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x000251DC
+Got 200 bytes at offset 1628 ... terminated at 199.
+Buffer is ':8fa40008
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:afa40008
+:83c20003
+:20010000
+:304300ff
+:6c64002f
+:1080001c
+:54000000
+:304300ff
+Z'
+Seeking to 1828 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000122c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000122C
+MemoryTranslateUserToSystem-Offset: 0x0000022C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002522C
+Got 200 bytes at offset 1828 ... terminated at 199.
+Buffer is ':70640039
+:1480005c
+:54000000
+:08000004
+:54000000
+:304300ff
+:6c640060
+:1080001c
+:54000000
+:304300ff
+:70640066
+:14800034
+:54000000
+:08000004
+:54000000
+:304300ff
+:6c640040
+:10800020
+:54000000
+:304300ff
+Z'
+Seeking to 2028 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000127c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000127C
+MemoryTranslateUserToSystem-Offset: 0x0000027C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002527C
+Got 200 bytes at offset 2028 ... terminated at 199.
+Buffer is ':70640041
+:1480000c
+:54000000
+:08000008
+:54000000
+:20010001
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fa40008
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+Z'
+Seeking to 2228 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000012cc.
+MemoryTranslateUserToSystem-Address to translate: 0x000012CC
+MemoryTranslateUserToSystem-Offset: 0x000002CC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x000252CC
+Got 200 bytes at offset 2228 ... terminated at 199.
+Buffer is ':afa20000
+:afa30004
+:8fc10000
+:afc1fff4
+:8fc10000
+:20220001
+:afc20000
+:8fc20004
+:20430001
+:afc30004
+:80420000
+:a0220000
+:a3c2fff3
+:93c1fff3
+:64220000
+:1440000c
+:54000000
+:0800000c
+:54000000
+:0bffffc0
+Z'
+Seeking to 2428 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000131c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000131C
+MemoryTranslateUserToSystem-Offset: 0x0000031C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002531C
+Got 200 bytes at offset 2428 ... terminated at 199.
+Buffer is ':54000000
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:8fc10000
+:afc1fff4
+:8fc10008
+Z'
+Seeking to 2628 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000136c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000136C
+MemoryTranslateUserToSystem-Offset: 0x0000036C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002536C
+Got 200 bytes at offset 2628 ... terminated at 199.
+Buffer is ':2022ffff
+:afc20008
+:70210000
+:1020000c
+:54000000
+:08000048
+:54000000
+:8fc10000
+:20220001
+:afc20000
+:8fc20004
+:20430001
+:afc30004
+:80420000
+:a0220000
+:a3c2fff3
+:93c1fff3
+:64220000
+:1440000c
+:54000000
+Z'
+Seeking to 2828 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000013bc.
+MemoryTranslateUserToSystem-Address to translate: 0x000013BC
+MemoryTranslateUserToSystem-Offset: 0x000003BC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x000253BC
+Got 200 bytes at offset 2828 ... terminated at 199.
+Buffer is ':0800000c
+:54000000
+:0bffffa0
+:54000000
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:8fc10000
+Z'
+Seeking to 3028 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000140c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000140C
+MemoryTranslateUserToSystem-Offset: 0x0000040C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002540C
+Got 200 bytes at offset 3028 ... terminated at 199.
+Buffer is ':afc1fff4
+:8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:0800001c
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffffd0
+:54000000
+:23bdfff8
+:001d0820
+:8fc20000
+:ac220000
+:8fc20004
+:ac220004
+Z'
+Seeking to 3228 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000145c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000145C
+MemoryTranslateUserToSystem-Offset: 0x0000045C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002545C
+Got 200 bytes at offset 3228 ... terminated at 199.
+Buffer is ':0ffffe5c
+:54000000
+:23bd0008
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:54000000
+:20010000
+Z'
+Seeking to 3428 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000014ac.
+MemoryTranslateUserToSystem-Address to translate: 0x000014AC
+MemoryTranslateUserToSystem-Offset: 0x000004AC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x000254AC
+Got 200 bytes at offset 3428 ... terminated at 199.
+Buffer is ':afc1fff4
+:8fc1fff4
+:8fc20008
+:0022082a
+:1420000c
+:54000000
+:08000088
+:54000000
+:8fc10004
+:90220000
+:64410000
+:14200018
+:54000000
+:20010000
+:080000d8
+:54000000
+:08000028
+:54000000
+:8fc10000
+:8fc20004
+Z'
+Seeking to 3628 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000014fc.
+MemoryTranslateUserToSystem-Address to translate: 0x000014FC
+MemoryTranslateUserToSystem-Offset: 0x000004FC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x000254FC
+Got 200 bytes at offset 3628 ... terminated at 199.
+Buffer is ':90210000
+:90420000
+:00220829
+:1020000c
+:54000000
+:0800003c
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:8fc20004
+:20410001
+:00011020
+:afc20004
+:8fc2fff4
+:20410001
+:00011020
+:afc2fff4
+:0bffff64
+Z'
+Seeking to 3828 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000154c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000154C
+MemoryTranslateUserToSystem-Offset: 0x0000054C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002554C
+Got 200 bytes at offset 3828 ... terminated at 199.
+Buffer is ':54000000
+:8fc1fff4
+:8fc20008
+:00220828
+:10200018
+:54000000
+:20010000
+:08000054
+:54000000
+:0800004c
+:54000000
+:8fc20000
+:90410000
+:8fc20004
+:90430000
+:00230822
+:74220000
+:10400020
+:54000000
+:8fc10000
+Z'
+Seeking to 4028 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000159c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000159C
+MemoryTranslateUserToSystem-Offset: 0x0000059C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002559C
+Got 200 bytes at offset 4028 ... terminated at 199.
+Buffer is ':8fc20004
+:90210000
+:90420000
+:00220829
+:08000008
+:54000000
+:2001ffff
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+Z'
+Seeking to 4228 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000015ec.
+MemoryTranslateUserToSystem-Address to translate: 0x000015EC
+MemoryTranslateUserToSystem-Offset: 0x000005EC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x000255EC
+Got 200 bytes at offset 4228 ... terminated at 199.
+Buffer is ':afa20000
+:20010000
+:afc1fff4
+:8fc10000
+:20220001
+:afc20000
+:90210000
+:64220000
+:1440000c
+:54000000
+:0800001c
+:54000000
+:8fc2fff4
+:20410001
+:00011020
+:afc2fff4
+:0bffffc8
+:54000000
+:8fc1fff4
+:08000004
+Z'
+Seeking to 4428 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000163c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000163C
+MemoryTranslateUserToSystem-Offset: 0x0000063C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002563C
+Got 200 bytes at offset 4428 ... terminated at 199.
+Buffer is ':54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:23bdfff8
+:001d0820
+:8fc20004
+:ac220000
+:0fffff5c
+:54000000
+:23bd0008
+:afc1fff4
+Z'
+Seeking to 4628 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000168c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000168C
+MemoryTranslateUserToSystem-Offset: 0x0000068C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002568C
+Got 200 bytes at offset 4628 ... terminated at 199.
+Buffer is ':8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:08000060
+:54000000
+:23bdfff0
+:001d0820
+:8fc20000
+:ac220000
+:8fc20004
+:ac220004
+:8fc2fff4
+:ac220008
+:0ffffdc0
+:54000000
+:23bd0010
+:64220000
+:14400010
+Z'
+Seeking to 4828 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000016dc.
+MemoryTranslateUserToSystem-Address to translate: 0x000016DC
+MemoryTranslateUserToSystem-Offset: 0x000006DC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x000256DC
+Got 200 bytes at offset 4828 ... terminated at 199.
+Buffer is ':54000000
+:8fc10000
+:08000028
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffff8c
+:54000000
+:20010000
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+Z'
+Seeking to 5028 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000172c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000172C
+MemoryTranslateUserToSystem-Offset: 0x0000072C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002572C
+Got 200 bytes at offset 5028 ... terminated at 199.
+Buffer is ':001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:54000000
+:8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:08000070
+:54000000
+:8fc10004
+:afc1fff4
+:8fc1fff4
+:90220000
+:64410000
+:1420000c
+:54000000
+:08000044
+Z'
+Seeking to 5228 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000177c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000177C
+MemoryTranslateUserToSystem-Offset: 0x0000077C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002577C
+Got 200 bytes at offset 5228 ... terminated at 199.
+Buffer is ':54000000
+:8fc10000
+:8fc2fff4
+:90210000
+:90420000
+:00220828
+:10200010
+:54000000
+:8fc10000
+:08000030
+:54000000
+:8fc2fff4
+:20410001
+:00011020
+:afc2fff4
+:0bffffa8
+:54000000
+:0bffff7c
+:54000000
+:20010000
+Z'
+Seeking to 5428 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000017cc.
+MemoryTranslateUserToSystem-Address to translate: 0x000017CC
+MemoryTranslateUserToSystem-Offset: 0x000007CC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x000257CC
+Got 200 bytes at offset 5428 ... terminated at 199.
+Buffer is ':08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:54000000
+:8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:08000040
+Z'
+Seeking to 5628 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000181c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000181C
+MemoryTranslateUserToSystem-Offset: 0x0000081C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002581C
+Got 200 bytes at offset 5628 ... terminated at 199.
+Buffer is ':54000000
+:8fc10000
+:90220000
+:8fc10004
+:00411028
+:10400010
+:54000000
+:8fc10000
+:08000028
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffffac
+:54000000
+:20010000
+:08000004
+:54000000
+:8fa20000
+Z'
+Seeking to 5828 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000186c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000186C
+MemoryTranslateUserToSystem-Offset: 0x0000086C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002586C
+Got 200 bytes at offset 5828 ... terminated at 199.
+Buffer is ':8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:8fc10000
+:68220000
+:1040002c
+:54000000
+:8fc10004
+:20220001
+:afc20004
+:2002002d
+:a0220000
+Z'
+Seeking to 6028 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000018bc.
+MemoryTranslateUserToSystem-Address to translate: 0x000018BC
+MemoryTranslateUserToSystem-Offset: 0x000008BC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x000258BC
+Got 200 bytes at offset 6028 ... terminated at 199.
+Buffer is ':8fc10000
+:00011022
+:afc20000
+:08000118
+:54000000
+:8fc10000
+:64220000
+:14400020
+:54000000
+:8fc10004
+:20220001
+:afc20004
+:20020030
+:a0220000
+:080000ec
+:54000000
+:20010001
+:afc1fff4
+:8fc1fff4
+:8fc20000
+Z'
+Seeking to 6228 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000190c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000190C
+MemoryTranslateUserToSystem-Offset: 0x0000090C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002590C
+Got 200 bytes at offset 6228 ... terminated at 199.
+Buffer is ':0022082c
+:1420000c
+:54000000
+:08000024
+:54000000
+:8fc1fff4
+:00011820
+:50620002
+:00411020
+:50410001
+:afc1fff4
+:0bffffc8
+:54000000
+:54000000
+:8fc1fff4
+:2002000a
+:00200035
+:00400835
+:0401000f
+:00000834
+Z'
+Seeking to 6428 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000195c.
+MemoryTranslateUserToSystem-Address to translate: 0x0000195C
+MemoryTranslateUserToSystem-Offset: 0x0000095C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x0002595C
+Got 200 bytes at offset 6428 ... terminated at 199.
+Buffer is ':afc1fff4
+:8fc10004
+:20220001
+:afc20004
+:8fc20000
+:8fc3fff4
+:00400035
+:00600835
+:0401000f
+:00001034
+:00021820
+:20620030
+:a0220000
+:8fc10000
+:8fc3fff4
+:00200035
+:00600835
+:0401000f
+:00001034
+:8fc3fff4
+Z'
+Seeking to 6628 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000019ac.
+MemoryTranslateUserToSystem-Address to translate: 0x000019AC
+MemoryTranslateUserToSystem-Offset: 0x000009AC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x000259AC
+Got 200 bytes at offset 6628 ... terminated at 199.
+Buffer is ':00400035
+:00600835
+:0401000e
+:00001034
+:00220822
+:afc10000
+:8fc1fff4
+:6c220001
+:1440000c
+:54000000
+:0800000c
+:54000000
+:0bffff64
+:54000000
+:8fc10004
+:20020000
+:a0220000
+:8fa20000
+:8fa30004
+:8fdffff8
+Z'
+Seeking to 6828 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000019fc.
+MemoryTranslateUserToSystem-Address to translate: 0x000019FC
+MemoryTranslateUserToSystem-Offset: 0x000009FC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x000259FC
+Got 200 bytes at offset 6828 ... terminated at 199.
+Buffer is ':001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0020
+:afa20000
+:20010000
+:afc1fff4
+:8fc10000
+:90220000
+:60410020
+:14200034
+:54000000
+:8fc10000
+:90220000
+:60410009
+:14200020
+Z'
+Seeking to 7028 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001a4c.
+MemoryTranslateUserToSystem-Address to translate: 0x00001A4C
+MemoryTranslateUserToSystem-Offset: 0x00000A4C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025A4C
+Got 200 bytes at offset 7028 ... terminated at 199.
+Buffer is ':54000000
+:8fc10000
+:90220000
+:6041000a
+:1420000c
+:54000000
+:0800001c
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffffa8
+:54000000
+:8fc10004
+:64220000
+:10400010
+:54000000
+:8fc10004
+:8fc20000
+Z'
+Seeking to 7228 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001a9c.
+MemoryTranslateUserToSystem-Address to translate: 0x00001A9C
+MemoryTranslateUserToSystem-Offset: 0x00000A9C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025A9C
+Got 200 bytes at offset 7228 ... terminated at 199.
+Buffer is ':ac220000
+:8fc10000
+:90220000
+:64410000
+:14200010
+:54000000
+:8fc1fff4
+:08000294
+:54000000
+:8fc10000
+:90220000
+:6041002d
+:10200024
+:54000000
+:2001ffff
+:afc1ffec
+:8fc20000
+:20410001
+:00011020
+:afc20000
+Z'
+Seeking to 7428 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001aec.
+MemoryTranslateUserToSystem-Address to translate: 0x00001AEC
+MemoryTranslateUserToSystem-Offset: 0x00000AEC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025AEC
+Got 200 bytes at offset 7428 ... terminated at 199.
+Buffer is ':0800000c
+:54000000
+:20010001
+:afc1ffec
+:8fc10008
+:64220000
+:14400090
+:54000000
+:8fc10000
+:90220000
+:60410030
+:10200074
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:8fc10000
+:90220000
+:60410078
+Z'
+Seeking to 7628 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001b3c.
+MemoryTranslateUserToSystem-Address to translate: 0x00001B3C
+MemoryTranslateUserToSystem-Offset: 0x00000B3C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025B3C
+Got 200 bytes at offset 7628 ... terminated at 199.
+Buffer is ':14200020
+:54000000
+:8fc10000
+:90220000
+:60410058
+:1420000c
+:54000000
+:08000024
+:54000000
+:20010010
+:afc10008
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0800000c
+:54000000
+:20010008
+:afc10008
+:0800000c
+Z'
+Seeking to 7828 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001b8c.
+MemoryTranslateUserToSystem-Address to translate: 0x00001B8C
+MemoryTranslateUserToSystem-Offset: 0x00000B8C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025B8C
+Got 200 bytes at offset 7828 ... terminated at 199.
+Buffer is ':54000000
+:2001000a
+:afc10008
+:8fc10008
+:70220000
+:1440001c
+:54000000
+:8fc10008
+:6c220010
+:1440000c
+:54000000
+:08000010
+:54000000
+:8fc1fff4
+:08000188
+:54000000
+:54000000
+:8fc10000
+:90220000
+:6c41002f
+Z'
+Seeking to 8028 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001bdc.
+MemoryTranslateUserToSystem-Address to translate: 0x00001BDC
+MemoryTranslateUserToSystem-Offset: 0x00000BDC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025BDC
+Got 200 bytes at offset 8028 ... terminated at 199.
+Buffer is ':10200030
+:54000000
+:8fc10000
+:90220000
+:70410039
+:1020001c
+:54000000
+:8fc10000
+:90220000
+:2041ffd0
+:afc1fff0
+:0800008c
+:54000000
+:8fc10000
+:90220000
+:6c410060
+:10200030
+:54000000
+:8fc10000
+:90220000
+Z'
+Seeking to 8228 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001c2c.
+MemoryTranslateUserToSystem-Address to translate: 0x00001C2C
+MemoryTranslateUserToSystem-Offset: 0x00000C2C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025C2C
+Got 200 bytes at offset 8228 ... terminated at 199.
+Buffer is ':7041007a
+:1020001c
+:54000000
+:8fc10000
+:90220000
+:2041ffa9
+:afc1fff0
+:0800004c
+:54000000
+:8fc10000
+:90220000
+:6c410040
+:10200030
+:54000000
+:8fc10000
+:90220000
+:7041005a
+:1020001c
+:54000000
+:8fc10000
+Z'
+Seeking to 8428 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001c7c.
+MemoryTranslateUserToSystem-Address to translate: 0x00001C7C
+MemoryTranslateUserToSystem-Offset: 0x00000C7C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025C7C
+Got 200 bytes at offset 8428 ... terminated at 199.
+Buffer is ':90220000
+:2041ffc9
+:afc1fff0
+:0800000c
+:54000000
+:200103e8
+:afc1fff0
+:8fc1fff0
+:8fc20008
+:0022082a
+:10200040
+:54000000
+:8fc1fff4
+:8fc20008
+:00200035
+:00400835
+:0401000e
+:00000834
+:afc1fff4
+:8fc1fff4
+Z'
+Seeking to 8628 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001ccc.
+MemoryTranslateUserToSystem-Address to translate: 0x00001CCC
+MemoryTranslateUserToSystem-Offset: 0x00000CCC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025CCC
+Got 200 bytes at offset 8628 ... terminated at 199.
+Buffer is ':8fc2fff0
+:00220820
+:afc1fff4
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:8fc1fff0
+:8fc20008
+:0022082a
+:1420000c
+:54000000
+:0800000c
+:54000000
+:0bfffec8
+:54000000
+:8fc10004
+:64220000
+:10400010
+:54000000
+Z'
+Seeking to 8828 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001d1c.
+MemoryTranslateUserToSystem-Address to translate: 0x00001D1C
+MemoryTranslateUserToSystem-Offset: 0x00000D1C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025D1C
+Got 200 bytes at offset 8828 ... terminated at 199.
+Buffer is ':8fc10004
+:8fc20000
+:ac220000
+:8fc1fff4
+:8fc2ffec
+:00200035
+:00400835
+:0401000e
+:00000834
+:afc1fff4
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+Z'
+Seeking to 9028 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001d6c.
+MemoryTranslateUserToSystem-Address to translate: 0x00001D6C
+MemoryTranslateUserToSystem-Offset: 0x00000D6C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025D6C
+Got 200 bytes at offset 9028 ... terminated at 199.
+Buffer is ':001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:afa30004
+:54000000
+:8fc10008
+:2022ffff
+:afc20008
+:6c210000
+:1420000c
+:54000000
+:0800002c
+:54000000
+:8fc10004
+:20220001
+:afc20004
+:8fc20000
+:20430001
+:afc30000
+Z'
+Seeking to 9228 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001dbc.
+MemoryTranslateUserToSystem-Address to translate: 0x00001DBC
+MemoryTranslateUserToSystem-Offset: 0x00000DBC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025DBC
+Got 200 bytes at offset 9228 ... terminated at 199.
+Buffer is ':80420000
+:a0220000
+:0bffffbc
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:54000000
+:8fc10004
+:2022ffff
+:afc20004
+Z'
+Seeking to 9428 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001e0c.
+MemoryTranslateUserToSystem-Address to translate: 0x00001E0C
+MemoryTranslateUserToSystem-Offset: 0x00000E0C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025E0C
+Got 200 bytes at offset 9428 ... terminated at 199.
+Buffer is ':6c210000
+:1420000c
+:54000000
+:08000020
+:54000000
+:8fc10000
+:20220001
+:afc20000
+:20020000
+:a0220000
+:0bffffc8
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+Z'
+Seeking to 9628 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001e5c.
+MemoryTranslateUserToSystem-Address to translate: 0x00001E5C
+MemoryTranslateUserToSystem-Offset: 0x00000E5C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025E5C
+Got 200 bytes at offset 9628 ... terminated at 199.
+Buffer is ':afbffff8
+:2fbd0010
+:afa20000
+:afa30004
+:8fc10000
+:8fc20004
+:0022182c
+:14600008
+:54000000
+:8fc10004
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+Z'
+Seeking to 9828 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001eac.
+MemoryTranslateUserToSystem-Address to translate: 0x00001EAC
+MemoryTranslateUserToSystem-Offset: 0x00000EAC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025EAC
+Got 200 bytes at offset 9828 ... terminated at 199.
+Buffer is ':001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:afa30004
+:8fc10000
+:8fc20004
+:0022182d
+:14600008
+:54000000
+:8fc10004
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+Z'
+Seeking to 10028 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001efc.
+MemoryTranslateUserToSystem-Address to translate: 0x00001EFC
+MemoryTranslateUserToSystem-Offset: 0x00000EFC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025EFC
+Got 50 bytes at offset 10028 ... terminated at 49.
+Buffer is ':44000300
+:4be00000
+:54000000
+:4be00000
+:54000000
+Z'
+Seeking to 10078 and returning 20 bytes!
+ProcessFork-Placing 20 bytes at vaddr 00001f4c.
+MemoryTranslateUserToSystem-Address to translate: 0x00001F4C
+MemoryTranslateUserToSystem-Offset: 0x00000F4C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00025000
+MemoryTranslateUserToSystem-Translated Address: 0x00025F4C
+ProcessFork-USER_STACKPOINTER: 0x000FFFFC
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEFC
+MemoryTranslateUserToSystem-Offset: 0x00000EFC
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028000
+MemoryTranslateUserToSystem-Translated Address: 0x00028EFC
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEF0
+MemoryTranslateUserToSystem-Offset: 0x00000EF0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028000
+MemoryTranslateUserToSystem-Translated Address: 0x00028EF0
+Setting currentPCB=0x1ffac, stackframe=0x29ea8
+Leaving ProcessFork (test2.dlx.obj)
+Set timer quantum to 10000, about to run first process.
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Offset: 0x00000EE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028003
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028000
+MemoryTranslateUserToSystem-Translated Address: 0x00028EE0
+MemoryTranslateUserToSystem-Address to translate: 0x00002000
+MemoryTranslateUserToSystem-Offset: 0x00000000
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026000
+MemoryTranslateUserToSystem-Address to translate: 0x00002001
+MemoryTranslateUserToSystem-Offset: 0x00000001
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026001
+MemoryTranslateUserToSystem-Address to translate: 0x00002002
+MemoryTranslateUserToSystem-Offset: 0x00000002
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026002
+MemoryTranslateUserToSystem-Address to translate: 0x00002003
+MemoryTranslateUserToSystem-Offset: 0x00000003
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026003
+MemoryTranslateUserToSystem-Address to translate: 0x00002004
+MemoryTranslateUserToSystem-Offset: 0x00000004
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026004
+MemoryTranslateUserToSystem-Address to translate: 0x00002005
+MemoryTranslateUserToSystem-Offset: 0x00000005
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026005
+MemoryTranslateUserToSystem-Address to translate: 0x00002006
+MemoryTranslateUserToSystem-Offset: 0x00000006
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026006
+MemoryTranslateUserToSystem-Address to translate: 0x00002007
+MemoryTranslateUserToSystem-Offset: 0x00000007
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026007
+MemoryTranslateUserToSystem-Address to translate: 0x00002008
+MemoryTranslateUserToSystem-Offset: 0x00000008
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026008
+MemoryTranslateUserToSystem-Address to translate: 0x00002009
+MemoryTranslateUserToSystem-Offset: 0x00000009
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026009
+MemoryTranslateUserToSystem-Address to translate: 0x0000200A
+MemoryTranslateUserToSystem-Offset: 0x0000000A
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002600A
+MemoryTranslateUserToSystem-Address to translate: 0x0000200B
+MemoryTranslateUserToSystem-Offset: 0x0000000B
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002600B
+MemoryTranslateUserToSystem-Address to translate: 0x0000200C
+MemoryTranslateUserToSystem-Offset: 0x0000000C
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002600C
+MemoryTranslateUserToSystem-Address to translate: 0x0000200D
+MemoryTranslateUserToSystem-Offset: 0x0000000D
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002600D
+MemoryTranslateUserToSystem-Address to translate: 0x0000200E
+MemoryTranslateUserToSystem-Offset: 0x0000000E
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002600E
+MemoryTranslateUserToSystem-Address to translate: 0x0000200F
+MemoryTranslateUserToSystem-Offset: 0x0000000F
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002600F
+MemoryTranslateUserToSystem-Address to translate: 0x00002010
+MemoryTranslateUserToSystem-Offset: 0x00000010
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026010
+MemoryTranslateUserToSystem-Address to translate: 0x00002011
+MemoryTranslateUserToSystem-Offset: 0x00000011
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026011
+MemoryTranslateUserToSystem-Address to translate: 0x00002012
+MemoryTranslateUserToSystem-Offset: 0x00000012
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026012
+MemoryTranslateUserToSystem-Address to translate: 0x00002013
+MemoryTranslateUserToSystem-Offset: 0x00000013
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026013
+MemoryTranslateUserToSystem-Address to translate: 0x00002014
+MemoryTranslateUserToSystem-Offset: 0x00000014
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026014
+MemoryTranslateUserToSystem-Address to translate: 0x00002015
+MemoryTranslateUserToSystem-Offset: 0x00000015
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026015
+MemoryTranslateUserToSystem-Address to translate: 0x00002016
+MemoryTranslateUserToSystem-Offset: 0x00000016
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026016
+MemoryTranslateUserToSystem-Address to translate: 0x00002017
+MemoryTranslateUserToSystem-Offset: 0x00000017
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026017
+MemoryTranslateUserToSystem-Address to translate: 0x00002018
+MemoryTranslateUserToSystem-Offset: 0x00000018
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026018
+MemoryTranslateUserToSystem-Address to translate: 0x00002019
+MemoryTranslateUserToSystem-Offset: 0x00000019
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026019
+MemoryTranslateUserToSystem-Address to translate: 0x0000201A
+MemoryTranslateUserToSystem-Offset: 0x0000001A
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002601A
+MemoryTranslateUserToSystem-Address to translate: 0x0000201B
+MemoryTranslateUserToSystem-Offset: 0x0000001B
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002601B
+MemoryTranslateUserToSystem-Address to translate: 0x0000201C
+MemoryTranslateUserToSystem-Offset: 0x0000001C
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002601C
+MemoryTranslateUserToSystem-Address to translate: 0x0000201D
+MemoryTranslateUserToSystem-Offset: 0x0000001D
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002601D
+MemoryTranslateUserToSystem-Address to translate: 0x0000201E
+MemoryTranslateUserToSystem-Offset: 0x0000001E
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002601E
+MemoryTranslateUserToSystem-Address to translate: 0x0000201F
+MemoryTranslateUserToSystem-Offset: 0x0000001F
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002601F
+MemoryTranslateUserToSystem-Address to translate: 0x00002020
+MemoryTranslateUserToSystem-Offset: 0x00000020
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026020
+MemoryTranslateUserToSystem-Address to translate: 0x00002021
+MemoryTranslateUserToSystem-Offset: 0x00000021
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026021
+MemoryTranslateUserToSystem-Address to translate: 0x00002022
+MemoryTranslateUserToSystem-Offset: 0x00000022
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026022
+MemoryTranslateUserToSystem-Address to translate: 0x00002023
+MemoryTranslateUserToSystem-Offset: 0x00000023
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026023
+MemoryTranslateUserToSystem-Address to translate: 0x00002024
+MemoryTranslateUserToSystem-Offset: 0x00000024
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026024
+MemoryTranslateUserToSystem-Address to translate: 0x00002025
+MemoryTranslateUserToSystem-Offset: 0x00000025
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026025
+Trying to access address 0xDEADBEEF!
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEE0
+MemoryTranslateUserToSystem-Offset: 0x00000EE0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028003
+MemoryTranslateUserToSystem-PTE_IDX: 0x00028000
+MemoryTranslateUserToSystem-Translated Address: 0x00028EE0
+MemoryTranslateUserToSystem-Address to translate: 0x00002028
+MemoryTranslateUserToSystem-Offset: 0x00000028
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026028
+MemoryTranslateUserToSystem-Address to translate: 0x00002029
+MemoryTranslateUserToSystem-Offset: 0x00000029
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026029
+MemoryTranslateUserToSystem-Address to translate: 0x0000202A
+MemoryTranslateUserToSystem-Offset: 0x0000002A
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002602A
+MemoryTranslateUserToSystem-Address to translate: 0x0000202B
+MemoryTranslateUserToSystem-Offset: 0x0000002B
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002602B
+MemoryTranslateUserToSystem-Address to translate: 0x0000202C
+MemoryTranslateUserToSystem-Offset: 0x0000002C
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002602C
+MemoryTranslateUserToSystem-Address to translate: 0x0000202D
+MemoryTranslateUserToSystem-Offset: 0x0000002D
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002602D
+MemoryTranslateUserToSystem-Address to translate: 0x0000202E
+MemoryTranslateUserToSystem-Offset: 0x0000002E
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002602E
+MemoryTranslateUserToSystem-Address to translate: 0x0000202F
+MemoryTranslateUserToSystem-Offset: 0x0000002F
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002602F
+MemoryTranslateUserToSystem-Address to translate: 0x00002030
+MemoryTranslateUserToSystem-Offset: 0x00000030
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026030
+MemoryTranslateUserToSystem-Address to translate: 0x00002031
+MemoryTranslateUserToSystem-Offset: 0x00000031
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026031
+MemoryTranslateUserToSystem-Address to translate: 0x00002032
+MemoryTranslateUserToSystem-Offset: 0x00000032
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026032
+MemoryTranslateUserToSystem-Address to translate: 0x00002033
+MemoryTranslateUserToSystem-Offset: 0x00000033
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026033
+MemoryTranslateUserToSystem-Address to translate: 0x00002034
+MemoryTranslateUserToSystem-Offset: 0x00000034
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026034
+MemoryTranslateUserToSystem-Address to translate: 0x00002035
+MemoryTranslateUserToSystem-Offset: 0x00000035
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026035
+MemoryTranslateUserToSystem-Address to translate: 0x00002036
+MemoryTranslateUserToSystem-Offset: 0x00000036
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026036
+MemoryTranslateUserToSystem-Address to translate: 0x00002037
+MemoryTranslateUserToSystem-Offset: 0x00000037
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026037
+MemoryTranslateUserToSystem-Address to translate: 0x00002038
+MemoryTranslateUserToSystem-Offset: 0x00000038
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026038
+MemoryTranslateUserToSystem-Address to translate: 0x00002039
+MemoryTranslateUserToSystem-Offset: 0x00000039
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x00026039
+MemoryTranslateUserToSystem-Address to translate: 0x0000203A
+MemoryTranslateUserToSystem-Offset: 0x0000003A
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002603A
+MemoryTranslateUserToSystem-Address to translate: 0x0000203B
+MemoryTranslateUserToSystem-Offset: 0x0000003B
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002603B
+MemoryTranslateUserToSystem-Address to translate: 0x0000203C
+MemoryTranslateUserToSystem-Offset: 0x0000003C
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002603C
+MemoryTranslateUserToSystem-Address to translate: 0x0000203D
+MemoryTranslateUserToSystem-Offset: 0x0000003D
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002603D
+MemoryTranslateUserToSystem-Address to translate: 0x0000203E
+MemoryTranslateUserToSystem-Offset: 0x0000003E
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026001
+MemoryTranslateUserToSystem-PTE_IDX: 0x00026000
+MemoryTranslateUserToSystem-Translated Address: 0x0002603E
+I shouldn't get here!
+Entering ProcessDestroy for 0x1ffac.
+Leaving ProcessDestroy for 0x1ffac.
+No runnable processes - exiting!
+Exiting at program request.
+Instructions executed: 2943816
+Time simulated: 2.944 secs
+Real time elapsed: 0.239 secs
+Execution rate: 12.34M simulated instructions per real second.

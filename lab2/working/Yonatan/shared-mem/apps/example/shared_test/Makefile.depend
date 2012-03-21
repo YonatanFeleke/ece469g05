@@ -1,0 +1,2 @@
+work/shared_test.o: shared_test.c ../../../include/usertraps.h \
+ ../../../include/misc.h
