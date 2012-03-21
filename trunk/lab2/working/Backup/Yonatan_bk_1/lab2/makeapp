@@ -1,0 +1,3 @@
+cd apps/example/user_prog
+make clean
+make

@@ -1,0 +1,492 @@
+rm -rf work ../bin/os.dlx.obj ../lib/usertraps.aso ../lib/misc.o Makefile.depend ../bin/vm
+[H[2Jgcc-dlx -I../include -I../include/os -MM filesys.c memory.c misc.c process.c queue.c traps.c sysproc.c clock.c disk.c dfs.c ostests.c files.c osend.s trap_random.s dlxos.s | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+mkdir -p work
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/filesys.o filesys.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/memory.o memory.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/misc.o misc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/process.o process.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/queue.o queue.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/traps.o traps.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/sysproc.o sysproc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/clock.o clock.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/disk.o disk.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/dfs.o dfs.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/ostests.o ostests.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/files.o files.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/osend.aso osend.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/trap_random.aso trap_random.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/dlxos.aso dlxos.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -o work/os.dlx work/filesys.o work/memory.o work/misc.o work/process.o work/queue.o work/traps.o work/sysproc.o work/clock.o work/disk.o work/dfs.o work/ostests.o work/files.o work/osend.aso work/trap_random.aso work/dlxos.aso ../lib/synch.o
+dlxasm -i _osinit -l work/os.lst work/os.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x22738
+Last data address: 0x4227c
+cp work/os.dlx.obj ../bin/os.dlx.obj
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/usertraps.aso usertraps.s
+cp work/usertraps.aso ../lib/usertraps.aso
+cp work/misc.o ../lib/misc.o
+rm work/usertraps.aso
+cd ostests; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab3/working/Yonatan/flat/apps/ostests/ostests'
+rm -rf work ../../../bin/ostests.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab3/working/Yonatan/flat/apps/ostests/ostests'
+cd ostests; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab3/working/Yonatan/flat/apps/ostests/ostests'
+gcc-dlx -I../include -I../../../include -MM ostests.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab3/working/Yonatan/flat/apps/ostests/ostests'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab3/working/Yonatan/flat/apps/ostests/ostests'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/ostests.o ostests.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/ostests.dlx work/ostests.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/ostests.lst work/ostests.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x1fe0
+Last data address: 0x2000
+cp work/ostests.dlx.obj ../../../bin/ostests.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab3/working/Yonatan/flat/apps/ostests/ostests'
+cd ../../bin; dlxsim -x os.dlx.obj -a  -u ostests.dlx.obj; ee469_fixterminal
+Stack=0x1fffd4, pc starting at 0x1ebf0
+Got 2 arguments.
+Available memory: 0x40d7c -> 0x200000.
+Argument count is 2.
+Argument 0 is -u.
+Argument 1 is ostests.dlx.obj.
+DfsOpenFileSystem:----------------------DONE-----------------------
+
+
+-----------------------------------Test1-----------------------------------------------
+Starting a non block aligned write
+Writing to handle:0
+
+--------Done write now read--------
+writtenBytes[0]=0
+writtenBytes[1]=1
+writtenBytes[2]=2
+writtenBytes[3]=3
+writtenBytes[4]=4
+writtenBytes[5]=5
+writtenBytes[6]=6
+writtenBytes[7]=7
+writtenBytes[8]=8
+writtenBytes[9]=9
+writtenBytes[10]=:
+writtenBytes[11]=;
+writtenBytes[12]=<
+writtenBytes[13]==
+writtenBytes[14]=>
+writtenBytes[15]=?
+writtenBytes[16]=@
+writtenBytes[17]=A
+writtenBytes[18]=B
+writtenBytes[19]=C
+writtenBytes[20]=D
+writtenBytes[21]=E
+writtenBytes[22]=F
+writtenBytes[23]=G
+writtenBytes[24]=H
+writtenBytes[25]=I
+writtenBytes[26]=J
+writtenBytes[27]=K
+writtenBytes[28]=L
+writtenBytes[29]=M
+writtenBytes[30]=N
+writtenBytes[31]=O
+writtenBytes[32]=P
+writtenBytes[33]=Q
+writtenBytes[34]=R
+writtenBytes[35]=S
+writtenBytes[36]=T
+writtenBytes[37]=U
+writtenBytes[38]=V
+writtenBytes[39]=W
+writtenBytes[40]=X
+writtenBytes[41]=Y
+writtenBytes[42]=Z
+writtenBytes[43]=[
+writtenBytes[44]=\
+writtenBytes[45]=]
+writtenBytes[46]=^
+writtenBytes[47]=_
+writtenBytes[48]=`
+writtenBytes[49]=a
+writtenBytes[50]=b
+writtenBytes[51]=c
+writtenBytes[52]=d
+writtenBytes[53]=e
+writtenBytes[54]=f
+writtenBytes[55]=g
+writtenBytes[56]=h
+writtenBytes[57]=i
+writtenBytes[58]=j
+writtenBytes[59]=k
+writtenBytes[60]=l
+writtenBytes[61]=m
+writtenBytes[62]=n
+writtenBytes[63]=o
+DONE non block aligned write
+
+-----------------------------------Test2-----------------------------------------------
+Starting a persistence Check
+DfsWriteBlockUncached : called with Block# 37
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 1
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 2
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 3
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 4
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 5
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 6
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 7
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 8
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 9
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 10
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 11
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 12
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 13
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 14
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 15
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 16
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 17
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 18
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 19
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 20
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsCloseFileSystem:----------------------DONE-----------------------
+
+DfsWriteBlockUncached : called with Block# 21
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 22
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 23
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 24
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 25
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 26
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 27
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 28
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 29
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 30
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 31
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 32
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 33
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 34
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 35
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 36
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsOpenFileSystem:----------------------DONE-----------------------
+
+writtenBytes[0]=0
+writtenBytes[1]=1
+writtenBytes[2]=2
+writtenBytes[3]=3
+writtenBytes[4]=4
+writtenBytes[5]=5
+writtenBytes[6]=6
+writtenBytes[7]=7
+writtenBytes[8]=8
+writtenBytes[9]=9
+writtenBytes[10]=:
+writtenBytes[11]=;
+writtenBytes[12]=<
+writtenBytes[13]==
+writtenBytes[14]=>
+writtenBytes[15]=?
+writtenBytes[16]=@
+writtenBytes[17]=A
+writtenBytes[18]=B
+writtenBytes[19]=C
+writtenBytes[20]=D
+writtenBytes[21]=E
+writtenBytes[22]=F
+writtenBytes[23]=G
+writtenBytes[24]=H
+writtenBytes[25]=I
+writtenBytes[26]=J
+writtenBytes[27]=K
+writtenBytes[28]=L
+writtenBytes[29]=M
+writtenBytes[30]=N
+writtenBytes[31]=O
+writtenBytes[32]=P
+writtenBytes[33]=Q
+writtenBytes[34]=R
+writtenBytes[35]=S
+writtenBytes[36]=T
+writtenBytes[37]=U
+writtenBytes[38]=V
+writtenBytes[39]=W
+writtenBytes[40]=X
+writtenBytes[41]=Y
+writtenBytes[42]=Z
+writtenBytes[43]=[
+writtenBytes[44]=\
+writtenBytes[45]=]
+writtenBytes[46]=^
+writtenBytes[47]=_
+writtenBytes[48]=`
+writtenBytes[49]=a
+writtenBytes[50]=b
+writtenBytes[51]=c
+writtenBytes[52]=d
+writtenBytes[53]=e
+writtenBytes[54]=f
+writtenBytes[55]=g
+writtenBytes[56]=h
+writtenBytes[57]=i
+writtenBytes[58]=j
+writtenBytes[59]=k
+writtenBytes[60]=l
+writtenBytes[61]=m
+writtenBytes[62]=n
+writtenBytes[63]=o
+DONE with persistence Check
+
+-----------------------------------Test3-----------------------------------------------
+Starting write a Huge File 
+Writing to handle:1 a huge file
+Finished writing to Huge file 12288 Bytes
+Read Huge file
+DONE with a huge file writing into 12 Blocks
+DfsWriteBlockUncached : called with Block# 39
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 40
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 41
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 42
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 43
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 44
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 45
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 46
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 47
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 49
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 50
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 38
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 1
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 2
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 3
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 4
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 5
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 6
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 7
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 8
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 9
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 10
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 11
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 12
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 13
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 14
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 15
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 16
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 17
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 18
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 19
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 20
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsCloseFileSystem:----------------------DONE-----------------------
+
+DfsWriteBlockUncached : called with Block# 21
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 22
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 23
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 24
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 25
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 26
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 27
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 28
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 29
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 30
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 31
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 32
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 33
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 34
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 35
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 36
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsOpenFileSystem:----------------------DONE-----------------------
+
+
+-----------------------------------Test4-----------------------------------------------
+Starting a persistence Check on huge file
+
+writtenBytes of Block 0: 0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnoMULTIPLE BLOCKS TO READ!!
+
+writtenBytes of Block 1: 123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0MULTIPLE BLOCKS TO READ!!
+
+writtenBytes of Block 2: 23456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno01MULTIPLE BLOCKS TO READ!!
+
+writtenBytes of Block 3: 3456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno012MULTIPLE BLOCKS TO READ!!
+
+writtenBytes of Block 4: 456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123MULTIPLE BLOCKS TO READ!!
+
+writtenBytes of Block 5: 56789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno01234MULTIPLE BLOCKS TO READ!!
+
+writtenBytes of Block 6: 6789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno012345MULTIPLE BLOCKS TO READ!!
+
+writtenBytes of Block 7: 789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456MULTIPLE BLOCKS TO READ!!
+
+writtenBytes of Block 8: 89:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno01234567MULTIPLE BLOCKS TO READ!!
+
+writtenBytes of Block 9: 9:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno012345678MULTIPLE BLOCKS TO READ!!
+
+writtenBytes of Block 10: :;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789MULTIPLE BLOCKS TO READ!!
+
+writtenBytes of Block 11: ;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmno0123456789:DONE with persistence Check
+No runnable processes - exiting!
+DfsWriteBlockUncached : called with Block# 1
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 2
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 3
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 4
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 5
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 6
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 7
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 8
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 9
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 10
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 11
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 12
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 13
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 14
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 15
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 16
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 17
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 18
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 19
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 20
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsCloseFileSystem:----------------------DONE-----------------------
+
+DfsWriteBlockUncached : called with Block# 27
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 28
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 29
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 30
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 31
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 32
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 33
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 34
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 36
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 35
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 21
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 23
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 24
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 25
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 22
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+DfsWriteBlockUncached : called with Block# 26
+DfsWriteBlockUncached : SUCCESS writing to disk total bytes:1024
+Exiting at program request.
+Instructions executed: 82247029
+Time simulated: 82.247 secs
+Real time elapsed: 6.251 secs
+Execution rate: 13.16M simulated instructions per real second.
+#cd ../../bin; dlxsim -x os.dlx.obj -a -D DCdY -u ostests.dlx.obj; ee469_fixterminal
+#cd ../../bin; dlxsim -x os.dlx.obj -a -D CDdjY -u ostests.dlx.obj; ee469_fixterminal

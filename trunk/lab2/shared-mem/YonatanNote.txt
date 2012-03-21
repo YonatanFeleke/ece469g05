@@ -1,0 +1,6 @@
+************************************sharing memory*************************************
+traps.c: In function `dointerrupt':
+traps.c:469: warning: assignment makes integer from pointer without a cast
+../include/os/shared_memory.h: At top level:
+../include/os/shared_memory.h:17: warning: `SHM_Array_Shmids' defined but not used
+../include/os/shared_memory.h:18: warning: `SHM_Array_ProcessCount' defined but not used

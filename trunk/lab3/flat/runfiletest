@@ -1,0 +1,13 @@
+cd os
+make clean
+make
+cd ../apps/filetest/
+make clean
+make
+cd ../filetest2/
+make clean
+make
+cd ../filetest
+make run
+cd ../filetest2
+make run

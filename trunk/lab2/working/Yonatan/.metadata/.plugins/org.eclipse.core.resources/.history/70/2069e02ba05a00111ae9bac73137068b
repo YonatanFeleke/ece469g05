@@ -1,0 +1,13 @@
+//
+//	shared_memory.h
+//
+//	Definitions for functions that will link or unlink segments
+//	in memory to be shared among different processes
+//
+
+
+
+int shmget(int shmsize);
+void *shmat(int shmid, int vaddr);
+int shmdt(void * shmaddr);
+int shmrm(int shmid);

@@ -1,0 +1,5 @@
+cleanlab
+cd os
+make
+cd ../apps/example/
+make

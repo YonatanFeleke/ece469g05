@@ -1,0 +1,2 @@
+work/delay_prog.o: delay_prog.c ../../../include/usertraps.h \
+ ../../../include/misc.h

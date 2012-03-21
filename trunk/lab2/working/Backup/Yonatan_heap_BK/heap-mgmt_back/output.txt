@@ -1,0 +1,362 @@
+gcc-dlx -I../include -I../include/os -MM filesys.c memory.c misc.c process.c queue.c synch.c traps.c sysproc.c clock.c osend.s trap_random.s dlxos.s | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+rm -rf work ../bin/os.dlx.obj ../lib/usertraps.aso ../lib/misc.o Makefile.depend ../bin/vm
+gcc-dlx -I../include -I../include/os -MM filesys.c memory.c misc.c process.c queue.c synch.c traps.c sysproc.c clock.c osend.s trap_random.s dlxos.s | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+mkdir -p work
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/filesys.o filesys.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/memory.o memory.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/misc.o misc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/process.o process.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/queue.o queue.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/synch.o synch.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/traps.o traps.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/sysproc.o sysproc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/clock.o clock.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/osend.aso osend.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/trap_random.aso trap_random.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/dlxos.aso dlxos.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -o work/os.dlx work/filesys.o work/memory.o work/misc.o work/process.o work/queue.o work/synch.o work/traps.o work/sysproc.o work/clock.o work/osend.aso work/trap_random.aso work/dlxos.aso 
+dlxasm -i _osinit -l work/os.lst work/os.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x15618
+Last data address: 0x23994
+cp work/os.dlx.obj ../bin/os.dlx.obj
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/usertraps.aso usertraps.s
+cp work/usertraps.aso ../lib/usertraps.aso
+cp work/misc.o ../lib/misc.o
+rm work/usertraps.aso
+cd makeprocs; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/makeprocs'
+rm -rf work ../../../bin/makeprocs.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/makeprocs'
+cd hello_world; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/hello_world'
+gcc-dlx -I../include -I../../../include -MM hello_world.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/hello_world'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/hello_world'
+rm -rf work ../../../bin/hello_world.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/hello_world'
+cd delay_prog; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/delay_prog'
+gcc-dlx -I../include -I../../../include -MM delay_prog.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/delay_prog'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/delay_prog'
+rm -rf work ../../../bin/delay_prog.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/delay_prog'
+cd invalid_page; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_page'
+gcc-dlx -I../include -I../../../include -MM invalid_page.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_page'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_page'
+rm -rf work ../../../bin/invalid_page.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_page'
+cd invalid_address; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_address'
+gcc-dlx -I../include -I../../../include -MM invalid_address.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_address'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_address'
+rm -rf work ../../../bin/invalid_address.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_address'
+cd stack_grow; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/stack_grow'
+gcc-dlx -I../include -I../../../include -MM stack_grow.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/stack_grow'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/stack_grow'
+rm -rf work ../../../bin/stack_grow.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/stack_grow'
+cd makeprocs; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/makeprocs'
+gcc-dlx -I../include -I../../../include -MM makeprocs.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/makeprocs'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/makeprocs'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/makeprocs.o makeprocs.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/makeprocs.dlx work/makeprocs.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/makeprocs.lst work/makeprocs.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x2718
+Last data address: 0x3542
+cp work/makeprocs.dlx.obj ../../../bin/makeprocs.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/makeprocs'
+cd hello_world; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/hello_world'
+gcc-dlx -I../include -I../../../include -MM hello_world.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/hello_world'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/hello_world'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/hello_world.o hello_world.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/hello_world.dlx work/hello_world.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/hello_world.lst work/hello_world.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x2100
+Last data address: 0x30a9
+cp work/hello_world.dlx.obj ../../../bin/hello_world.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/hello_world'
+cd delay_prog; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/delay_prog'
+gcc-dlx -I../include -I../../../include -MM delay_prog.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/delay_prog'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/delay_prog'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/delay_prog.o delay_prog.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/delay_prog.dlx work/delay_prog.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/delay_prog.lst work/delay_prog.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x2140
+Last data address: 0x30c8
+cp work/delay_prog.dlx.obj ../../../bin/delay_prog.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/delay_prog'
+cd invalid_page; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_page'
+gcc-dlx -I../include -I../../../include -MM invalid_page.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_page'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_page'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/invalid_page.o invalid_page.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/invalid_page.dlx work/invalid_page.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/invalid_page.lst work/invalid_page.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x1fb8
+Last data address: 0x2157
+cp work/invalid_page.dlx.obj ../../../bin/invalid_page.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_page'
+cd invalid_address; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_address'
+gcc-dlx -I../include -I../../../include -MM invalid_address.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_address'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_address'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/invalid_address.o invalid_address.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/invalid_address.dlx work/invalid_address.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/invalid_address.lst work/invalid_address.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x1fb8
+Last data address: 0x2133
+cp work/invalid_address.dlx.obj ../../../bin/invalid_address.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/invalid_address'
+cd stack_grow; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/stack_grow'
+gcc-dlx -I../include -I../../../include -MM stack_grow.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/stack_grow'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/stack_grow'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/stack_grow.o stack_grow.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/stack_grow.dlx work/stack_grow.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/stack_grow.lst work/stack_grow.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x2128
+Last data address: 0x30d4
+cp work/stack_grow.dlx.obj ../../../bin/stack_grow.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/stack_grow'
+cd ../../bin; dlxsim -x os.dlx.obj -a -D impf -u hello_world.dlx.obj 5 5; ee469_fixterminal
+Stack=0x1fffac, pc starting at 0x15284
+Got 6 arguments.
+Available memory: 0x23998 -> 0x200000.
+Argument count is 6.
+Argument 0 is -D.
+Argument 1 is impf.
+Argument 2 is -u.
+Argument 3 is hello_world.dlx.obj.
+Argument 4 is 5.
+Argument 5 is 5.
+About to initialize queues.
+After initializing queues.
+PmemSize: 2097152
+Number of physical pages in memory: 512
+Last address of OS: 145816
+Number of pages used by OS: 36
+Number of free pages left in physical memory: 476
+Freemap Int #0 value: 0x00000000
+Freemap Int #1 value: 0xFFFFFFF0
+Freemap Int #2 value: 0xFFFFFFFF
+Freemap Int #3 value: 0xFFFFFFFF
+Freemap Int #4 value: 0xFFFFFFFF
+Freemap Int #5 value: 0xFFFFFFFF
+Freemap Int #6 value: 0xFFFFFFFF
+Freemap Int #7 value: 0xFFFFFFFF
+Freemap Int #8 value: 0xFFFFFFFF
+Freemap Int #9 value: 0xFFFFFFFF
+Freemap Int #10 value: 0xFFFFFFFF
+Freemap Int #11 value: 0xFFFFFFFF
+Freemap Int #12 value: 0xFFFFFFFF
+Freemap Int #13 value: 0xFFFFFFFF
+Freemap Int #14 value: 0xFFFFFFFF
+Freemap Int #15 value: 0xFFFFFFFF
+Initializing all entries in all static L2 Page Tables to 0...
+level2_pt_block[0] starting address: 0x00018AF4
+level2_pt_block[1] starting address: 0x00018B34
+level2_pt_block[2] starting address: 0x00018B74
+level2_pt_block[3] starting address: 0x00018BB4
+level2_pt_block[4] starting address: 0x00018BF4
+level2_pt_block[5] starting address: 0x00018C34
+level2_pt_block[6] starting address: 0x00018C74
+level2_pt_block[7] starting address: 0x00018CB4
+level2_pt_block[8] starting address: 0x00018CF4
+level2_pt_block[9] starting address: 0x00018D34
+level2_pt_block[10] starting address: 0x00018D74
+level2_pt_block[11] starting address: 0x00018DB4
+level2_pt_block[12] starting address: 0x00018DF4
+level2_pt_block[13] starting address: 0x00018E34
+level2_pt_block[14] starting address: 0x00018E74
+level2_pt_block[15] starting address: 0x00018EB4
+level2_pt_block[16] starting address: 0x00018EF4
+level2_pt_block[17] starting address: 0x00018F34
+level2_pt_block[18] starting address: 0x00018F74
+level2_pt_block[19] starting address: 0x00018FB4
+level2_pt_block[20] starting address: 0x00018FF4
+level2_pt_block[21] starting address: 0x00019034
+level2_pt_block[22] starting address: 0x00019074
+level2_pt_block[23] starting address: 0x000190B4
+level2_pt_block[24] starting address: 0x000190F4
+level2_pt_block[25] starting address: 0x00019134
+level2_pt_block[26] starting address: 0x00019174
+level2_pt_block[27] starting address: 0x000191B4
+level2_pt_block[28] starting address: 0x000191F4
+level2_pt_block[29] starting address: 0x00019234
+level2_pt_block[30] starting address: 0x00019274
+level2_pt_block[31] starting address: 0x000192B4
+level2_pt_block[32] starting address: 0x000192F4
+level2_pt_block[33] starting address: 0x00019334
+level2_pt_block[34] starting address: 0x00019374
+level2_pt_block[35] starting address: 0x000193B4
+level2_pt_block[36] starting address: 0x000193F4
+level2_pt_block[37] starting address: 0x00019434
+level2_pt_block[38] starting address: 0x00019474
+level2_pt_block[39] starting address: 0x000194B4
+level2_pt_block[40] starting address: 0x000194F4
+level2_pt_block[41] starting address: 0x00019534
+level2_pt_block[42] starting address: 0x00019574
+level2_pt_block[43] starting address: 0x000195B4
+level2_pt_block[44] starting address: 0x000195F4
+level2_pt_block[45] starting address: 0x00019634
+level2_pt_block[46] starting address: 0x00019674
+level2_pt_block[47] starting address: 0x000196B4
+level2_pt_block[48] starting address: 0x000196F4
+level2_pt_block[49] starting address: 0x00019734
+level2_pt_block[50] starting address: 0x00019774
+level2_pt_block[51] starting address: 0x000197B4
+level2_pt_block[52] starting address: 0x000197F4
+level2_pt_block[53] starting address: 0x00019834
+level2_pt_block[54] starting address: 0x00019874
+level2_pt_block[55] starting address: 0x000198B4
+level2_pt_block[56] starting address: 0x000198F4
+level2_pt_block[57] starting address: 0x00019934
+level2_pt_block[58] starting address: 0x00019974
+level2_pt_block[59] starting address: 0x000199B4
+level2_pt_block[60] starting address: 0x000199F4
+level2_pt_block[61] starting address: 0x00019A34
+level2_pt_block[62] starting address: 0x00019A74
+level2_pt_block[63] starting address: 0x00019AB4
+Initializing L2 Page Table freemap...
+freemap_pt index #0 value: 0xFFFFFFFF
+freemap_pt index #1 value: 0xFFFFFFFF
+After initializing memory.
+Entering ProcessModuleInit
+Initializing PCB 0 @ 0x1ae44.
+Initializing PCB 1 @ 0x1b0f4.
+Initializing PCB 2 @ 0x1b3a4.
+Initializing PCB 3 @ 0x1b654.
+Initializing PCB 4 @ 0x1b904.
+Initializing PCB 5 @ 0x1bbb4.
+Initializing PCB 6 @ 0x1be64.
+Initializing PCB 7 @ 0x1c114.
+Initializing PCB 8 @ 0x1c3c4.
+Initializing PCB 9 @ 0x1c674.
+Initializing PCB 10 @ 0x1c924.
+Initializing PCB 11 @ 0x1cbd4.
+Initializing PCB 12 @ 0x1ce84.
+Initializing PCB 13 @ 0x1d134.
+Initializing PCB 14 @ 0x1d3e4.
+Initializing PCB 15 @ 0x1d694.
+Initializing PCB 16 @ 0x1d944.
+Initializing PCB 17 @ 0x1dbf4.
+Initializing PCB 18 @ 0x1dea4.
+Initializing PCB 19 @ 0x1e154.
+Initializing PCB 20 @ 0x1e404.
+Initializing PCB 21 @ 0x1e6b4.
+Initializing PCB 22 @ 0x1e964.
+Initializing PCB 23 @ 0x1ec14.
+Initializing PCB 24 @ 0x1eec4.
+Initializing PCB 25 @ 0x1f174.
+Initializing PCB 26 @ 0x1f424.
+Initializing PCB 27 @ 0x1f6d4.
+Initializing PCB 28 @ 0x1f984.
+Initializing PCB 29 @ 0x1fc34.
+Initializing PCB 30 @ 0x1fee4.
+Initializing PCB 31 @ 0x20194.
+Leaving ProcessModuleInit
+After initializing processes.
+SynchModuleInit: Entering SynchModuleInit
+SynchModuleInit: Leaving SynchModuleInit
+After initializing synchronization tools.
+After initializing keyboard.
+After initializing clock.
+Attepmting to open vm mode=2.
+File vm opening in file system 0.
+Attempting to open file vm into desc 0, mode 2.
+Opened vm in FS 0, mode=2 slot=0.
+VM Descriptor is 0
+ProcessFork-Entering ProcessFork args=0x0 0x1ffe0c hello_world.dlx.obj 1
+ProcessFork-Got a link @ 0x207a4
+Freemap_PT Index #0 has free table, contents: 0xFFFFFFFF
+L2 Page Table #0 allocated!
+Freemap_PT Index #0 after L2 Page Table: 0xFFFFFFFE
+Freemap Index #1 has free pages, contents: 0xFFFFFFF0
+Physical Page #36 allocated!
+Freemap Index #1 after page allocated: 0xFFFFFFE0
+ProcessFork-Allocating physical page #36 (Address 0x00024000) for process virtual page #0 (data/code)
+Contents at 0x00018AF4: 0x00024001
+
+Freemap Index #1 has free pages, contents: 0xFFFFFFE0
+Physical Page #37 allocated!
+Freemap Index #1 after page allocated: 0xFFFFFFC0
+ProcessFork-Allocating physical page #37 (Address 0x00025000) for process virtual page #1 (data/code)
+Contents at 0x00018AF8: 0x00025001
+
+Freemap Index #1 has free pages, contents: 0xFFFFFFC0
+Physical Page #38 allocated!
+Freemap Index #1 after page allocated: 0xFFFFFF80
+ProcessFork-Allocating physical page #38 (Address 0x00026000) for process virtual page #2 (data/code)
+Contents at 0x00018AFC: 0x00026001
+
+Freemap Index #1 has free pages, contents: 0xFFFFFF80
+Physical Page #39 allocated!
+Freemap Index #1 after page allocated: 0xFFFFFF00
+ProcessFork-Allocating physical page #39 (Address 0x00027000) for process virtual page #3 (data/code)
+Contents at 0x00018B00: 0x00027001
+
+Freemap_PT Index #0 has free table, contents: 0xFFFFFFFE
+L2 Page Table #1 allocated!
+Freemap_PT Index #0 after L2 Page Table: 0xFFFFFFFC
+Freemap Index #1 has free pages, contents: 0xFFFFFF00
+Physical Page #40 allocated!
+Freemap Index #1 after page allocated: 0xFFFFFE00
+ProcessFork-Allocating physical page #40 (Address 0x00028000) for process virtual page #5 (Heap Allocation)
+Heap are is at physical address:0x00028000   L2 Address: 0x00028009
+Contents at 0x00018B70: 0x00000000
+
+Got a keyboard interrupt (char=0x1a(), nleft=1)!
+Got a control-C: exiting!
+# cd ../../bin; dlxsim -x os.dlx.obj -a -D impf -u userprog.dlx.obj; ee469_fixterminal
+# cd ../../bin; dlxsim -x os.dlx.obj -a -D impf -u makeprocs.dlx.obj 5 5; ee469_fixterminal
+# cd ../../bin; dlxsim -x os.dlx.obj -a -u invalid_page.dlx.obj; ee469_fixterminal
+# cd ../../bin; dlxsim -x os.dlx.obj -a -u invalid_address.dlx.obj; ee469_fixterminal

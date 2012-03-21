@@ -1,0 +1,20 @@
+To josh: 
+	Line1295-commented out the indirect translation table maker in DfsInodeWriteBytes
+		- handled in AllocateVirtual that gets called when phyNum = UNALLOC
+			changed- translate virtual to returns unalloc when missing table
+	Added flush functionality 
+	Fixed other bugs so use my copy and merge
+	changed debug prototypes and a new function so need to get new dfs.h
+	
+Take a look at test 3 of urs, thats what is running right now but i've gone tru 1 and 2 and they 
+work as they should.
+
+		
+Flags
+Y- cache debug print functions
+d- dfs function flags josh
+D- dfs function flags Yonatan
+j- dfs flags close and open file system
+C- cache work
+
+		YONATAN OUT! see u after sp. break!

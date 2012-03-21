@@ -1,0 +1,33 @@
+
+CHECK ON
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Flags
+Y- work yonatan
+F- Josh flag in process.c NONE
+d- dfs.c flags josh
+j- dfs.c flags close and open file system
+D- dfs.c flags Yonatan
+C- normal Cache work
+Y- cache debug print functions
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Cache notes
+
+get a freespot form the front of the empty_slots:
+		toBeRemoved = AQueueFirst(empty_slots);
+when new slot added to full_slots add to end
+		AQueueInsertLast(full_slots,tmp)
+when accesing a block read or write
+		DfsCacheMoveToEnd(blocknum);
+when needing to remove 
+		point to object with another link
+		Aqremove old linke
+after writing to disk(uncached) mark as dirty?
+	in allocate
+	In graceful exit call
+
+Note that if we do a DfsCacheAllocate and then fail to do a write that block is not used
+	- gets left until its the LRU and then freed so no problem

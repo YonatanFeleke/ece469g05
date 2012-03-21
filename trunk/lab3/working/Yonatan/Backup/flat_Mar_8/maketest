@@ -1,0 +1,9 @@
+cd os
+make clean
+cd ../apps/ostests/
+make clean
+clear
+cd ../../os
+make
+cd ../apps/ostests/
+make

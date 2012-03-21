@@ -1,0 +1,3 @@
+cd os
+make clean
+make

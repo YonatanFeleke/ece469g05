@@ -1,0 +1,1838 @@
+rm -rf work ../bin/os.dlx.obj ../lib/usertraps.aso ../lib/misc.o Makefile.depend ../bin/vm
+gcc-dlx -I../include -I../include/os -MM filesys.c memory.c misc.c process.c queue.c synch.c traps.c sysproc.c clock.c osend.s trap_random.s dlxos.s | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+mkdir -p work
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/filesys.o filesys.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/memory.o memory.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/misc.o misc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/process.o process.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/queue.o queue.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/synch.o synch.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/traps.o traps.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/sysproc.o sysproc.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/clock.o clock.c
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/osend.aso osend.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/trap_random.aso trap_random.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/dlxos.aso dlxos.s
+gcc-dlx -mtraps -Wall -I../include -I../include/os -o work/os.dlx work/filesys.o work/memory.o work/misc.o work/process.o work/queue.o work/synch.o work/traps.o work/sysproc.o work/clock.o work/osend.aso work/trap_random.aso work/dlxos.aso 
+dlxasm -i _osinit -l work/os.lst work/os.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x14468
+Last data address: 0x28eb4
+cp work/os.dlx.obj ../bin/os.dlx.obj
+gcc-dlx -mtraps -Wall -I../include -I../include/os -c -o work/usertraps.aso usertraps.s
+cp work/usertraps.aso ../lib/usertraps.aso
+cp work/misc.o ../lib/misc.o
+rm work/usertraps.aso
+cd heap_test; make clean
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/heap_test'
+rm -rf work ../../../bin/heap_test.dlx.obj Makefile.depend ../../../bin/vm
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/heap_test'
+cd heap_test; make
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/heap_test'
+gcc-dlx -I../include -I../../../include -MM heap_test.c  | sed "s/^\(.*\):/work\/\1:/" > Makefile.depend
+usleep 50000
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/heap_test'
+make[1]: Entering directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/heap_test'
+mkdir -p work
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -c -o work/heap_test.o heap_test.c
+gcc-dlx -mtraps -O3 -Wall -I../include -I../../../include -o work/heap_test.dlx work/heap_test.o  ../../../lib/usertraps.aso ../../../lib/misc.o
+dlxasm  -l work/heap_test.lst work/heap_test.dlx
+Starting pass 1.
+Starting pass 2.
+Last text address: 0x1fe0
+Last data address: 0x20ac
+cp work/heap_test.dlx.obj ../../../bin/heap_test.dlx.obj
+make[1]: Leaving directory `/home/shay/a/ee469g05/ee469/lab2/working/Yonatan/heap-mgmt/apps/example/heap_test'
+#	cd makeprocs; make
+#	cd hello_world; make
+#	cd delay_prog; make
+#	cd invalid_page; make
+#	cd invalid_address; make
+#	cd stack_grow; make
+cd ../../bin; dlxsim -x os.dlx.obj -a -D impf -u heap_test.dlx.obj; ee469_fixterminal
+Stack=0x1fffbc, pc starting at 0x140d0
+Got 4 arguments.
+Available memory: 0x28eb8 -> 0x200000.
+Argument count is 4.
+Argument 0 is -D.
+Argument 1 is impf.
+Argument 2 is -u.
+Argument 3 is heap_test.dlx.obj.
+About to initialize queues.
+After initializing queues.
+PmemSize: 2097152
+Number of physical pages in memory: 512
+Last address of OS: 167608
+Number of pages used by OS: 41
+Number of free pages left in physical memory: 471
+Freemap Int #0 value: 0x00000000
+Freemap Int #1 value: 0xFFFFFE00
+Freemap Int #2 value: 0xFFFFFFFF
+Freemap Int #3 value: 0xFFFFFFFF
+Freemap Int #4 value: 0xFFFFFFFF
+Freemap Int #5 value: 0xFFFFFFFF
+Freemap Int #6 value: 0xFFFFFFFF
+Freemap Int #7 value: 0xFFFFFFFF
+Freemap Int #8 value: 0xFFFFFFFF
+Freemap Int #9 value: 0xFFFFFFFF
+Freemap Int #10 value: 0xFFFFFFFF
+Freemap Int #11 value: 0xFFFFFFFF
+Freemap Int #12 value: 0xFFFFFFFF
+Freemap Int #13 value: 0xFFFFFFFF
+Freemap Int #14 value: 0xFFFFFFFF
+Freemap Int #15 value: 0xFFFFFFFF
+After initializing memory.
+Entering ProcessModuleInit
+Initializing PCB 0 @ 0x18b64.
+Initializing PCB 1 @ 0x191d4.
+Initializing PCB 2 @ 0x19844.
+Initializing PCB 3 @ 0x19eb4.
+Initializing PCB 4 @ 0x1a524.
+Initializing PCB 5 @ 0x1ab94.
+Initializing PCB 6 @ 0x1b204.
+Initializing PCB 7 @ 0x1b874.
+Initializing PCB 8 @ 0x1bee4.
+Initializing PCB 9 @ 0x1c554.
+Initializing PCB 10 @ 0x1cbc4.
+Initializing PCB 11 @ 0x1d234.
+Initializing PCB 12 @ 0x1d8a4.
+Initializing PCB 13 @ 0x1df14.
+Initializing PCB 14 @ 0x1e584.
+Initializing PCB 15 @ 0x1ebf4.
+Initializing PCB 16 @ 0x1f264.
+Initializing PCB 17 @ 0x1f8d4.
+Initializing PCB 18 @ 0x1ff44.
+Initializing PCB 19 @ 0x205b4.
+Initializing PCB 20 @ 0x20c24.
+Initializing PCB 21 @ 0x21294.
+Initializing PCB 22 @ 0x21904.
+Initializing PCB 23 @ 0x21f74.
+Initializing PCB 24 @ 0x225e4.
+Initializing PCB 25 @ 0x22c54.
+Initializing PCB 26 @ 0x232c4.
+Initializing PCB 27 @ 0x23934.
+Initializing PCB 28 @ 0x23fa4.
+Initializing PCB 29 @ 0x24614.
+Initializing PCB 30 @ 0x24c84.
+Initializing PCB 31 @ 0x252f4.
+Leaving ProcessModuleInit
+After initializing processes.
+SynchModuleInit: Entering SynchModuleInit
+SynchModuleInit: Leaving SynchModuleInit
+After initializing synchronization tools.
+After initializing keyboard.
+After initializing clock.
+Attepmting to open vm mode=2.
+File vm opening in file system 0.
+Attempting to open file vm into desc 0, mode 2.
+Opened vm in FS 0, mode=2 slot=0.
+VM Descriptor is 0
+ProcessFork-Entering ProcessFork args=0x0 0x1ffe1c heap_test.dlx.obj 1
+ProcessFork-Got a link @ 0x25cc4
+Freemap Index #1 has free pages, contents: 0xFFFFFE00
+Physical Page #41 allocated!
+Freemap Index #1 after page allocated: 0xFFFFFC00
+ProcessFork-Allocating physical page #41 (Address 0x00029000) for process virtual page #0 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFFC00
+Physical Page #42 allocated!
+Freemap Index #1 after page allocated: 0xFFFFF800
+ProcessFork-Allocating physical page #42 (Address 0x0002A000) for process virtual page #1 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFF800
+Physical Page #43 allocated!
+Freemap Index #1 after page allocated: 0xFFFFF000
+ProcessFork-Allocating physical page #43 (Address 0x0002B000) for process virtual page #2 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFF000
+Physical Page #44 allocated!
+Freemap Index #1 after page allocated: 0xFFFFE000
+ProcessFork-Allocating physical page #44 (Address 0x0002C000) for process virtual page #3 (data/code)
+
+Freemap Index #1 has free pages, contents: 0xFFFFE000
+Physical Page #45 allocated!
+Freemap Index #1 after page allocated: 0xFFFFC000
+ProcessFork-Allocating physical page #45 (Address 0x0002D000) for process virtual page #4 (Heap)
+
+Heap area is at physical address:0x0002D000   L2 Address: 0x0002D009
+Contents at 0x00025364: 0x0002D009
+
+Freemap Index #1 has free pages, contents: 0xFFFFC000
+Physical Page #46 allocated!
+Freemap Index #1 after page allocated: 0xFFFF8000
+ProcessFork-Allocating physical page #46 (Address 0x0002E000) for process virtual page #255 (user stack)
+
+Freemap Index #1 has free pages, contents: 0xFFFF8000
+Physical Page #47 allocated!
+Freemap Index #1 after page allocated: 0xFFFF0000
+ProcessFork-Allocating physical page #47 (Address 0x0002F000) for process system stack
+
+ProcessFork-Initializing system stack pointer to 0x0002FFFC
+
+ProcessFork-ProcessFork: stackframe = 0x2fea8
+ProcessFork-PTBASE: 0x00025354
+
+ProcessFork-PTSIZE: 0x00000100
+
+ProcessFork-PTBITS: 0x000C000C
+
+ProcessFork-About to load heap_test.dlx.obj
+Attepmting to open heap_test.dlx.obj mode=1.
+File heap_test.dlx.obj opening in file system 0.
+Attempting to open file heap_test.dlx.obj into desc 1, mode 1.
+Opened heap_test.dlx.obj in FS 0, mode=1 slot=1.
+File descriptor is now 1.
+ProcessFork-USER_STACKPOINTER: 0x000FFFFC
+
+ProcessFork-File heap_test.dlx.obj -> start=0x00001000
+ProcessFork-File heap_test.dlx.obj -> code @ 0x00001000 (size=0x00000fe0)
+ProcessFork-File heap_test.dlx.obj -> data @ 0x00002000 (size=0x000000ac)
+Got 200 bytes at offset 60 ... terminated at 199.
+Buffer is '00002000:0a2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d
+00002045:2d2d2d2d
+Z'
+New address is 0x2000.
+Seeking to 242 and returning 69 bytes!
+ProcessFork-Placing 69 bytes at vaddr 00002000.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00002000
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B001
+MemoryTranslateUserToSystem-Translated Address: 0x0002B000
+Got 200 bytes at offset 242 ... terminated at 199.
+Buffer is '00002045:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d2d2d2d
+:2d0a00
+00002058:53746172
+:74696e67
+:20746f20
+:63616c6c
+:20686561
+:700a00
+00002070:4d616c6c
+:6f632072
+:65747572
+:6e656420
+:77697468
+:2076616c
+:75652030
+Z'
+New address is 0x2045.
+Seeking to 298 and returning 19 bytes!
+ProcessFork-Placing 19 bytes at vaddr 00002045.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00002045
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B001
+MemoryTranslateUserToSystem-Translated Address: 0x0002B045
+Got 200 bytes at offset 298 ... terminated at 199.
+Buffer is '00002058:53746172
+:74696e67
+:20746f20
+:63616c6c
+:20686561
+:700a00
+00002070:4d616c6c
+:6f632072
+:65747572
+:6e656420
+:77697468
+:2076616c
+:75652030
+:78252e38
+:580a00
+00002094:56616c75
+:65206174
+:20307825
+Z'
+New address is 0x2058.
+Seeking to 364 and returning 23 bytes!
+ProcessFork-Placing 23 bytes at vaddr 00002058.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00002058
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B001
+MemoryTranslateUserToSystem-Translated Address: 0x0002B058
+Got 200 bytes at offset 364 ... terminated at 191.
+Buffer is '00002070:4d616c6c
+:6f632072
+:65747572
+:6e656420
+:77697468
+:2076616c
+:75652030
+:78252e38
+:580a00
+00002094:56616c75
+:65206174
+:20307825
+:2e38583a
+:3078252e
+:38580a00
+00001000:afbefffc
+:001df020
+Z'
+New address is 0x2070.
+Seeking to 460 and returning 35 bytes!
+ProcessFork-Placing 35 bytes at vaddr 00002070.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00002070
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B001
+MemoryTranslateUserToSystem-Translated Address: 0x0002B070
+Got 200 bytes at offset 460 ... terminated at 195.
+Buffer is '00002094:56616c75
+:65206174
+:20307825
+:2e38583a
+:3078252e
+:38580a00
+00001000:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:0c000fc4
+:54000000
+:23bdfff8
+:20020004
+:afa20000
+:0c000204
+:54000000
+:afc1fff4
+Z'
+New address is 0x2094.
+Seeking to 528 and returning 24 bytes!
+ProcessFork-Placing 24 bytes at vaddr 00002094.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00002094
+MemoryTranslateUserToSystem-Index: 0x00000002
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002B001
+MemoryTranslateUserToSystem-Translated Address: 0x0002B094
+Got 200 bytes at offset 528 ... terminated at 197.
+Buffer is '00001000:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:0c000fc4
+:54000000
+:23bdfff8
+:20020004
+:afa20000
+:0c000204
+:54000000
+:afc1fff4
+:20020005
+:ac220000
+:3c020000
+:24422000
+:afa20000
+:0c0000d0
+:54000000
+Z'
+New address is 0x1000.
+Seeking to 726 and returning 76 bytes!
+ProcessFork-Placing 76 bytes at vaddr 00001000.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001000
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A000
+Got 200 bytes at offset 726 ... terminated at 199.
+Buffer is ':3c020000
+:24422058
+:afa20000
+:0c0000bc
+:54000000
+:20020004
+:afa20000
+:0c0001c0
+:54000000
+:afc1fff4
+:3c020000
+:24422070
+:afa20000
+:8fc1fff4
+:afa10004
+:0c00008c
+:54000000
+:8fc1fff4
+:20020005
+:ac220000
+Z'
+Seeking to 926 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000104c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000104C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A04C
+Got 200 bytes at offset 926 ... terminated at 199.
+Buffer is ':23bdfff8
+:3c020000
+:24422094
+:afa20000
+:8fc1fff4
+:afa10004
+:23c1fff4
+:afa10008
+:0c000058
+:54000000
+:23bd0010
+:0c000f00
+:54000000
+:44000213
+:4be00000
+:54000000
+:44000214
+:4be00000
+:54000000
+:44000210
+Z'
+Seeking to 1126 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000109c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000109C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A09C
+Got 200 bytes at offset 1126 ... terminated at 199.
+Buffer is ':4be00000
+:54000000
+:44000211
+:4be00000
+:54000000
+:44000212
+:4be00000
+:54000000
+:44000280
+:4be00000
+:54000000
+:44000201
+:4be00000
+:54000000
+:44000431
+:4be00000
+:54000000
+:44000432
+:4be00000
+:54000000
+Z'
+Seeking to 1326 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000010ec.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000010EC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A0EC
+Got 200 bytes at offset 1326 ... terminated at 199.
+Buffer is ':44000440
+:4be00000
+:54000000
+:44000441
+:4be00000
+:54000000
+:44000450
+:4be00000
+:54000000
+:44000451
+:4be00000
+:54000000
+:44000452
+:4be00000
+:54000000
+:44000453
+:4be00000
+:54000000
+:44000454
+:4be00000
+Z'
+Seeking to 1526 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000113c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000113C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A13C
+Got 200 bytes at offset 1526 ... terminated at 199.
+Buffer is ':54000000
+:44000455
+:4be00000
+:54000000
+:44000456
+:4be00000
+:54000000
+:44000457
+:4be00000
+:54000000
+:44000458
+:4be00000
+:54000000
+:44000459
+:4be00000
+:54000000
+:44000460
+:4be00000
+:54000000
+:44000461
+Z'
+Seeking to 1726 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000118c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000118C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A18C
+Got 200 bytes at offset 1726 ... terminated at 199.
+Buffer is ':4be00000
+:54000000
+:44000462
+:4be00000
+:54000000
+:44000463
+:4be00000
+:54000000
+:44000464
+:4be00000
+:54000000
+:44000465
+:4be00000
+:54000000
+:44000466
+:4be00000
+:54000000
+:44000500
+:4be00000
+:54000000
+Z'
+Seeking to 1926 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000011dc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000011DC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A1DC
+Got 200 bytes at offset 1926 ... terminated at 199.
+Buffer is ':44000467
+:4be00000
+:44000468
+:4be00000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:afa40008
+:83c20003
+:20010000
+:304300ff
+:60640020
+:1480002c
+:54000000
+:304300ff
+:60640009
+:1480001c
+Z'
+Seeking to 2126 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000122c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000122C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A22C
+Got 200 bytes at offset 2126 ... terminated at 199.
+Buffer is ':54000000
+:304300ff
+:6064000a
+:1480000c
+:54000000
+:08000008
+:54000000
+:20010001
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fa40008
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+Z'
+Seeking to 2326 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000127c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000127C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A27C
+Got 200 bytes at offset 2326 ... terminated at 199.
+Buffer is ':afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:afa40008
+:83c20003
+:20010000
+:304300ff
+:6c64002f
+:1080001c
+:54000000
+:304300ff
+:70640039
+:1480005c
+:54000000
+:08000004
+:54000000
+:304300ff
+:6c640060
+:1080001c
+Z'
+Seeking to 2526 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000012cc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000012CC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A2CC
+Got 200 bytes at offset 2526 ... terminated at 199.
+Buffer is ':54000000
+:304300ff
+:70640066
+:14800034
+:54000000
+:08000004
+:54000000
+:304300ff
+:6c640040
+:10800020
+:54000000
+:304300ff
+:70640041
+:1480000c
+:54000000
+:08000008
+:54000000
+:20010001
+:08000004
+:54000000
+Z'
+Seeking to 2726 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000131c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000131C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A31C
+Got 200 bytes at offset 2726 ... terminated at 199.
+Buffer is ':8fa20000
+:8fa30004
+:8fa40008
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:8fc10000
+:afc1fff4
+:8fc10000
+:20220001
+:afc20000
+:8fc20004
+Z'
+Seeking to 2926 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000136c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000136C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A36C
+Got 200 bytes at offset 2926 ... terminated at 199.
+Buffer is ':20430001
+:afc30004
+:80420000
+:a0220000
+:a3c2fff3
+:93c1fff3
+:64220000
+:1440000c
+:54000000
+:0800000c
+:54000000
+:0bffffc0
+:54000000
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+Z'
+Seeking to 3126 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000013bc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000013BC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A3BC
+Got 200 bytes at offset 3126 ... terminated at 199.
+Buffer is ':8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:8fc10000
+:afc1fff4
+:8fc10008
+:2022ffff
+:afc20008
+:70210000
+:1020000c
+:54000000
+:08000048
+:54000000
+:8fc10000
+Z'
+Seeking to 3326 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000140c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000140C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A40C
+Got 200 bytes at offset 3326 ... terminated at 199.
+Buffer is ':20220001
+:afc20000
+:8fc20004
+:20430001
+:afc30004
+:80420000
+:a0220000
+:a3c2fff3
+:93c1fff3
+:64220000
+:1440000c
+:54000000
+:0800000c
+:54000000
+:0bffffa0
+:54000000
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+Z'
+Seeking to 3526 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000145c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000145C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A45C
+Got 200 bytes at offset 3526 ... terminated at 199.
+Buffer is ':8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:8fc10000
+:afc1fff4
+:8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:0800001c
+:54000000
+Z'
+Seeking to 3726 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000014ac.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000014AC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A4AC
+Got 200 bytes at offset 3726 ... terminated at 199.
+Buffer is ':8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffffd0
+:54000000
+:23bdfff8
+:001d0820
+:8fc20000
+:ac220000
+:8fc20004
+:ac220004
+:0ffffe5c
+:54000000
+:23bd0008
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+Z'
+Seeking to 3926 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000014fc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000014FC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A4FC
+Got 200 bytes at offset 3926 ... terminated at 199.
+Buffer is ':001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:afa30004
+:54000000
+:20010000
+:afc1fff4
+:8fc1fff4
+:8fc20008
+:0022082a
+:1420000c
+:54000000
+:08000088
+:54000000
+Z'
+Seeking to 4126 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000154c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000154C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A54C
+Got 200 bytes at offset 4126 ... terminated at 199.
+Buffer is ':8fc10004
+:90220000
+:64410000
+:14200018
+:54000000
+:20010000
+:080000d8
+:54000000
+:08000028
+:54000000
+:8fc10000
+:8fc20004
+:90210000
+:90420000
+:00220829
+:1020000c
+:54000000
+:0800003c
+:54000000
+:8fc20000
+Z'
+Seeking to 4326 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000159c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000159C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A59C
+Got 200 bytes at offset 4326 ... terminated at 199.
+Buffer is ':20410001
+:00011020
+:afc20000
+:8fc20004
+:20410001
+:00011020
+:afc20004
+:8fc2fff4
+:20410001
+:00011020
+:afc2fff4
+:0bffff64
+:54000000
+:8fc1fff4
+:8fc20008
+:00220828
+:10200018
+:54000000
+:20010000
+:08000054
+Z'
+Seeking to 4526 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000015ec.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000015EC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A5EC
+Got 200 bytes at offset 4526 ... terminated at 199.
+Buffer is ':54000000
+:0800004c
+:54000000
+:8fc20000
+:90410000
+:8fc20004
+:90430000
+:00230822
+:74220000
+:10400020
+:54000000
+:8fc10000
+:8fc20004
+:90210000
+:90420000
+:00220829
+:08000008
+:54000000
+:2001ffff
+:08000004
+Z'
+Seeking to 4726 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000163c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000163C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A63C
+Got 200 bytes at offset 4726 ... terminated at 199.
+Buffer is ':54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:20010000
+:afc1fff4
+:8fc10000
+:20220001
+:afc20000
+:90210000
+:64220000
+Z'
+Seeking to 4926 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000168c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000168C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A68C
+Got 200 bytes at offset 4926 ... terminated at 199.
+Buffer is ':1440000c
+:54000000
+:0800001c
+:54000000
+:8fc2fff4
+:20410001
+:00011020
+:afc2fff4
+:0bffffc8
+:54000000
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+Z'
+Seeking to 5126 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000016dc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000016DC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A6DC
+Got 200 bytes at offset 5126 ... terminated at 199.
+Buffer is ':001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:23bdfff8
+:001d0820
+:8fc20004
+:ac220000
+:0fffff5c
+:54000000
+:23bd0008
+:afc1fff4
+:8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:08000060
+:54000000
+:23bdfff0
+Z'
+Seeking to 5326 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000172c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000172C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A72C
+Got 200 bytes at offset 5326 ... terminated at 199.
+Buffer is ':001d0820
+:8fc20000
+:ac220000
+:8fc20004
+:ac220004
+:8fc2fff4
+:ac220008
+:0ffffdc0
+:54000000
+:23bd0010
+:64220000
+:14400010
+:54000000
+:8fc10000
+:08000028
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+Z'
+Seeking to 5526 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000177c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000177C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A77C
+Got 200 bytes at offset 5526 ... terminated at 199.
+Buffer is ':0bffff8c
+:54000000
+:20010000
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0018
+:afa20000
+:54000000
+:8fc10000
+:90220000
+:64410000
+Z'
+Seeking to 5726 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000017cc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000017CC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A7CC
+Got 200 bytes at offset 5726 ... terminated at 199.
+Buffer is ':1420000c
+:54000000
+:08000070
+:54000000
+:8fc10004
+:afc1fff4
+:8fc1fff4
+:90220000
+:64410000
+:1420000c
+:54000000
+:08000044
+:54000000
+:8fc10000
+:8fc2fff4
+:90210000
+:90420000
+:00220828
+:10200010
+:54000000
+Z'
+Seeking to 5926 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000181c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000181C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A81C
+Got 200 bytes at offset 5926 ... terminated at 199.
+Buffer is ':8fc10000
+:08000030
+:54000000
+:8fc2fff4
+:20410001
+:00011020
+:afc2fff4
+:0bffffa8
+:54000000
+:0bffff7c
+:54000000
+:20010000
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+Z'
+Seeking to 6126 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000186c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000186C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A86C
+Got 200 bytes at offset 6126 ... terminated at 199.
+Buffer is ':afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:54000000
+:8fc10000
+:90220000
+:64410000
+:1420000c
+:54000000
+:08000040
+:54000000
+:8fc10000
+:90220000
+:8fc10004
+:00411028
+:10400010
+:54000000
+:8fc10000
+Z'
+Seeking to 6326 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000018bc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000018BC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A8BC
+Got 200 bytes at offset 6326 ... terminated at 199.
+Buffer is ':08000028
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffffac
+:54000000
+:20010000
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+Z'
+Seeking to 6526 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000190c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000190C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A90C
+Got 200 bytes at offset 6526 ... terminated at 199.
+Buffer is ':2fbd0018
+:afa20000
+:afa30004
+:8fc10000
+:68220000
+:1040002c
+:54000000
+:8fc10004
+:20220001
+:afc20004
+:2002002d
+:a0220000
+:8fc10000
+:00011022
+:afc20000
+:08000118
+:54000000
+:8fc10000
+:64220000
+:14400020
+Z'
+Seeking to 6726 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 0000195c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x0000195C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A95C
+Got 200 bytes at offset 6726 ... terminated at 199.
+Buffer is ':54000000
+:8fc10004
+:20220001
+:afc20004
+:20020030
+:a0220000
+:080000ec
+:54000000
+:20010001
+:afc1fff4
+:8fc1fff4
+:8fc20000
+:0022082c
+:1420000c
+:54000000
+:08000024
+:54000000
+:8fc1fff4
+:00011820
+:50620002
+Z'
+Seeking to 6926 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000019ac.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000019AC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A9AC
+Got 200 bytes at offset 6926 ... terminated at 199.
+Buffer is ':00411020
+:50410001
+:afc1fff4
+:0bffffc8
+:54000000
+:54000000
+:8fc1fff4
+:2002000a
+:00200035
+:00400835
+:0401000f
+:00000834
+:afc1fff4
+:8fc10004
+:20220001
+:afc20004
+:8fc20000
+:8fc3fff4
+:00400035
+:00600835
+Z'
+Seeking to 7126 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 000019fc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000019FC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002A9FC
+Got 200 bytes at offset 7126 ... terminated at 199.
+Buffer is ':0401000f
+:00001034
+:00021820
+:20620030
+:a0220000
+:8fc10000
+:8fc3fff4
+:00200035
+:00600835
+:0401000f
+:00001034
+:8fc3fff4
+:00400035
+:00600835
+:0401000e
+:00001034
+:00220822
+:afc10000
+:8fc1fff4
+:6c220001
+Z'
+Seeking to 7326 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001a4c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001A4C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AA4C
+Got 200 bytes at offset 7326 ... terminated at 199.
+Buffer is ':1440000c
+:54000000
+:0800000c
+:54000000
+:0bffff64
+:54000000
+:8fc10004
+:20020000
+:a0220000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0020
+Z'
+Seeking to 7526 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001a9c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001A9C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AA9C
+Got 200 bytes at offset 7526 ... terminated at 199.
+Buffer is ':afa20000
+:20010000
+:afc1fff4
+:8fc10000
+:90220000
+:60410020
+:14200034
+:54000000
+:8fc10000
+:90220000
+:60410009
+:14200020
+:54000000
+:8fc10000
+:90220000
+:6041000a
+:1420000c
+:54000000
+:0800001c
+:54000000
+Z'
+Seeking to 7726 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001aec.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001AEC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AAEC
+Got 200 bytes at offset 7726 ... terminated at 199.
+Buffer is ':8fc20000
+:20410001
+:00011020
+:afc20000
+:0bffffa8
+:54000000
+:8fc10004
+:64220000
+:10400010
+:54000000
+:8fc10004
+:8fc20000
+:ac220000
+:8fc10000
+:90220000
+:64410000
+:14200010
+:54000000
+:8fc1fff4
+:08000294
+Z'
+Seeking to 7926 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001b3c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001B3C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AB3C
+Got 200 bytes at offset 7926 ... terminated at 199.
+Buffer is ':54000000
+:8fc10000
+:90220000
+:6041002d
+:10200024
+:54000000
+:2001ffff
+:afc1ffec
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0800000c
+:54000000
+:20010001
+:afc1ffec
+:8fc10008
+:64220000
+:14400090
+:54000000
+Z'
+Seeking to 8126 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001b8c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001B8C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AB8C
+Got 200 bytes at offset 8126 ... terminated at 199.
+Buffer is ':8fc10000
+:90220000
+:60410030
+:10200074
+:54000000
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:8fc10000
+:90220000
+:60410078
+:14200020
+:54000000
+:8fc10000
+:90220000
+:60410058
+:1420000c
+:54000000
+:08000024
+Z'
+Seeking to 8326 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001bdc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001BDC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002ABDC
+Got 200 bytes at offset 8326 ... terminated at 199.
+Buffer is ':54000000
+:20010010
+:afc10008
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:0800000c
+:54000000
+:20010008
+:afc10008
+:0800000c
+:54000000
+:2001000a
+:afc10008
+:8fc10008
+:70220000
+:1440001c
+:54000000
+:8fc10008
+Z'
+Seeking to 8526 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001c2c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001C2C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AC2C
+Got 200 bytes at offset 8526 ... terminated at 199.
+Buffer is ':6c220010
+:1440000c
+:54000000
+:08000010
+:54000000
+:8fc1fff4
+:08000188
+:54000000
+:54000000
+:8fc10000
+:90220000
+:6c41002f
+:10200030
+:54000000
+:8fc10000
+:90220000
+:70410039
+:1020001c
+:54000000
+:8fc10000
+Z'
+Seeking to 8726 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001c7c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001C7C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AC7C
+Got 200 bytes at offset 8726 ... terminated at 199.
+Buffer is ':90220000
+:2041ffd0
+:afc1fff0
+:0800008c
+:54000000
+:8fc10000
+:90220000
+:6c410060
+:10200030
+:54000000
+:8fc10000
+:90220000
+:7041007a
+:1020001c
+:54000000
+:8fc10000
+:90220000
+:2041ffa9
+:afc1fff0
+:0800004c
+Z'
+Seeking to 8926 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001ccc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001CCC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002ACCC
+Got 200 bytes at offset 8926 ... terminated at 199.
+Buffer is ':54000000
+:8fc10000
+:90220000
+:6c410040
+:10200030
+:54000000
+:8fc10000
+:90220000
+:7041005a
+:1020001c
+:54000000
+:8fc10000
+:90220000
+:2041ffc9
+:afc1fff0
+:0800000c
+:54000000
+:200103e8
+:afc1fff0
+:8fc1fff0
+Z'
+Seeking to 9126 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001d1c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001D1C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AD1C
+Got 200 bytes at offset 9126 ... terminated at 199.
+Buffer is ':8fc20008
+:0022082a
+:10200040
+:54000000
+:8fc1fff4
+:8fc20008
+:00200035
+:00400835
+:0401000e
+:00000834
+:afc1fff4
+:8fc1fff4
+:8fc2fff0
+:00220820
+:afc1fff4
+:8fc20000
+:20410001
+:00011020
+:afc20000
+:8fc1fff0
+Z'
+Seeking to 9326 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001d6c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001D6C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AD6C
+Got 200 bytes at offset 9326 ... terminated at 199.
+Buffer is ':8fc20008
+:0022082a
+:1420000c
+:54000000
+:0800000c
+:54000000
+:0bfffec8
+:54000000
+:8fc10004
+:64220000
+:10400010
+:54000000
+:8fc10004
+:8fc20000
+:ac220000
+:8fc1fff4
+:8fc2ffec
+:00200035
+:00400835
+:0401000e
+Z'
+Seeking to 9526 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001dbc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001DBC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002ADBC
+Got 200 bytes at offset 9526 ... terminated at 199.
+Buffer is ':00000834
+:afc1fff4
+:8fc1fff4
+:08000004
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:afa30004
+:54000000
+:8fc10008
+:2022ffff
+Z'
+Seeking to 9726 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001e0c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001E0C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AE0C
+Got 200 bytes at offset 9726 ... terminated at 199.
+Buffer is ':afc20008
+:6c210000
+:1420000c
+:54000000
+:0800002c
+:54000000
+:8fc10004
+:20220001
+:afc20004
+:8fc20000
+:20430001
+:afc30000
+:80420000
+:a0220000
+:0bffffbc
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+Z'
+Seeking to 9926 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001e5c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001E5C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AE5C
+Got 200 bytes at offset 9926 ... terminated at 199.
+Buffer is ':8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:54000000
+:8fc10004
+:2022ffff
+:afc20004
+:6c210000
+:1420000c
+:54000000
+:08000020
+:54000000
+:8fc10000
+:20220001
+:afc20000
+Z'
+Seeking to 10126 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001eac.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001EAC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AEAC
+Got 200 bytes at offset 10126 ... terminated at 199.
+Buffer is ':20020000
+:a0220000
+:0bffffc8
+:54000000
+:8fa20000
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:afa30004
+:8fc10000
+:8fc20004
+:0022182c
+:14600008
+Z'
+Seeking to 10326 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001efc.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001EFC
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AEFC
+Got 200 bytes at offset 10326 ... terminated at 199.
+Buffer is ':54000000
+:8fc10004
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:afbefffc
+:001df020
+:afbffff8
+:2fbd0010
+:afa20000
+:afa30004
+:8fc10000
+:8fc20004
+:0022182d
+Z'
+Seeking to 10526 and returning 80 bytes!
+ProcessFork-Placing 80 bytes at vaddr 00001f4c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001F4C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AF4C
+Got 170 bytes at offset 10526 ... terminated at 169.
+Buffer is ':14600008
+:54000000
+:8fc10004
+:08000004
+:54000000
+:8fa20000
+:8fa30004
+:8fdffff8
+:001ee820
+:8fdefffc
+:4be00000
+:54000000
+:44000300
+:4be00000
+:54000000
+:4be00000
+:54000000
+Z'
+Seeking to 10696 and returning 68 bytes!
+ProcessFork-Placing 68 bytes at vaddr 00001f9c.
+
+MemoryTranslateUserToSystem-Address to translate: 0x00001F9C
+MemoryTranslateUserToSystem-Index: 0x00000001
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002A001
+MemoryTranslateUserToSystem-Translated Address: 0x0002AF9C
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEFC
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002E001
+MemoryTranslateUserToSystem-Translated Address: 0x0002EEFC
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFEF0
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002E001
+MemoryTranslateUserToSystem-Translated Address: 0x0002EEF0
+Setting currentPCB=0x252f4, stackframe=0x2fea8
+Leaving ProcessFork (heap_test.dlx.obj)
+Set timer quantum to 10000, about to run first process.
+
+MemoryTranslateUserToSystem-Address to translate: 0x000FFED8
+MemoryTranslateUserToSystem-Index: 0x000000FF
+MemoryTranslateUserToSystem-PTE_IDX: 0x0002E003
+MemoryTranslateUserToSystem-Translated Address: 0x0002EED8
+MemoryHeapAllocatePage-Heap Index #0 has free table, contents: 0x00000001
+MemoryHeapAllocatePage-HeapPointertable #0 allocated!
+MemoryHeapAllocatePage-Freemap_PT Index #0 after L2 Page Table: 0x00000000
+Exiting after illegal address at iar=0x1034, isr=0x100
+Exiting at program request.
+Instructions executed: 3006727
+Time simulated: 3.007 secs
+Real time elapsed: 0.251 secs
+Execution rate: 11.96M simulated instructions per real second.
+# cd ../../bin; dlxsim -x os.dlx.obj -a -D impf -u userprog.dlx.obj; ee469_fixterminal
+# cd ../../bin; dlxsim -x os.dlx.obj -a -D impf -u makeprocs.dlx.obj 5 5; ee469_fixterminal
+# cd ../../bin; dlxsim -x os.dlx.obj -a -u invalid_page.dlx.obj; ee469_fixterminal
+# cd ../../bin; dlxsim -x os.dlx.obj -a -u invalid_address.dlx.obj; ee469_fixterminal

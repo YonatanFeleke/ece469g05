@@ -1,0 +1,4 @@
+int shmget(int shmsize)
+void *shmat(int shmid, int vaddr)
+int shmdt(void * shmaddr)
+int shmrm(int shmid)
