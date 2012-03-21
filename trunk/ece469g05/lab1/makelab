@@ -1,7 +1,0 @@
-cd os
-make clean
-make
-cd ../apps/
-make clean
-make
-make run

@@ -1,5 +1,0 @@
-cd os
-make clean
-cd ../apps/
-make clean
-
