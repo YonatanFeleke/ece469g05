@@ -1,0 +1,26 @@
+How many semaphores are available in DLXOS?
+	There are a total of 32 semaphores allowed in the system
+
+How many locks are available in DLXOS?
+	There are a total of 64 locks available
+
+How is a semaphore created in DLXOS?
+	Using the SemCreate() function in synch.c, the function grabs
+a semaphore from the total array of semaphores (malloc is not available)
+and returns a handleto it.
+
+Explain how sem_signal and sem_wait work.
+	
+What is a handle and how is it used to access semaphores in DLXOS?
+	a handle is a unique identifier for a shared physical memory segment
+to be passed among proccess to access same memory segment in their 
+virtual translation
+
+
+
+
+
+Answer Notes:
+	#define	QUEUE_MAX_LINKS		400
+	#define MAX_SEMS	32	//Maximum 32 semaphores allowed in the system
+	#define MAX_LOCKS	64	//Maximum 64 locks allowed in the system
